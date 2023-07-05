@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Slide from "./Slide";
+import homepage_photo_2 from "../images/homepage-photo-2.jpg";
 
 const data = [
   {
@@ -13,9 +14,9 @@ const data = [
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    headline: "Stay Connected and fuck off on the Go",
-    body: "Keep up with the latest trends and stay connected on-the-go with our selection of smartphones. Choose from top brands and affordable options, with advanced features to enhance your mobile experience.",
+    src: homepage_photo_2,
+    headline: "Stay connected and live life to the fullest",
+    body: "Embrace the invaluable power of connection and immerse yourself in a vibrant tapestry of life and activities alongside individuals who share the same passions as you.",
     cta: "Shop now",
     category: "smartphone",
   },
