@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import SingleProduct from "../components/SingleProduct";
 import { Link } from "react-router-dom";
+import product_data from "../product_data/product_data.json";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -25,9 +26,10 @@ const Products = () => {
     const getData = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch("https://itproducts.onrender.com/products");
-        if (!res.ok) throw new Error("Oops! An error has occured");
-        const json = await res.json();
+        // const res = product_data; //await fetch("https://itproducts.onrender.com/products");
+        // if (!res.ok) throw new Error("Oops! An error has occured");
+        // const json = await res.json();
+        const json = product_data;
         setIsLoading(false);
         setProducts(json);
         setFilterProducts(json);

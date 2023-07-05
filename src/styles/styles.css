@@ -45,3 +45,23 @@
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
+.product-details-description {
+  width: 80%;
+  color: #4a5568;
+}
+
+.product-details-right-box {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.75rem;
+  margin-right: 11%;
+  gap: 10px;
+}
+
+.product-details-image {
+  display: flex;
+  justify-content: flex-end;
+  width: 200%;
+  margin-right: 15%;
+}
