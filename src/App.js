@@ -2,6 +2,7 @@ import React from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Login from "./pages/Login";
 import Product from "./pages/Product";
 import Notfound from "./pages/404";
 import Navbar from "./components/Navbar";
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="/:id" element={<ProductDetails />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
