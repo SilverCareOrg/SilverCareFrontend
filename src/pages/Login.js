@@ -44,6 +44,8 @@ function Login() {
         // Handle the response
         if (response.status == 200) {
           setIsSubmitted(true);
+          const csrfToken = response.headers['csrftoken'];
+          console.log(csrfToken);
           localStorage.setItem("token", response.data['access']);
           localStorage.setItem("refresh", response.data['refresh']);
           setRefreshToken(response.data['refresh']);
