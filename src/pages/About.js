@@ -13,13 +13,10 @@ const About = () => {
                 Who we are?
               </h1>
               <p className="text-lg text-gray-700">
-                We are a team of passionate individuals committed to providing
-                high-quality products and exceptional customer service. Our
-                mission is to make technology accessible to everyone, no matter
-                where they are in the world. Shop with us and experience the
-                difference of working with a dedicated and customer-centric
-                team.
+              SilverCare inseamna integrare, emotii pozitive, relatii noi si grija fata de seniori. 
+              Serviciile noastre asigura reintegrarea in comunitate a seniorilor. Va punem la dispozitie o gama larga de optiuni, garantand siguranta domnilor si doamnelor de varsta a 3-a.
               </p>
+              <p className="text-lg text-gray-700">Haideti sa ajutam seniorii sa isi regaseasca activitatile favorite!</p>
             </div>
           </div>
           <div>
