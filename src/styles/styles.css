@@ -154,3 +154,25 @@ input[type="login-submit"]:hover {
   font-size: 17px;
   font-family: Times New Roman;
 }
+
+input[type="admin-add-service-name"],
+input[type="admin-add-service-category"],
+input[type="admin-add-service-price"] {
+  height: 35px;
+  padding-left: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+input[type="admin-add-service-description"] {
+  height: 100px;
+  padding-left: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+
+.admin-add-service-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px;
+}

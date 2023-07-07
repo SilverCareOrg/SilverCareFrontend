@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-
+import axios_api from '../axios_api';
 import '../styles/styles.css';
 
 function Login() {
   // React States
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [refreshToken, setRefreshToken] = useState('');
 
   // User Login info
   const database = [
@@ -21,31 +22,39 @@ function Login() {
   ];
 
   const errors = {
-    uname: "invalid username",
+    email: "invalid username",
     pass: "invalid password"
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     //Prevent page reload
     event.preventDefault();
 
-    var { uname, pass } = document.forms[0];
-
-    // Find user login info
-    const userData = database.find((user) => user.username === uname.value);
-
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-      }
-    } else {
-      // Username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
-    }
+    var { email, pass } = document.forms[0];
+    localStorage.removeItem("token");
+    axios_api.post("http://127.0.0.1:8000/login", {
+        email: email.value,
+        password: pass.value
+    }, {sameSite: 'none', withCredentials: true,
+    headers: {
+      // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
+      'Content-Type': 'application/json'
+  }})
+      .then((response) => {
+        // Handle the response
+        if (response.status == 200) {
+          setIsSubmitted(true);
+          localStorage.setItem("token", response.data['access']);
+          localStorage.setItem("refresh", response.data['refresh']);
+          setRefreshToken(response.data['refresh']);
+        } else {
+          console.log("Failed to send login data to the API");
+        }
+      })
+      .catch((error) => {
+        // Handle errors
+        console.log("Error:", error);
+      });
   };
 
   // Generate JSX code for error message
@@ -59,9 +68,9 @@ function Login() {
     <div className="login-form">
       <form onSubmit={handleSubmit}>
         <div className="login-input-container">
-          <label>Username </label>
-          <input type="login-text" name="uname" required />
-          {renderErrorMessage("uname")}
+          <label>Email </label>
+          <input type="login-text" name="email" required />
+          {renderErrorMessage("email")}
         </div>
         <div className="login-input-container">
           <label>Password </label>
