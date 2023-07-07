@@ -11,11 +11,6 @@ const axios_api = axios.create({
         ? `Bearer ${localStorage.getItem("token")}`
         : undefined,
   },
-  transformRequest: [
-    (data) => {
-      return JSON.stringify(data);
-    },
-  ],
   transformResponse: [
     (data) => {
       return JSON.parse(data);

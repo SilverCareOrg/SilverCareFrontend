@@ -176,3 +176,22 @@ input[type="admin-add-service-description"] {
   gap: 8px;
   margin: 10px;
 }
+
+.image-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px;
+}
+
+.upload-label {
+  display: block;
+  padding: 10px 20px;
+  background-color: #eaeaea;
+  color: #333;
+  cursor: pointer;
+}
+
+.upload-label:hover {
+  background-color: #ccc;
+}
