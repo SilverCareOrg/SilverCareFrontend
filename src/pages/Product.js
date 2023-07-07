@@ -1,38 +1,62 @@
 import { useState, useEffect, useRef } from "react";
 import SingleProduct from "../components/SingleProduct";
 import { Link } from "react-router-dom";
-import product_data from "../product_data/product_data.json";
+import axios_api from '../axios_api';
+import { saveAs } from 'file-saver';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(null);
-
+  var FileSaver = require('file-saver');
   const [catPath, setCatPath] = useState("all categories");
+  // const fs = require('fs');
 
   const para = useRef(null);
 
   const categories = [
-    "smartphone",
-    "laptop",
-    "smartwatch",
-    "earbuds",
-    "Keyboard",
-    "graphics card",
+    "spiritualitate",
+    "excursii",
+    "cursuri de limbi străine",
+    "hobby",
+    "sport",
+    "educatie",
+    "sanatate",
+    "divertisment",
+    "arta"
   ];
 
   useEffect(() => {
     const getData = async () => {
       try {
         setIsLoading(true);
-        // const res = product_data; //await fetch("https://itproducts.onrender.com/products");
-        // if (!res.ok) throw new Error("Oops! An error has occured");
-        // const json = await res.json();
-        const json = product_data;
-        setIsLoading(false);
-        setProducts(json);
-        setFilterProducts(json);
+
+        axios_api.get("http://127.0.0.1:8000/get_all_services", {withCredentials: true}).then((response) => {
+          if (response.status === 200) {
+            // Save file on local frontend server - FOR FUTURE USE
+            // for (let i = 0; i < response.data.length; i++) {
+            //   const encodedPhoto = response.data[i]["image"];
+            //   const decodedPhoto = atob(encodedPhoto);
+            //   const photoBlob = new Blob([decodedPhoto], { type: 'image/' + response.data[i]["image_type"] });
+            //   // saveAs(photoBlob, '../images/' + response.data[i]["image_path"]);
+            //   fs.writeFile("../images/" + response.data[i]["image_path"], decodedPhoto, (err) => {
+            //     if (err) {
+            //         return console.log(err);
+            //     }
+            //     console.log("file saved!");
+            // }); 
+            //   // FileSaver.saveAs("../images/", response.data[i]["image_path"]);
+            // }
+
+            const json = response.data;
+            setIsLoading(false);
+            setProducts(json);
+            setFilterProducts(json);
+          }
+        }).catch((error) => {
+          console.log("Error:", error);
+        });
       } catch (err) {
         setIsLoading(false);
         setErr(err.message);

@@ -4,21 +4,21 @@ import '../styles/styles.css';
 const ProductDetails = () => {
   const { state: product } = useLocation();
 
-  const { img, title, description, category, rating, price } = product;
+  const { img_path, name, description, category, rating, price } = product;
 
   return (
     <section className="flex flex-col gap-16 py-10 bg-gray-100">
       <div className="container mx-auto flex justify-around  items-center w-[80%]">
         <div className="product-details-image">
-          <img src={require(`../images/${img}`)} alt={title} className="w-full select-none" />
+          <img src={require(`../images/${img_path}`)} alt={name} className="w-full select-none" />
         </div>
         <div className="product-details-right-box">
           <p className="text-gray-500">
             {"Home/"}
             {<Link to="/product">product</Link>}
-            {`/${title}`}
+            {`/${name}`}
           </p>
-          <h2 className="text-4xl">{title}</h2>
+          <h2 className="text-4xl">{name}</h2>
           <span className="font-semibold">
             Price: <span className="text-2xl">{price}</span>
           </span>
@@ -31,9 +31,9 @@ const ProductDetails = () => {
             <span>
               Rating:{" "}
               <span className="text-rose-500 font-bold">
-                {rating.slice(0, 3)}
+                {rating.toString().slice(0, 3)}
               </span>
-              <span>{rating.slice(3)}</span>
+              <span>{rating.toString().slice(3)}</span>
             </span>
           </h3>
           <button

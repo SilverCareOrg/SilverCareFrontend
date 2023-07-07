@@ -18,11 +18,12 @@ function AdminAddService() {
     event.preventDefault();
 
     const formData = new FormData();
-    var { name, category, price, description } = document.forms[0];
+    var { name, category, price, description, organiser } = document.forms[0];
     formData.append("name", name.value);
     formData.append('category', category.value);
     formData.append('price', price.value);
     formData.append('description', description.value);
+    formData.append('organiser', organiser.value);
 
     var imagefile = document.querySelector('#upload-input');
     formData.append("file", imagefile.files[0]);
@@ -76,6 +77,10 @@ function AdminAddService() {
           <label>Description </label>
           <input type="admin-add-service-description" name="description" required />
         </div>
+        <div className="admin-add-service-input-container">
+          <label>Organiser </label>
+          <input type="admin-add-service-category" name="organiser" required />
+        </div>
         <div className="image-upload-container" name="file" required>
             <label>Upload image </label>
       <input
@@ -96,7 +101,7 @@ function AdminAddService() {
     <div className="login">
       <div className="login-form">
         <div className="login-title">Add service</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {isSubmitted ? <div>Service has been successfully added!</div> : renderForm}
       </div>
     </div>
   );
