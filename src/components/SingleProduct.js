@@ -1,23 +1,25 @@
 import { Link } from "react-router-dom";
 
 const SingleProduct = ({ product }) => {
-  const { img, title, price } = product;
+
+  const { img_path, name, price } = product;
+
   return (
     <div className="single-product flex flex-col bg-gray-50 gap-3 shadow-md hover:shadow-xl hover:scale-105 duration-300 px-4 py-7 rounded-sm overflow-hidden">
       <div className="flex justify-center">
         <img
           className="w-72 h-48 object-contain hover:scale-110 duration-500"
-          src={require(`../images/${img}`)}
-          alt={title}
+          src={require(`../images/${img_path}`)}
+          alt={name}
         />
       </div>
       <Link
-        to={title}
+        to={name}
         state={product}
         className="hover:text-rose-500 duration-300 flex justify-between items-center"
       >
         <h2 className="text-stone-950 font-semibold text-xl capitalize">
-          {product.title}
+          {product.name}
         </h2>
       </Link>
       <p className="text-sm text-gray-600">
@@ -25,7 +27,7 @@ const SingleProduct = ({ product }) => {
       </p>
       <div className="flex justify-between items-center">
         <Link
-          to={title}
+          to={name}
           state={product}
           className="hover:text-rose-50 text-gray-900 duration-300 flex justify-between items-center"
         >

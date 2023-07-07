@@ -13,7 +13,7 @@ const Navbar = () => {
   useEffect(() => async () => {
     // Check if the user has admin permission
     axios_api.get("http://127.0.0.1:8000/check_permissions", {withCredentials: true}).then((response) => {
-      if (response.data['isAdmin']) {
+      if (localStorage.getItem('token') && response.data['isAdmin']) {
         setIsAdmin(true);
         console.log("User has admin permissions");
       }

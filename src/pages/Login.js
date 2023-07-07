@@ -9,18 +9,6 @@ function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [refreshToken, setRefreshToken] = useState('');
 
-  // User Login info
-  const database = [
-    {
-      username: "user1",
-      password: "pass1"
-    },
-    {
-      username: "user2",
-      password: "pass2"
-    }
-  ];
-
   const errors = {
     email: "invalid username",
     pass: "invalid password"
