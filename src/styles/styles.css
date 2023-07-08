@@ -17,8 +17,15 @@
   font-size: 1.5rem;
 }
 
+.homepage-slide-bg {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .homepage-slide-frame-headline {
-  font-size: 5rem;
+  font-size: 4rem;
   color: white;
   font-weight: 500;
   width: 80%;
