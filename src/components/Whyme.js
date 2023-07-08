@@ -1,58 +1,47 @@
 import {
-  FaGlobe,
-  FaCertificate,
-  FaPercentage,
-  FaShieldAlt,
-} from "react-icons/fa";
+  FaPeopleGroup,
+  FaShapes
+} from "react-icons/fa6";
+
+import {
+  AiFillSafetyCertificate
+} from "react-icons/ai";
 
 const Whyme = () => {
   return (
-    <section className=" bg-gray-50 pb-20">
+    <section className=" bg-gray-100 pb-20">
       <div className="container mx-auto flex flex-col gap-5">
         <h2 className="text-4xl py-14 text-center font-semibold text-gray-700">
-          Why Choose Us
+          De ce ai alege SilverCare?
         </h2>
-        <div className="grid grid-cols-4 gap-10 justify-between">
-          <div className="text-center  flex flex-col gap-3 bg-gray-100 py-10 px-4">
+        <div className="grid grid-cols-3 gap-10 justify-between">
+          <div className="text-center  flex flex-col gap-3 bg-gray-200 py-10 px-4">
             <div className="flex justify-center">
-              <FaGlobe className="text-7xl text-gray-700" />
+              <AiFillSafetyCertificate className="text-7xl text-gray-700" />
             </div>
             <h1 className="text-2xl text-gray-900 font-semibold">
-              Worldwide Shipping
+              Siguranță
             </h1>
             <p className="text-gray-700 text-lg">
-              We offer worldwide shipping to make our products accessible to
-              customers all over the world.
+              Seniorii beneficiază de servicii sigure și de încredere.
             </p>
           </div>
-          <div className="text-center flex flex-col gap-3 bg-gray-100 py-10 px-4">
+          <div className="text-center flex flex-col gap-3 bg-gray-200 py-10 px-4">
             <div className="flex justify-center">
-              <FaCertificate className="text-7xl text-gray-700" />
+              <FaPeopleGroup className="text-7xl text-gray-700" />
             </div>
-            <h1 className="text-2xl font-semibold">Best Quality</h1>
+            <h1 className="text-2xl font-semibold">Comunitate</h1>
             <p className="text-gray-700 text-lg">
-              We believe in providing our customers with only the best quality
-              products.
+              Avem convingerea că împreună putem crea o comunitate mai unită, unde seniorii pot cunoaște oameni cu pasiuni comune.
             </p>
           </div>
-          <div className="text-center flex flex-col gap-3 bg-gray-100 py-10 px-4">
+          <div className="text-center flex flex-col gap-3 bg-gray-200 py-10 px-4">
             <div className="flex justify-center">
-              <FaPercentage className="text-7xl text-gray-700" />
+              <FaShapes className="text-7xl text-gray-700" />
             </div>
-            <h1 className="text-2xl font-semibold">Best Offers</h1>
+            <h1 className="text-2xl font-semibold">Varietate</h1>
             <p className="text-gray-700 text-lg">
-              We pride ourselves on offering the best deals and discounts to our
-              customers.
-            </p>
-          </div>
-          <div className="text-center flex flex-col gap-3 bg-gray-100 py-10 px-4">
-            <div className="flex justify-center">
-              <FaShieldAlt className="text-7xl text-gray-700" />
-            </div>
-            <h1 className="text-2xl font-semibold">Secure Payments</h1>
-            <p className="text-gray-700 text-lg">
-              We offer a range of secure payment options to ensure that your
-              transactions are safe and secure.
+              Suntem motivați să oferim o gamă cât mai largă de servicii.
             </p>
           </div>
         </div>
