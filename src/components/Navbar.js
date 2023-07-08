@@ -35,8 +35,6 @@ const Navbar = () => {
     });
   }, []);
 
-  console.log(visibleCartPanel)
-
   return (
     <div className="shadow-lg backdrop-blur-lg py-5 text-gray-900 bg-gray-50">
       <nav className="flex items-center container mx-auto">
