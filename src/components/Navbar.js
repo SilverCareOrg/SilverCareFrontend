@@ -1,14 +1,27 @@
 import { Link, NavLink } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import '../styles/styles.css';
-import { useEffect } from "react";
+import { useEffect, useRef  } from "react";
 import React, { useState } from "react";
 import axios_api from '../axios_api';
 import axios from "axios";
+import CartPanel from "./CartPanel";
 
 const Navbar = () => {
   // React States
   const [isAdmin, setIsAdmin] = useState(false);
+  const [visibleCartPanel, setVisibleCartPanel] = useState(false);
+  const cartPanelRef = useRef(null);
+  const clickTimeoutRef = useRef(null);
+
+  const toggleCartPanel = () => {
+    setVisibleCartPanel(prevState => !prevState);
+  };
+
+  const closeCartPanel = () => {
+    setVisibleCartPanel(false);
+    console.log("Function" + visibleCartPanel)
+  };
 
   useEffect(() => async () => {
     // Check if the user has admin permission
@@ -21,6 +34,8 @@ const Navbar = () => {
       console.log("Error:", error);
     });
   }, []);
+
+  console.log(visibleCartPanel)
 
   return (
     <div className="shadow-lg backdrop-blur-lg py-5 text-gray-900 bg-gray-50">
@@ -46,11 +61,11 @@ const Navbar = () => {
           <li>
             <NavLink to="/login">Sign in</NavLink>
           </li>
-          <li>
-            <NavLink to="/cart">
-              <FaShoppingCart />
-            </NavLink>
-          </li>
+            <button
+              onClick={toggleCartPanel}
+            >
+              {<FaShoppingCart />}
+            </button>
           {isAdmin && ( // Conditionally render the "Admin" link based on user permission
             <li>
               <NavLink to="/admin">Admin</NavLink>
@@ -58,6 +73,7 @@ const Navbar = () => {
           )}
         </ul>
       </nav>
+      {visibleCartPanel && <CartPanel onClose={closeCartPanel}></CartPanel>}
     </div>
   );
 };
