@@ -1,22 +1,23 @@
 import Whyme from "../components/Whyme";
 import Herotext from "../components/Herotext";
 import OurTeam from "../components/OurTeam";
+
 const About = () => {
   return (
     <>
-      <Herotext textt="About Us" />
-      <section className=" bg-gray-50 py-20 px-20 ">
+      <Herotext textt="Despre noi" />
+      <section className=" bg-gray-100 py-20 px-20 ">
         <div className="container mx-auto grid grid-cols-2">
           <div className="flex flex-col justify-center">
             <div className="flex flex-col gap-3">
               <h1 className="text-6xl font-semibold text-gray-700">
-                Who we are?
+                Cine suntem noi?
               </h1>
               <p className="text-lg text-gray-700">
               SilverCare inseamna integrare, emotii pozitive, relatii noi si grija fata de seniori. 
               Serviciile noastre asigura reintegrarea in comunitate a seniorilor. Va punem la dispozitie o gama larga de optiuni, garantand siguranta domnilor si doamnelor de varsta a 3-a.
               </p>
-              <p className="text-lg text-gray-700">Haideti sa ajutam seniorii sa isi regaseasca activitatile favorite!</p>
+              <p className="text-lg text-gray-700">Haideti sa ajutam seniorii sa isi regaseasca activitatile favorite!</p>
             </div>
           </div>
           <div>
