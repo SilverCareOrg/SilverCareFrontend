@@ -1,48 +1,43 @@
 import { useState } from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Slide from "./Slide";
+import homepage_photo_4 from "../images/homepage-photo-4.jpg";
+import homepage_photo_3 from "../images/homepage-photo-3.jpg";
 import homepage_photo_2 from "../images/homepage-photo-2.jpg";
+import homepage_photo_1 from "../images/homepage-photo-1.jpg";
 
 const data = [
   {
     id: 1,
-    src: "https://assets.mspimages.in/wp-content/uploads/2021/06/pjimage-1.jpg",
-    headline: "Power and Portability at your Fingertips",
-    body: "Discover our wide range of laptops for all your computing needs. From ultrabooks to gaming laptops, our selection offers the perfect combination of power and portability for your lifestyle.",
-    cta: "Shop now",
-    category: "laptop",
+    src: homepage_photo_1,
+    headline: "Arată-le părinților tăi că îți pasă",
+    body: "Înțelegem importanța relației cu părinții și dorința ta de a le oferi cele mai bune experiențe și servicii. Prin intermediul platformei noastre, poți descoperi o varietate de activități și servicii special concepute pentru părinții tăi, oferindu-le oportunități de bucurie, socializare și îmbunătățire a calității vieții.  Demonstrează-le părinților tăi că le acorzi atenția și grija pe care le merită, prin intermediul serviciilor noastre dedicate părinților și prin crearea de amintiri de neuitat pentru ei.",
+    cta: "Cumpără acum",
+    category: "divertisment",
   },
   {
     id: 2,
     src: homepage_photo_2,
-    headline: "Stay connected and live life to the fullest",
-    body: "Embrace the invaluable power of connection and immerse yourself in a vibrant tapestry of life and activities alongside individuals who share the same passions as you.",
-    cta: "Shop now",
-    category: "smartphone",
+    headline: "Conectează-te și trăiește viața la maxim",
+    body: "Platforma noastră este locul ideal pentru seniori să se conecteze și să participe la diverse activități care îi ajută să se integreze într-o comunitate activă și dinamică. Descoperă evenimente sociale, cursuri tematice și experiențe captivante care facilitează legături puternice și prietenii pe termen lung.",
+    cta: "Cumpără acum",
+    category: "hobby",
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1631281956016-3cdc1b2fe5fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
-    headline: "Track your Fitness and Stay Connected",
-    body: "Enhance your lifestyle with our range of smartwatches. Monitor your fitness goals and stay connected to your digital life with ease. Choose from popular brands and a variety of styles and features.",
-    cta: "Shop now",
-    category: "smartwatch",
+    src: homepage_photo_3,
+    headline: "Alătură-te comunității noastre",
+    body: "Platforma noastră este un loc unic destinat seniorilor, unde poți cumpăra și participa la diverse activități care promovează interacțiunea socială și integrarea într-o comunitate prietenoasă. Descoperă opțiuni variate, inclusiv excursii, ateliere, evenimente culturale și multe altele, toate menite să îți ofere o experiență memorabilă și să îți faciliteze îmbinarea într-un mediu comunitar plin de viață.",
+    cta: "Cumpără acum",
+    category: "excursii",
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1600003263720-95b45a4035d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    headline: "The Ultimate Gaming Experience",
-    body: "Take your gaming experience to the next level with our high-performance graphics cards. Choose from top brands and the latest technology for smooth and fast gameplay.",
-    cta: "Shop now",
-    category: "graphics card",
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1526876798423-97e53fb23428?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    headline: "Listen in Style and Comfort",
-    body: "Elevate your audio experience with our selection of earbuds and headphones. Choose from the latest models and top brands, with noise-cancelling and wireless options for a customized listening experience.",
-    cta: "Shop now",
-    category: "earbuds",
+    src: homepage_photo_4,
+    headline: "Adoptă un stil de viață sănătos",
+    body: " De la clase de fitness și ateliere de hobby până la evenimente culturale, platforma noastră te conectează cu experiențe captivante care stimulează bunăstarea fizică, mentală și socială.",
+    cta: "Cumpără acum",
+    category: "sport",
   },
 ];
 const Slider = () => {
@@ -69,8 +64,8 @@ const Slider = () => {
           <Slide image={image} key={image.id} />
         ))}
       </div>
-      <div className="btns absolute z-[1]  text-gray-50 bottom-[50%] w-screen ">
-        <div className="flex  justify-between pr-5 pl-1 gap-10 ">
+      <div className="btns absolute z-[1]  text-gray-50 bottom-[40%] w-screen ">
+        <div className="flex  justify-between pr-7 pl-2 gap-10 ">
           <button
             onClick={prevSlide}
             className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-4 py-7"
