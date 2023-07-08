@@ -50,28 +50,33 @@ export default function CartPanel({ onClose }) {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        onClose(); // Call the provided onClose function when clicking outside the modal
-      }
-    };
-
-    // Attach the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    const handleOutsideClick = (event) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+          onClose(); // Call the provided onClose function when clicking outside the modal
+        }
+      };
+  
+      const handleEscapeKey = (event) => {
+        if (event.key === 'Escape') {
+          onClose(); // Call the provided onClose function when the Escape key is pressed
+        }
+      };
+  
+      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('keydown', handleEscapeKey);
+  
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+        document.removeEventListener('keydown', handleEscapeKey);
+      };
   }, [wrapperRef]);
 
   return (
-    <div ref={wrapperRef}>
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
-          enter="ease-in-out duration-500"
+          enter="ease-in-out duration-1000"
           enterFrom="opacity-0"
           enterTo="opacity-100"
           leave="ease-in-out duration-500"
@@ -92,7 +97,7 @@ export default function CartPanel({ onClose }) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
+                <Dialog.Panel ref={wrapperRef} className="pointer-events-auto relative w-screen max-w-md">
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
@@ -172,7 +177,7 @@ export default function CartPanel({ onClose }) {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => setOpen(false)}
+                            onClick={handleClose}
                           >
                             &nbsp;  Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>
@@ -188,6 +193,5 @@ export default function CartPanel({ onClose }) {
         </div>
       </Dialog>
     </Transition.Root>
-    </div>
   )
 }
