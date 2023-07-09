@@ -11,7 +11,7 @@ function Signup() {
   const [refreshToken, setRefreshToken] = useState('');
 
   const errors = {
-    email: "invalid username",
+    email: "invalid email",
     pass: "invalid password",
     username: "invalid username"
   };

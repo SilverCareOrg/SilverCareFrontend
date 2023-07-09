@@ -121,7 +121,7 @@ const Products = () => {
           <div className="grid grid-cols-3 gap-10 ">
             {filterProducts &&
               filterProducts.map((product) => (
-                <SingleProduct key={product.id} product={product} />
+                <SingleProduct key={product.service_id} product={product} />
               ))}
           </div>
         </div>

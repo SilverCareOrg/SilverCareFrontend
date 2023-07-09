@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
 import axios_api from '../axios_api';
+import RegistrationService from "./RegistrationService";
+import { useEffect, useRef, useState  } from "react";
 
 const SingleProduct = ({ product }) => {
 
   const { img_path, name, price } = product;
+  const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
 
   const handleAddCart = async (event) => {
     //Prevent page reload
     event.preventDefault();
 
     axios_api.post("http://127.0.0.1:8000/add_to_cart", {
-        product_id: product.service_id,
+        service_id: product.service_id,
         senior_name: "senior1",
         adult_name: "adult1",
         phone_number: "1234567890",
@@ -32,6 +35,15 @@ const SingleProduct = ({ product }) => {
         // Handle errors
         console.log("Error:", error);
       });
+  };
+
+  const toggleRegistrationService = () => {
+    setVisibleRegistrationService(prevState => !prevState);
+  };
+
+  const closeRegistrationService = () => {
+    setVisibleRegistrationService(false);
+    console.log("Function" + visibleRegistrationService)
   };
 
   return (
@@ -66,12 +78,13 @@ const SingleProduct = ({ product }) => {
           </button>
         </Link>
         <button
-          onClick={handleAddCart}
+          onClick={toggleRegistrationService}
           className="bg-sky-400 text-sky-50 hover:bg-sky-50 hover:text-sky-400 duration-300 border border-sky-400 px-2 py-1 rounded-md"
         >
-          Add to cart
+          Participă
         </button>
       </div>
+      {visibleRegistrationService && <RegistrationService onClose={closeRegistrationService} service_id={product.service_id} ></RegistrationService>}
     </div>
   );
 };

@@ -1,10 +1,40 @@
 import { Link, useLocation } from "react-router-dom";
 import '../styles/styles.css';
+import axios_api from '../axios_api';
 
 const ProductDetails = () => {
   const { state: product } = useLocation();
 
   const { img_path, name, description, category, rating, price } = product;
+
+  const handleAddCart = async (event) => {
+    //Prevent page reload
+    event.preventDefault();
+
+    axios_api.post("http://127.0.0.1:8000/add_to_cart", {
+        service_id: product.service_id,
+        senior_name: "senior1",
+        adult_name: "adult1",
+        phone_number: "1234567890",
+        companion: "companion1",
+        email: "user@user"
+    }, {sameSite: 'none', withCredentials: true,
+    headers: {
+      // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
+      'Content-Type': 'application/json'
+  }})
+      .then((response) => {
+        // Handle the response
+        if (response.status == 200) {
+        } else {
+          console.log("Failed to send login data to the API");
+        }
+      })
+      .catch((error) => {
+        // Handle errors
+        console.log("Error:", error);
+      });
+  };
 
   return (
     <section className="flex flex-col gap-16 py-10 bg-gray-100">
@@ -37,10 +67,10 @@ const ProductDetails = () => {
             </span>
           </h3>
           <button
-            onClick={() => console.log("ksk")}
+            onClick={handleAddCart}
             className="bg-sky-500 text-sky-50 px-2 py-1 mt-4"
           >
-            Add to cart
+            Participă
           </button>
         </div>
       </div>
