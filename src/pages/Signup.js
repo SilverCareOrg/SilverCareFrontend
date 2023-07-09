@@ -4,7 +4,7 @@ import axios_api from '../axios_api';
 import '../styles/styles.css';
 import { Link, NavLink } from "react-router-dom";
 
-function Login() {
+function Signup() {
   // React States
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -12,17 +12,19 @@ function Login() {
 
   const errors = {
     email: "invalid username",
-    pass: "invalid password"
+    pass: "invalid password",
+    username: "invalid username"
   };
 
   const handleSubmit = async (event) => {
     //Prevent page reload
     event.preventDefault();
 
-    var { email, pass } = document.forms[0];
+    var { email, username, pass } = document.forms[0];
     localStorage.removeItem("token");
-    axios_api.post("http://127.0.0.1:8000/login", {
+    axios_api.post("http://127.0.0.1:8000/signup", {
         email: email.value,
+        username: username.value,
         password: pass.value
     }, {sameSite: 'none', withCredentials: true,
     headers: {
@@ -31,7 +33,9 @@ function Login() {
   }})
       .then((response) => {
         // Handle the response
-        if (response.status == 200) {
+        console.log(response);
+        if (response.status === 200) {
+            console.log("eu is aici ai");
           setIsSubmitted(true);
           const csrfToken = response.headers['csrftoken'];
           console.log(csrfToken);
@@ -64,12 +68,17 @@ function Login() {
           {renderErrorMessage("email")}
         </div>
         <div className="login-input-container">
+          <label>Username </label>
+          <input type="login-text" name="username" required />
+          {renderErrorMessage("username")}
+        </div>
+        <div className="login-input-container">
           <label>Password </label>
           <input type="login-password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
         <div className="login-button-container" onClick={handleSubmit}>
-            <button>Sign in</button>
+            <button>Sign Up</button>
         </div>
       </form>
     </div>
@@ -78,17 +87,11 @@ function Login() {
   return (
     <div className="login">
       <div className="login-form">
-        <div className="login-title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        <div className="login-title">Sign Up</div>
+        {isSubmitted ? <div>Cont creat cu success!</div> : renderForm}
       </div>
-        <div className="login-text-for-signup">
-            <p>Does not have an account yet? <span className="login-signup-link">
-              
-                <Link to="/signup">Click here to Sign up</Link>
-                </span></p>
-        </div>
     </div>
   );
 }
 
-export default Login;
+export default Signup;
