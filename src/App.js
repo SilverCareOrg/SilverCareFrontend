@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
 import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
+import RegistrationService from "./components/RegistrationService";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cartPanel" element={<CartPanel />} />
+          <Route path="/registrationService" element={<RegistrationService />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/adminAddService" element={<AdminAddService />} />
           <Route path="*" element={<Notfound />} />

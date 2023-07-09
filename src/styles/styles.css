@@ -123,7 +123,7 @@ input[type="login-submit"]:hover {
 }
 
 .login-form {
-  background-color: white;
+  background-color: rgb(247, 247, 247);
   padding: 2rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -201,4 +201,20 @@ input[type="admin-add-service-description"] {
 
 .upload-label:hover {
   background-color: #ccc;
+}
+
+.registrationService-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  background: #01d28e;
+  border: 2px solid #01d28e;
+  color: #fff;
+  padding: 10px;
+}
+
+.registrationService-button-container:hover {
+  background: #6cf0c2;
 }
