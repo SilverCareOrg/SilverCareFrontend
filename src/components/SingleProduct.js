@@ -1,8 +1,38 @@
 import { Link } from "react-router-dom";
+import axios_api from '../axios_api';
 
 const SingleProduct = ({ product }) => {
 
   const { img_path, name, price } = product;
+
+  const handleAddCart = async (event) => {
+    //Prevent page reload
+    event.preventDefault();
+
+    axios_api.post("http://127.0.0.1:8000/add_to_cart", {
+        product_id: product.service_id,
+        senior_name: "senior1",
+        adult_name: "adult1",
+        phone_number: "1234567890",
+        companion: "companion1",
+        email: "user@user"
+    }, {sameSite: 'none', withCredentials: true,
+    headers: {
+      // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
+      'Content-Type': 'application/json'
+  }})
+      .then((response) => {
+        // Handle the response
+        if (response.status == 200) {
+        } else {
+          console.log("Failed to send login data to the API");
+        }
+      })
+      .catch((error) => {
+        // Handle errors
+        console.log("Error:", error);
+      });
+  };
 
   return (
     <div className="single-product flex flex-col bg-gray-50 gap-3 shadow-md hover:shadow-xl hover:scale-105 duration-300 px-4 py-7 rounded-sm overflow-hidden">
@@ -36,7 +66,7 @@ const SingleProduct = ({ product }) => {
           </button>
         </Link>
         <button
-          onClick={() => console.log("ksk")}
+          onClick={handleAddCart}
           className="bg-sky-400 text-sky-50 hover:bg-sky-50 hover:text-sky-400 duration-300 border border-sky-400 px-2 py-1 rounded-md"
         >
           Add to cart

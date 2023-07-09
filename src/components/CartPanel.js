@@ -3,18 +3,6 @@ import {  Transition, Dialog, PaperProps } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useEffect, useRef } from "react";
 
-const styles = {
-    root: {
-      backgroundColor: "transparent"
-    },
-  
-    paper: {
-      backgroundColor: "transparent",
-      boxShadow: "none",
-      overflow: "hidden"
-    },
-  };
-
 const products = [
   {
     id: 1,
