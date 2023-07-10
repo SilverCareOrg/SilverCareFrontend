@@ -42,7 +42,7 @@ const BestSelling = () => {
       </div>
       {/* Mobile */}
       <div className="xl:hidden">
-        <div className="grid grid-rows-3 gap-10 w-[80%] mx-auto pb-20">
+        <div className="grid grid-rows-3 gap-10  mx-auto pb-20">
           {products &&
             products
               .map((product) => {
