@@ -68,7 +68,7 @@ const Slider = () => {
         <div className="flex justify-between mx-auto gap-10 ">
           <button
             onClick={prevSlide}
-            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-2 py-7 md:px-5"
+            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-2 py-7 lg:px-5"
           >
             <span>
               <BsArrowLeft />
@@ -77,7 +77,7 @@ const Slider = () => {
 
           <button
             onClick={nextSlide}
-            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-2 py-7 md:px-5"
+            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-2 py-7 lg:px-5"
           >
             <span>
               <BsArrowRight />

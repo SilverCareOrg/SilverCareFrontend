@@ -15,7 +15,7 @@ const Slide = ({ image }) => {
         <h1 className="font-bold max-w-[1500px] text-5xl md:text-7xl drop-shadow-2xl font-semibold w-4/5">
           {image.headline}
         </h1>
-        <p className="drop-shadow-2xl pr-5 py-2 max-w-[1100px] text-sm md:text-lg">{image.body}</p>
+        <p className="drop-shadow-2xl pr-5 py-2 xl:max-w-[1100px] max-w-[700px]  text-sm lg:text-lg">{image.body}</p>
         <Link
           to="/product"
           className="border border-solid mt-2 border-white text-white transition duration-300 px-8 py-3"
