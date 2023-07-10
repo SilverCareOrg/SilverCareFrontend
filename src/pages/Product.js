@@ -142,7 +142,7 @@ const Products = () => {
           <div className="pl-3">
             <Menu as="div" className="relative text-left">
                     <div>
-                      <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                      <Menu.Button className="group inline-flex justify-center text-md font-medium text-gray-700 hover:text-gray-900">
                         Categorii
                         <ChevronDownIcon
                           className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
