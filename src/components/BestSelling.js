@@ -28,7 +28,7 @@ const BestSelling = () => {
   return (
     <section className="container mx-auto">
       <h2 className="text-4xl py-10 text-center font-medium text-gray-700">
-        Best Selling Products
+        Cele mai apreciate servicii
       </h2>
       <div className="grid grid-cols-3 gap-10 w-[80%] mx-auto pb-20">
         {products &&

@@ -8,7 +8,7 @@ import Whyme from "../components/Whyme";
 
 const Home = () => {
   return (
-    <div className="home">
+    <div className="home overflow-x-hidden">
       <Slider />
       <BestSelling />
       {/* <FeatureProducts /> */}

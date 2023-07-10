@@ -45,19 +45,19 @@ const Navbar = () => {
         </div>
         <ul className="navbar-custom-list">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">Pagina principală </NavLink>
           </li>
           <li>
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/product">Servicii </NavLink>
           </li>
           <li>
-            <NavLink to="/product">Product</NavLink>
+            <NavLink to="/about">Despre noi </NavLink>
           </li>
           <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
           <li>
-            <NavLink to="/login">Sign in</NavLink>
+            <NavLink to="/login">Autentificare </NavLink>
           </li>
             <button
               onClick={toggleCartPanel}

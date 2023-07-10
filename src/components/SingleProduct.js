@@ -65,7 +65,7 @@ const SingleProduct = ({ product }) => {
         </h2>
       </Link>
       <p className="text-sm text-gray-600">
-        Price: <span className="text-rose-500 font-semibold">{price}</span>
+        Preț: <span className="text-rose-500 font-semibold">{price}</span>
       </p>
       <div className="flex justify-between items-center">
         <Link
@@ -74,7 +74,7 @@ const SingleProduct = ({ product }) => {
           className="hover:text-rose-50 text-gray-900 duration-300 flex justify-between items-center"
         >
           <button className="text-sky-400 px-2 py-1 border border-sky-400 rounded-md hover:bg-sky-400 hover:text-sky-50 duration-300">
-            More Info
+            Mai multe informații
           </button>
         </Link>
         <button

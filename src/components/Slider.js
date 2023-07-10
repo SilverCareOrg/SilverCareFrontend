@@ -55,20 +55,20 @@ const Slider = () => {
   };
 
   return (
-    <div className="frame relative overflow-x-hidden">
+    <div className="flex w-full relative overflow-x-hidden overflow-y-hidden">
       <div
-        className="slider relative "
+        className="h-[calc(100vh-5rem)] w-[500vw] flex transition duration-1000 ease-linear relative "
         style={{ transform: `translateX(-${100 * currentSlide}vw)` }}
       >
         {data.map((image) => (
           <Slide image={image} key={image.id} />
         ))}
       </div>
-      <div className="btns absolute z-[1]  text-gray-50 bottom-[40%] w-screen ">
-        <div className="flex  justify-between pr-7 pl-2 gap-10 ">
+      <div className="btns absolute z-[1] text-gray-50 bottom-[40%] w-full ">
+        <div className="flex justify-between mx-auto gap-10 ">
           <button
             onClick={prevSlide}
-            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-4 py-7"
+            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-2 py-7 md:px-5"
           >
             <span>
               <BsArrowLeft />
@@ -77,7 +77,7 @@ const Slider = () => {
 
           <button
             onClick={nextSlide}
-            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-4 py-5"
+            className="backdrop-blur-xl bg-black bg-opacity-50 text-sky-50 px-2 py-7 md:px-5"
           >
             <span>
               <BsArrowRight />
