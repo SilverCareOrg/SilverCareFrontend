@@ -57,7 +57,7 @@ const Slider = () => {
   return (
     <div className="flex w-full relative overflow-x-hidden overflow-y-hidden">
       <div
-        className="h-[calc(100vh-5rem)] w-[500vw] flex transition duration-1000 ease-linear relative "
+        className="h-[calc(101vh-5rem)] w-[500vw] flex transition duration-1000 ease-linear relative "
         style={{ transform: `translateX(-${100 * currentSlide}vw)` }}
       >
         {data.map((image) => (

@@ -64,27 +64,27 @@ function Login() {
           {renderErrorMessage("email")}
         </div>
         <div className="login-input-container">
-          <label>Password </label>
+          <label>Parolă </label>
           <input type="login-password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
         <div className="login-button-container" onClick={handleSubmit}>
-            <button>Sign in</button>
+            <button>Conectare</button>
         </div>
       </form>
     </div>
   );
 
   return (
-    <div className="login">
+    <div className="max-md:transform max-md:translate-y-1/8 max-md:pl-2 max-md:pr-2 login">
       <div className="login-form">
-        <div className="login-title">Sign In</div>
+        <div className="login-title">Autentificare</div>
         {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
       </div>
-        <div className="login-text-for-signup">
-            <p>Does not have an account yet? <span className="login-signup-link">
+        <div className="text-center login-text-for-signup">
+            <p className="max-md:flex max-md:flex-col">Nu ți-ai creat un cont încă? <span className="login-signup-link">
               
-                <Link to="/signup">Click here to Sign up</Link>
+                <Link to="/signup">Apasă aici pentru întregistrare</Link>
                 </span></p>
         </div>
     </div>

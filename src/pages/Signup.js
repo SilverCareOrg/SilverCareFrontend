@@ -68,17 +68,17 @@ function Signup() {
           {renderErrorMessage("email")}
         </div>
         <div className="login-input-container">
-          <label>Username </label>
+          <label>Nume utilizator </label>
           <input type="login-text" name="username" required />
           {renderErrorMessage("username")}
         </div>
         <div className="login-input-container">
-          <label>Password </label>
+          <label>Parolă </label>
           <input type="login-password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
         <div className="login-button-container" onClick={handleSubmit}>
-            <button>Sign Up</button>
+            <button>Înregistrare</button>
         </div>
       </form>
     </div>
@@ -87,7 +87,7 @@ function Signup() {
   return (
     <div className="login">
       <div className="login-form">
-        <div className="login-title">Sign Up</div>
+        <div className="login-title">Înregistrare</div>
         {isSubmitted ? <div>Cont creat cu success!</div> : renderForm}
       </div>
     </div>
