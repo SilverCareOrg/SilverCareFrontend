@@ -156,11 +156,11 @@ export default function RegistrationService({ onClose, service_id}) {
                       <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                         Înregistrare activitate
                       </Dialog.Title>
-                      <div className="mt-2">
+                      {!isSubmitted && <div className="mt-2">
                         <p className="text-sm text-gray-500">
                           Vă rugăm introduceți următoarele detalii pentru a vă putea înregistra în cadrul activitiății alese.
                         </p>
-                      </div>
+                      </div>}
                     </div>
                   </div>
                 </div>

@@ -198,12 +198,12 @@ const Products = () => {
               </div>
           </div>
 
-        <div classname="">
+        <div className="">
           <p className="max-sm:hidden max-sm:px-2 text-gray-500 pb-4">
             {<Link to="/">Home </Link>}/
             <span className="text-sky-400 px-1">{catPath}</span>
           </p>
-          <div clasName="max-sm:flex max-sm:justify-center">
+          <div className="max-sm:flex max-sm:justify-center">
             <div className="grid max-sm:mx-auto max-md:grid-cols-1 max-xl:grid-cols-2 grid-cols-3 gap-10 ">
               {filterProducts &&
                 filterProducts.map((product) => (

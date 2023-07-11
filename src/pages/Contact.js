@@ -24,11 +24,11 @@ const Contact = () => {
         <h2 className="text-5xl text-gray-700 font-semibold text-center pb-5 ">
           Suntem aici pentru tine
         </h2>
-        <div className="flex w-[85%] mx-auto gap-5  py-10 px-0">
+        <div className="md:flex max-d:flex-row w-[85%] mx-auto gap-5 md:py-10 px-0">
           {couses &&
             couses.map((cause) => {
               return (
-                <div className="text-center bg-gray-100 rounded-lg flex flex-col gap-3 py-10 px-5">
+                <div className="text-center bg-gray-100 rounded-lg max-md:mt-10 md:flex md:flex-col gap-3 py-10 px-5">
                   <h3 className="text-gray-900 font-semibold text-2xl">
                     {cause.title}
                   </h3>

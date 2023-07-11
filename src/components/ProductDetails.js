@@ -5,7 +5,7 @@ import axios_api from '../axios_api';
 const ProductDetails = () => {
   const { state: product } = useLocation();
 
-  const { img_path, name, description, category, rating, price } = product;
+  const { img_path, name, description, category, rating, price, organiser } = product;
 
   const handleAddCart = async (event) => {
     //Prevent page reload
@@ -38,48 +38,99 @@ const ProductDetails = () => {
 
   return (
     <section className="flex flex-col gap-16 py-10 bg-gray-100">
-      <div className="container mx-auto flex justify-around  items-center w-[80%]">
-        <div className="product-details-image">
-          <img src={require(`../images/${img_path}`)} alt={name} className="w-full select-none" />
-        </div>
-        <div className="product-details-right-box">
-          <p className="text-gray-500">
-            {"Home/"}
-            {<Link to="/product">product</Link>}
-            {`/${name}`}
-          </p>
-          <h2 className="text-4xl">{name}</h2>
-          <span className="font-semibold">
-            Price: <span className="text-2xl">{price}</span>
-          </span>
-          <div className="flex flex-col gap-3">
-            <h1 className="text-2xl">Description</h1>
-            <p className="product-details-description">{description}</p>
+
+      {/* Desktop view */}
+      <div className="max-xl:hidden">
+        <div className="container mx-auto flex justify-around  items-center w-[80%]">
+          <div className="flex justify-end max-w-[500px] max-h-[500px]  mr-9">
+            <img src={require(`../images/${img_path}`)} alt={name} className="max-w-[500px] max-h-[500px] select-none" />
           </div>
-          <h3 className="flex justify-between text-gray-700 text-lg">
-            <span>Category: {category}</span>
-            <span>
-              Rating:{" "}
-              <span className="text-rose-500 font-bold">
-                {rating.toString().slice(0, 3)}
-              </span>
-              <span>{rating.toString().slice(3)}</span>
+          <div className="relative absolute product-details-right-box transform translate-x-1/4 translate-y-1/6">
+            <p className="text-gray-500">
+              {"Home/"}
+              {<Link to="/product">product</Link>}
+              {`/${name}`}
+            </p>
+            <h2 className="text-4xl">{name}</h2>
+            <span className="font-semibold">
+            Preț: <span className="text-2xl text-green-500">{price === "free" ? "Gratis" : price}</span> Ron
             </span>
-          </h3>
-          <button
-            onClick={handleAddCart}
-            className="bg-sky-500 text-sky-50 px-2 py-1 mt-4"
+            <div className="flex flex-col gap-3">
+              <h1 className="text-2xl">Descriere</h1>
+              <p className="product-details-description">{description}</p>
+            </div>
+            <h3 className="flex justify-between text-gray-700 text-lg">
+              <span>Categorie: {category}</span>
+              <span>
+                Rating:{" "}
+                <span className="text-blue-500 font-bold">
+                  {rating.toString().slice(0, 3)}
+                </span>
+                <span>{rating.toString().slice(3)}</span>
+              </span>
+            </h3>
+            <button
+              onClick={handleAddCart}
+              className="bg-sky-500 text-sky-50 px-2 py-1 mt-4"
+            >
+              Participă
+            </button>
+          </div>
+        </div>
+        <div className="flex justify-center mt-10">
+          <Link
+            to="/product"
+            className="text-xl py-1 text-center hover:text-cyan-500 duration-300 select-none"
           >
-            Participă
-          </button>
+            &larr; Întoarce-te la pagina de servicii
+          </Link>
         </div>
       </div>
-      <Link
-        to="/product"
-        className="text-xl py-1 text-center hover:text-cyan-500 duration-300 select-none"
-      >
-        &larr; Go to Product
-      </Link>
+
+      {/* Mobile view */}
+      <div className="xl:hidden flex-column w-screen overflow-x-hidden">
+        <div className="mx-auto items-center">
+          <div className="flex w-screen justify-center ">
+            <img src={require(`../images/${img_path}`)} alt={name} className="object-cover w-full select-none" />
+          </div>
+          <div className="px-3 py-4">
+            <h2 className="text-3xl font-semibold text-gray-500 text-center">{name}</h2>
+            <div className="py-6 flex flex-col text-lg">
+              <span className="font-semibold mb-2">
+                Preț: <span className="text-green-500">{price}</span> Ron
+              </span>
+              <span className="font-semibold mb-2">Categorie: {category}</span>
+              <span className="font-semibold">Organizator: {organiser}</span>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h1 className="text-2xl">Descriere</h1>
+              <p className="w-full">{description}</p>
+            </div>
+            <h3 className="mt-7 flex justify-between text-gray-700 text-lg">
+              <span>
+                Rating:{" "}
+                <span className="text-blue-500 font-bold">
+                  {rating.toString().slice(0, 3)}
+                </span>
+                <span>{rating.toString().slice(3)}</span>
+              </span>
+            </h3>
+            <button
+              onClick={handleAddCart}
+              className="bg-sky-500 text-sky-50 px-2 py-3 mt-4 justify-center flex mx-auto w-[80%]"
+            >
+              Participă
+            </button>
+          </div>
+        </div>
+        <Link
+          to="/product"
+          className="flex justify-center mt-3 text-xl text-center hover:text-cyan-500 duration-300 select-none"
+        >
+          &larr; Întoarce-te la pagina de servicii
+        </Link>
+      </div>
+
     </section>
   );
 };

@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a7858349.css",
+    "main.js": "/static/js/main.f526b019.js",
+    "static/media/homepage-photo-2.jpg": "/static/media/homepage-photo-2.d6cd9b73f0c3ff753ac7.jpg",
+    "static/media/auth-recommandation-sm.jpg": "/static/media/auth-recommandation-sm.4ff8679ac7ce3453b6c3.jpg",
+    "static/media/about_us_slide.jpg": "/static/media/about_us_slide.45f6f14573f77e4914ca.jpg",
+    "static/media/homepage-photo-4.jpg": "/static/media/homepage-photo-4.52afae6c54f7972cd368.jpg",
+    "static/media/homepage-photo-3.jpg": "/static/media/homepage-photo-3.6904fb129ce609f2332c.jpg",
+    "static/media/atelier_lucru_manual.jpg": "/static/media/atelier_lucru_manual.44ff8df4982ed1d8ab1b.jpg",
+    "static/media/auth-recommandation.jpg": "/static/media/auth-recommandation.3bb392dcabb05640acbe.jpg",
+    "static/media/pelerinaj_manastiri_rupestre.jpg": "/static/media/pelerinaj_manastiri_rupestre.5590b1f2ac6bf66a00fe.jpg",
+    "static/media/therapy.jpg": "/static/media/therapy.57c9eea508ff7b58b26b.jpg",
+    "static/media/homepage-photo-1.jpg": "/static/media/homepage-photo-1.aa17d463364c5fb25619.jpg",
+    "static/media/poza_teo.png": "/static/media/poza_teo.1f85d5e9c85aeb852cb2.png",
+    "static/media/poza_stefan.png": "/static/media/poza_stefan.b57144ef4954185cc05a.png",
+    "static/media/cursuri_limba_engleza_babel_650.png": "/static/media/cursuri_limba_engleza_babel_650.03bb45ce67c3fb2e6292.png",
+    "index.html": "/index.html",
+    "main.a7858349.css.map": "/static/css/main.a7858349.css.map",
+    "main.f526b019.js.map": "/static/js/main.f526b019.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a7858349.css",
+    "static/js/main.f526b019.js"
+  ]
+}
