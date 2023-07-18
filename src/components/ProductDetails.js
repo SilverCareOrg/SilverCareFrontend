@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import '../styles/styles.css';
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 
 const ProductDetails = () => {
   const { state: product } = useLocation();
@@ -11,7 +11,7 @@ const ProductDetails = () => {
     //Prevent page reload
     event.preventDefault();
 
-    axios_api.post("http://127.0.0.1:8000/add_to_cart", {
+    axios_api.post("/add_to_cart", {
         service_id: product.service_id,
         senior_name: "senior1",
         adult_name: "adult1",
@@ -53,7 +53,7 @@ const ProductDetails = () => {
             </p>
             <h2 className="text-4xl">{name}</h2>
             <span className="font-semibold">
-            Preț: <span className="text-2xl text-green-500">{price === "free" ? "Gratis" : price}</span> Ron
+            Preț: <span className="text-2xl text-green-500">{price === "free" ? "Gratis" : price}</span> {price === "free" ? "" : "Ron"}
             </span>
             <div className="flex flex-col gap-3">
               <h1 className="text-2xl">Descriere</h1>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import '../styles/styles.css';
 import { Link, NavLink } from "react-router-dom";
 
@@ -22,7 +22,7 @@ function Signup() {
 
     var { email, username, pass } = document.forms[0];
     localStorage.removeItem("token");
-    axios_api.post("http://127.0.0.1:8000/signup", {
+    axios_api.post("/signup", {
         email: email.value,
         username: username.value,
         password: pass.value
@@ -74,7 +74,7 @@ function Signup() {
         </div>
         <div className="login-input-container">
           <label>Parolă </label>
-          <input type="login-password" name="pass" required />
+          <input className="h-6 px-4 border border-gray-300" type="password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
         <div className="login-button-container" onClick={handleSubmit}>

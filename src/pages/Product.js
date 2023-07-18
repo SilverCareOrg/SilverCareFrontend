@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useRef } from "react";
 import SingleProduct from "../components/SingleProduct";
 import { Link } from "react-router-dom";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import { saveAs } from 'file-saver';
 import { GoFilter } from "react-icons/go";
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
@@ -53,7 +53,7 @@ const Products = () => {
       try {
         setIsLoading(true);
 
-        axios_api.get("http://127.0.0.1:8000/get_all_services", {withCredentials: true}).then((response) => {
+        axios_api.get("/get_all_services", {withCredentials: true}).then((response) => {
           if (response.status === 200) {
             // Save file on local frontend server - FOR FUTURE USE
             // for (let i = 0; i < response.data.length; i++) {

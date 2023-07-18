@@ -1,7 +1,7 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useEffect } from "react";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import '../styles/styles.css';
 import {
     ImHappy
@@ -53,7 +53,7 @@ export default function RegistrationService({ onClose, service_id}) {
     event.preventDefault();
 
     var { senior_name, adult_name, phone_number, companion, email } = document.forms[0];
-    axios_api.post("http://127.0.0.1:8000/add_to_cart", {
+    axios_api.post("/add_to_cart", {
         service_id: service_id,
         senior_name: senior_name.value,
         adult_name: adult_name.value,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import '../styles/styles.css';
 import { useNavigate   } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ function Admin() {
 
     var { email, pass } = document.forms[0];
     localStorage.removeItem("token");
-    axios_api.post("http://127.0.0.1:8000/login", {
+    axios_api.post("/login", {
         email: email.value,
         password: pass.value
     }, {sameSite: 'none', withCredentials: true,

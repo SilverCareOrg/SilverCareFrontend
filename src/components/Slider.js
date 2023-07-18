@@ -41,7 +41,7 @@ const data = [
   },
 ];
 const Slider = () => {
-  const [currentSlide, setCurrentSlide] = useState(1);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const prevSlide = () => {
     setCurrentSlide(

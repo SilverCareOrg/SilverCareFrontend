@@ -1,5 +1,5 @@
 import SingleProduct from "./SingleProduct";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import { useState, useEffect, useRef } from "react";
 
 const BestSelling = () => {
@@ -10,7 +10,7 @@ const BestSelling = () => {
     const getData = async () => {
     try {
 
-      axios_api.get("http://127.0.0.1:8000/get_homepage_best_selling_products", {withCredentials: true}).then((response) => {
+      axios_api.get("/get_homepage_best_selling_products", {withCredentials: true}).then((response) => {
         if (response.status === 200) {
           const json = response.data;
           setProducts(json);

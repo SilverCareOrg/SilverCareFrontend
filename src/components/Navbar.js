@@ -3,7 +3,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import '../styles/styles.css';
 import { useEffect, useRef  } from "react";
 import React, { useState } from "react";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import axios from "axios";
 import CartPanel from "./CartPanel";
 import { LuMenu } from 'react-icons/lu';
@@ -36,9 +36,10 @@ const Navbar = () => {
   };
 
 
-  useEffect(() => async () => {
+  useEffect(() => {
     // Check if the user has admin permission
-    axios_api.get("http://127.0.0.1:8000/check_permissions", {withCredentials: true}).then((response) => {
+    const trigger = async () => {
+    axios_api.get("/check_permissions", {withCredentials: true}).then((response) => {
       if (localStorage.getItem('token') && response.data['isAdmin']) {
         setIsAdmin(true);
         console.log("User has admin permissions");
@@ -46,6 +47,8 @@ const Navbar = () => {
     }).catch((error) => {
       console.log("Error:", error);
     });
+    };
+    trigger();
   }, []);
 
   return (
@@ -85,7 +88,7 @@ const Navbar = () => {
             </button>
           {isAdmin && ( // Conditionally render the "Admin" link based on user permission
             <li>
-              <NavLink to="/admin">Admin</NavLink>
+              <NavLink to="/adminPage">Admin</NavLink>
             </li>
           )}
         </ul>
@@ -130,7 +133,7 @@ const Navbar = () => {
             </button>
             {isAdmin && ( // Conditionally render the "Admin" link based on user permission
               <li className="px-4 py-2 bg-gray-50 hover:bg-gray-200">
-                <NavLink to="/admin">Admin</NavLink>
+                <NavLink to="/adminPage">Admin</NavLink>
               </li>
             )}
           </ul>} 
