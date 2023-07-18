@@ -85,7 +85,12 @@
   background-color: #f8f9fd;
 }
 
-input[type="login-text"],
+input[type="login-text"] {
+  height: 25px;
+  padding-left: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
 input[type="login-password"] {
   height: 25px;
   padding-left: 10px;

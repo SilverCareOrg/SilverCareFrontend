@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import RegistrationService from "./RegistrationService";
 import { useEffect, useRef, useState  } from "react";
 
@@ -12,7 +12,7 @@ const SingleProduct = ({ product }) => {
     //Prevent page reload
     event.preventDefault();
 
-    axios_api.post("http://127.0.0.1:8000/add_to_cart", {
+    axios_api.post("/add_to_cart", {
         service_id: product.service_id,
         senior_name: "senior1",
         adult_name: "adult1",
@@ -65,7 +65,7 @@ const SingleProduct = ({ product }) => {
         </h2>
       </Link>
       <p className="text-sm text-gray-600">
-        Preț: <span className="text-rose-500 font-semibold">{price}</span>
+        Preț: <span className="text-rose-500 font-semibold">{price === "free" ? "Gratis" : price}</span>
       </p>
       <div className="flex justify-between items-center">
         <Link

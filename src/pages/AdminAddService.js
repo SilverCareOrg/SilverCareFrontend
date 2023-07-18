@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import '../styles/styles.css';
 import { useNavigate   } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ function AdminAddService() {
     formData.append("file", imagefile.files[0]);
     console.log(Array.from(formData.entries()));
 
-    axios_api.post("http://127.0.0.1:8000/create_service/",
+    axios_api.post("/create_service/",
        formData
     , {withCredentials: true,
     headers: {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import axios_api from '../axios_api';
+import axios_api from '../api/axios_api';
 import '../styles/styles.css';
 import { Link, NavLink } from "react-router-dom";
 
@@ -21,7 +21,7 @@ function Login() {
 
     var { email, pass } = document.forms[0];
     localStorage.removeItem("token");
-    axios_api.post("http://127.0.0.1:8000/login", {
+    axios_api.post("/login", {
         email: email.value,
         password: pass.value
     }, {sameSite: 'none', withCredentials: true,
@@ -60,12 +60,12 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <div className="login-input-container">
           <label>Email </label>
-          <input type="login-text" name="email" required />
+          <input  type="login-text" name="email" required />
           {renderErrorMessage("email")}
         </div>
         <div className="login-input-container">
           <label>Parolă </label>
-          <input type="login-password" name="pass" required />
+          <input className="h-6 px-4 border border-gray-300" type="password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
         <div className="login-button-container" onClick={handleSubmit}>
@@ -79,7 +79,7 @@ function Login() {
     <div className="max-md:transform max-md:translate-y-1/8 max-md:pl-2 max-md:pr-2 login">
       <div className="login-form">
         <div className="login-title">Autentificare</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {isSubmitted ? <div>V-ați autentificat cu succes!</div> : renderForm}
       </div>
         <div className="text-center login-text-for-signup">
             <p className="max-md:flex max-md:flex-col">Nu ți-ai creat un cont încă? <span className="login-signup-link">
