@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import useAuthentication from '../api/permissions';
 import axios_api from '../api/axios_api';
 import '../styles/styles.css';
 import { useNavigate   } from 'react-router-dom';
@@ -10,6 +11,7 @@ function Admin() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [refreshToken, setRefreshToken] = useState('');
   const navigate = useNavigate();
+  const userRole = useAuthentication();
 
   const handleAddService = async (event) => {
     //Prevent page reload
@@ -49,17 +51,25 @@ function Admin() {
       });
   };
 
-  return (
-    <div className="login">
-        <div className="login-title">This is the admin page. Please choose one of the following actions.</div>
-        <div className="login-button-container" onClick={handleAddService}>
-            <button>Add new service.</button>
-        </div>
-        <div className="login-button-container" onClick={handleDeleteService}>
-            <button>Delete existing service.</button>
-        </div>
-    </div>
-  );
+  if (userRole === 'admin' || userRole === 'staff') {
+    return (
+      <div className="login">
+          <div className="login-title">This is the admin page. Please choose one of the following actions.</div>
+          <div className="login-button-container" onClick={handleAddService}>
+              <button>Add new service.</button>
+          </div>
+          <div className="login-button-container" onClick={handleDeleteService}>
+              <button>Delete existing service.</button>
+          </div>
+      </div>
+    );
+  } else if (userRole === null) {
+    // User role not fetched yet, show loading or login message
+    return <div>Loading...</div>;
+  } else {
+    // User is not authorized, show access denied message or redirect to login page
+    return <div>Access Denied</div>;
+  }
 }
 
 export default Admin;
