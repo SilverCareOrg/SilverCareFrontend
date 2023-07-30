@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import axios_api from '../api/axios_api';
+import useAuthentication from '../api/permissions';
 import '../styles/styles.css';
 import { useNavigate   } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ function AdminAddService() {
   const [refreshToken, setRefreshToken] = useState('');
   const navigate = useNavigate();
   const FormData = require('form-data');
+  const userRole = useAuthentication();
 
   const handleAddService = async (event) => {
     //Prevent page reload
@@ -97,14 +99,22 @@ function AdminAddService() {
     </div>
   );
 
-  return (
-    <div className="login">
-      <div className="login-form">
-        <div className="login-title">Add service</div>
-        {isSubmitted ? <div>Service has been successfully added!</div> : renderForm}
+  if (userRole === 'admin' || userRole === 'staff') {
+    return (
+      <div className="login flex mt-3 mb-3" style={{ minHeight: "100vh" }}>
+        <div className="login-form">
+          <div className="login-title">Add service</div>
+          {isSubmitted ? <div>Service has been successfully added!</div> : renderForm}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else if (userRole === null) {
+    // User role not fetched yet, show loading or login message
+    return <div>Loading...</div>;
+  } else {
+    // User is not authorized, show access denied message or redirect to login page
+    return <div>Access Denied</div>;
+  }
 }
 
 export default AdminAddService;

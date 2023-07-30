@@ -11,6 +11,7 @@ const axios_api = axios.create({
         ? `Bearer ${localStorage.getItem("token")}`
         : undefined,
   },
+  
   transformResponse: [
     (data) => {
       return JSON.parse(data);
@@ -18,9 +19,9 @@ const axios_api = axios.create({
   ],
 });
 
+
 axios_api.defaults.xsrfCookieName = 'csrftoken';
 axios_api.defaults.xsrfHeaderName = "X-CSRFToken";
 axios_api.defaults.withCredentials = true;
-
 
 export default axios_api;
