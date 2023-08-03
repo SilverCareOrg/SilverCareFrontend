@@ -63,11 +63,7 @@ function Admin() {
           </div>
       </div>
     );
-  } else if (userRole === null) {
-    // User role not fetched yet, show loading or login message
-    return <div>Loading...</div>;
   } else {
-    // User is not authorized, show access denied message or redirect to login page
     return <div>Access Denied</div>;
   }
 }
