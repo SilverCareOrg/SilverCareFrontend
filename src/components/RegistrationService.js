@@ -7,13 +7,15 @@ import {
     ImHappy
   } from "react-icons/im";
 
-export default function RegistrationService({ onClose, service_id}) {
+export default function RegistrationService({ onClose, service_id,
+  service_name, service_price, service_image_path}) {
   const [open, setOpen] = useState(true)
   const wrapperRef = useRef(null);
   const cancelButtonRef = useRef(null)
   const [err, setErr] = useState(null);
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const errors = {
     email: "invalid email",
@@ -25,6 +27,13 @@ export default function RegistrationService({ onClose, service_id}) {
     setOpen(false);
     onClose(); // Call the onClose prop to close the CartPanel
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token") ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -53,26 +62,52 @@ export default function RegistrationService({ onClose, service_id}) {
     event.preventDefault();
 
     var { senior_name, adult_name, phone_number, companion, email } = document.forms[0];
-    axios_api.post("/add_to_cart", {
-        service_id: service_id,
-        senior_name: senior_name.value,
-        adult_name: adult_name.value,
-        phone_number: phone_number.value,
-        companion: companion.value,
-        email: email.value
-    }, {sameSite: 'none', withCredentials: true})
-      .then((response) => {
-        // Handle the response
-        if (response.status === 200) {
-            setIsSubmitted(true);
-        } else {
-          console.log("Failed to send login data to the API");
-        }
-      })
-      .catch((error) => {
-        // Handle errors
-        console.log("Error:", error);
+
+    if (isLoggedIn) {
+      axios_api.post("/add_to_cart", {
+          service_id: service_id,
+          senior_name: senior_name.value,
+          adult_name: adult_name.value,
+          phone_number: phone_number.value,
+          companion: companion.value,
+          email: email.value
+      }, {sameSite: 'none', withCredentials: true})
+        .then((response) => {
+          // Handle the response
+          if (response.status === 200) {
+              setIsSubmitted(true);
+          } else {
+            console.log("Failed to send login data to the API");
+          }
+        })
+        .catch((error) => {
+          // Handle errors
+          console.log("Error:", error);
+        });
+    } else {
+      var services = localStorage.getItem("services");
+
+      if (services) {
+        services = JSON.parse(services);
+      } else {
+        services = [];
+      }
+
+      services.push({
+          service_id: service_id,
+          service_name: service_name,
+          service_price: service_price,
+          service_image_path: service_image_path,
+          senior_name: senior_name.value,
+          adult_name: adult_name.value,
+          phone_number: phone_number.value,
+          companion: companion.value,
+          email: email.value
       });
+
+      localStorage.setItem("services", JSON.stringify(services));
+      setIsSubmitted(true);
+    }
   };
 
   // Generate JSX code for error message

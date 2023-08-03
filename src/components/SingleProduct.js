@@ -84,7 +84,8 @@ const SingleProduct = ({ product }) => {
           Participă
         </button>
       </div>
-      {visibleRegistrationService && <RegistrationService onClose={closeRegistrationService} service_id={product.service_id} ></RegistrationService>}
+      {visibleRegistrationService && <RegistrationService onClose={closeRegistrationService} service_id={product.service_id}
+      service_name={name} service_price={price} service_image_path={img_path}></RegistrationService>}
     </div>
   );
 };
