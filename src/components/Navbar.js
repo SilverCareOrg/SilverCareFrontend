@@ -30,6 +30,12 @@ const Navbar = () => {
   }, [isLoggedIn]);
 
   const handleLogout = () => {
+    axios_api.post("/logout", {withCredentials: true}).then((response) => {
+      setIsAdmin(false);
+    }).catch((error) => {
+      console.log("Error:", error);
+    });
+
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     window.location.reload();
@@ -58,7 +64,8 @@ const Navbar = () => {
     axios_api.get("/check_permissions", {withCredentials: true}).then((response) => {
       if (localStorage.getItem('token') && response.data['isAdmin']) {
         setIsAdmin(true);
-        console.log("User has admin permissions");
+      } else {
+        setIsAdmin(false);
       }
     }).catch((error) => {
       console.log("Error:", error);
