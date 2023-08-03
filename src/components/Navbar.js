@@ -18,6 +18,22 @@ const Navbar = () => {
   const cartPanelRef = useRef(null);
   const navigate = useNavigate();
   const clickTimeoutRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token") ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    if (token) {
+      setIsLoggedIn(true);
+    }
+    setLoading(false);
+  }, [isLoggedIn]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    window.location.reload();
+  };
 
   const toggleCartPanel = () => {
     setVisibleCartPanel(prevState => !prevState);
@@ -51,6 +67,10 @@ const Navbar = () => {
     trigger();
   }, []);
 
+  if (loading) {
+    return null;
+  }
+
   return (
     <div className="relative flex-column items-center">
     <div className="lg:shadow-lg max-lg:items-start max-lg:flex-column backdrop-blur-lg py-5 text-gray-900 bg-gray-50">
@@ -79,7 +99,7 @@ const Navbar = () => {
             <NavLink to="/contact">Contact</NavLink>
           </li>
           <li>
-            <NavLink to="/login">Autentificare </NavLink>
+            {isLoggedIn ? <NavLink to="#" onClick={handleLogout}>Logout</NavLink>:<NavLink to="/login">Autentificare</NavLink>}
           </li>
             <button
               onClick={toggleCartPanel}
