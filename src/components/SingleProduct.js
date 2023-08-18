@@ -51,7 +51,7 @@ const SingleProduct = ({ product }) => {
       <div className="flex justify-center">
         <img
           className="w-72 h-48 object-contain hover:scale-110 duration-500"
-          src={require(`../images/${img_path}`)}
+          src={require(`${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`)}
           alt={name}
         />
       </div>
