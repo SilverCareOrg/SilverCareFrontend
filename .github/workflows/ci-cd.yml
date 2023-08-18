@@ -36,6 +36,8 @@ jobs:
           port: 22
           source: build/ # Adjust this path to your build output
           target: /home/ubuntu/sc_frontend/
+          script: |
+            sudo cp -r /home/ubuntu/sc_frontend/build/* /var/www/html/
 
       - name: Clean up
         run: rm -rf build/
