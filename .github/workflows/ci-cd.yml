@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 12.x
 
+      - name: Delete node_modules
+        run: rm -rf node_modules/
+
       - name: Install dependencies
         run: npm install
 
