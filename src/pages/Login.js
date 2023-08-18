@@ -38,7 +38,7 @@ function Login() {
       axiosConfig.headers['Authorization'] = `Bearer ${token}`;
     }
 
-    axios.post("http://localhost:8000/login", {
+    axios_api.post("/login", {
         email: email.value,
         password: pass.value
     }, axiosConfig)
