@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.936e9773.css",
-    "main.js": "/static/js/main.3e402aaa.js",
+    "main.js": "/static/js/main.440d48b6.js",
     "static/media/homepage-photo-2.jpg": "/static/media/homepage-photo-2.d6cd9b73f0c3ff753ac7.jpg",
     "static/media/auth-recommandation-sm.jpg": "/static/media/auth-recommandation-sm.4ff8679ac7ce3453b6c3.jpg",
     "static/media/about_us_slide.jpg": "/static/media/about_us_slide.45f6f14573f77e4914ca.jpg",
@@ -17,10 +17,10 @@
     "static/media/cursuri_limba_engleza_babel_650.png": "/static/media/cursuri_limba_engleza_babel_650.03bb45ce67c3fb2e6292.png",
     "index.html": "/index.html",
     "main.936e9773.css.map": "/static/css/main.936e9773.css.map",
-    "main.3e402aaa.js.map": "/static/js/main.3e402aaa.js.map"
+    "main.440d48b6.js.map": "/static/js/main.440d48b6.js.map"
   },
   "entrypoints": [
     "static/css/main.936e9773.css",
-    "static/js/main.3e402aaa.js"
+    "static/js/main.440d48b6.js"
   ]
 }
