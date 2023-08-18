@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REACT_APP_IMAGE_PATH: ${{ secrets.REACT_APP_SERVER_IMAGE_PATH }}
-      REACT_APP_IMAGE_PATH: ${{ secrets.REACT_APP_API }}
+      REACT_APP_SERVER_IMAGE_PATH: ${{ secrets.REACT_APP_SERVER_IMAGE_PATH }}
+      REACT_APP_API: ${{ secrets.REACT_APP_API }}
 
     steps:
       - name: Checkout repository
