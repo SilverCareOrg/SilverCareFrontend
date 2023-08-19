@@ -9,6 +9,7 @@ const SingleProduct = ({ product }) => {
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   var dev;
   var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
+
   // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   //   dev = false;
   // } else {
