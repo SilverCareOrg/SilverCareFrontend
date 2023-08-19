@@ -8,7 +8,7 @@ const SingleProduct = ({ product }) => {
   const { img_path, name, price } = product;
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   var dev;
-  var final_img_path;
+  var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
   // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   //   dev = false;
   // } else {
@@ -66,7 +66,7 @@ const SingleProduct = ({ product }) => {
         {/* {!dev &&  */}
           <img
           className="w-72 h-48 object-contain hover:scale-110 duration-500"
-          src="${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}"
+          src={final_img_path}
           alt={name}/>
           {/* } */}
       </div>
