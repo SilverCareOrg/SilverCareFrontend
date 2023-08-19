@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import '../styles/styles.css';
 import axios_api from '../api/axios_api';
+import { useEffect, useRef, useState  } from "react";
+import RegistrationService from "./RegistrationService";
 
 const ProductDetails = () => {
   const { state: product } = useLocation();
-
+  const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   const { img_path, name, description, category, rating, price, organiser } = product;
 
   const handleAddCart = async (event) => {
@@ -36,6 +38,15 @@ const ProductDetails = () => {
       });
   };
 
+  const toggleRegistrationService = () => {
+    setVisibleRegistrationService(prevState => !prevState);
+  };
+
+  const closeRegistrationService = () => {
+    setVisibleRegistrationService(false);
+    console.log("Function" + visibleRegistrationService)
+  };
+
   return (
     <section className="flex flex-col gap-16 py-10 bg-gray-100">
 
@@ -43,7 +54,7 @@ const ProductDetails = () => {
       <div className="max-xl:hidden">
         <div className="container mx-auto flex justify-around  items-center w-[80%]">
           <div className="flex justify-end max-w-[500px] max-h-[500px]  mr-9">
-            <img src={require(`../images/${img_path}`)} alt={name} className="max-w-[500px] max-h-[500px] select-none" />
+            <img src="${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}" alt={name} className="max-w-[500px] max-h-[500px] select-none" />
           </div>
           <div className="relative absolute product-details-right-box transform translate-x-1/4 translate-y-1/6">
             <p className="text-gray-500">
@@ -70,7 +81,7 @@ const ProductDetails = () => {
               </span>
             </h3>
             <button
-              onClick={handleAddCart}
+              onClick={toggleRegistrationService}
               className="bg-sky-500 text-sky-50 px-2 py-1 mt-4"
             >
               Participă
@@ -86,7 +97,8 @@ const ProductDetails = () => {
           </Link>
         </div>
       </div>
-
+      {visibleRegistrationService && <RegistrationService onClose={closeRegistrationService} service_id={product.service_id}
+      service_name={name} service_price={price} service_image_path={img_path}></RegistrationService>}
       {/* Mobile view */}
       <div className="xl:hidden flex-column w-screen overflow-x-hidden">
         <div className="mx-auto items-center">
@@ -116,7 +128,7 @@ const ProductDetails = () => {
               </span>
             </h3>
             <button
-              onClick={handleAddCart}
+              onClick={toggleRegistrationService}
               className="bg-sky-500 text-sky-50 px-2 py-3 mt-4 justify-center flex mx-auto w-[80%]"
             >
               Participă
@@ -130,8 +142,8 @@ const ProductDetails = () => {
           &larr; Întoarce-te la pagina de servicii
         </Link>
       </div>
-
     </section>
+    
   );
 };
 

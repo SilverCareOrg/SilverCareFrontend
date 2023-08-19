@@ -7,6 +7,14 @@ const SingleProduct = ({ product }) => {
 
   const { img_path, name, price } = product;
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
+  var dev;
+  var final_img_path;
+  // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  //   dev = false;
+  // } else {
+  //   dev = true;
+  //   final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
+  // }
 
   const handleAddCart = async (event) => {
     //Prevent page reload
@@ -49,11 +57,18 @@ const SingleProduct = ({ product }) => {
   return (
     <div className="max-sm:w-screen single-product flex flex-col bg-gray-50 gap-3 shadow-md hover:shadow-xl hover:scale-105 duration-300 px-4 py-7 rounded-sm overflow-hidden">
       <div className="flex justify-center">
+        {/* {dev &&
         <img
           className="w-72 h-48 object-contain hover:scale-110 duration-500"
-          src={require(`${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`)}
+          src={final_img_path}
           alt={name}
-        />
+        />} */}
+        {/* {!dev &&  */}
+          <img
+          className="w-72 h-48 object-contain hover:scale-110 duration-500"
+          src="${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}"
+          alt={name}/>
+          {/* } */}
       </div>
       <Link
         to={name}
