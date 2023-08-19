@@ -8,6 +8,7 @@ const ProductDetails = () => {
   const { state: product } = useLocation();
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   const { img_path, name, description, category, rating, price, organiser } = product;
+  var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
 
   const handleAddCart = async (event) => {
     //Prevent page reload
@@ -54,7 +55,7 @@ const ProductDetails = () => {
       <div className="max-xl:hidden">
         <div className="container mx-auto flex justify-around  items-center w-[80%]">
           <div className="flex justify-end max-w-[500px] max-h-[500px]  mr-9">
-            <img src="${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}" alt={name} className="max-w-[500px] max-h-[500px] select-none" />
+            <img src={final_img_path} alt={name} className="max-w-[500px] max-h-[500px] select-none" />
           </div>
           <div className="relative absolute product-details-right-box transform translate-x-1/4 translate-y-1/6">
             <p className="text-gray-500">
