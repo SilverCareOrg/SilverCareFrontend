@@ -1,26 +1,34 @@
 {
   "files": {
-    "main.css": "/static/css/main.936e9773.css",
-    "main.js": "/static/js/main.440d48b6.js",
+    "main.css": "/static/css/main.0f5deb61.css",
+    "main.js": "/static/js/main.953febb2.js",
     "static/media/homepage-photo-2.jpg": "/static/media/homepage-photo-2.d6cd9b73f0c3ff753ac7.jpg",
     "static/media/auth-recommandation-sm.jpg": "/static/media/auth-recommandation-sm.4ff8679ac7ce3453b6c3.jpg",
+    "static/media/poza_irina_vadan.jpg": "/static/media/poza_irina_vadan.f102c474df7b86e90f0b.jpg",
     "static/media/about_us_slide.jpg": "/static/media/about_us_slide.45f6f14573f77e4914ca.jpg",
     "static/media/homepage-photo-4.jpg": "/static/media/homepage-photo-4.52afae6c54f7972cd368.jpg",
     "static/media/homepage-photo-3.jpg": "/static/media/homepage-photo-3.6904fb129ce609f2332c.jpg",
     "static/media/atelier_lucru_manual.jpg": "/static/media/atelier_lucru_manual.44ff8df4982ed1d8ab1b.jpg",
     "static/media/auth-recommandation.jpg": "/static/media/auth-recommandation.3bb392dcabb05640acbe.jpg",
+    "static/media/poza_stefan_avram.jpg": "/static/media/poza_stefan_avram.2bca0d8fb54d5bd615fa.jpg",
+    "static/media/poza_teodora_minea.jpg": "/static/media/poza_teodora_minea.e4fdd35ab8d031e29498.jpg",
+    "static/media/poza_antonia_nicoara.jpg": "/static/media/poza_antonia_nicoara.fa0b26588bd778cd7580.jpg",
+    "static/media/poza_bianca_scirtocea.jpg": "/static/media/poza_bianca_scirtocea.7b05fe98e47a6250e259.jpg",
     "static/media/pelerinaj_manastiri_rupestre.jpg": "/static/media/pelerinaj_manastiri_rupestre.5590b1f2ac6bf66a00fe.jpg",
     "static/media/therapy.jpg": "/static/media/therapy.57c9eea508ff7b58b26b.jpg",
+    "static/media/poza_teofil_sturzoiu.jpg": "/static/media/poza_teofil_sturzoiu.ecb7798ba49af3de31c0.jpg",
     "static/media/homepage-photo-1.jpg": "/static/media/homepage-photo-1.aa17d463364c5fb25619.jpg",
+    "static/media/poza_madalina_hamciuc.jpg": "/static/media/poza_madalina_hamciuc.8c404750e6bae73f4d24.jpg",
     "static/media/poza_teo.png": "/static/media/poza_teo.1f85d5e9c85aeb852cb2.png",
     "static/media/poza_stefan.png": "/static/media/poza_stefan.b57144ef4954185cc05a.png",
     "static/media/cursuri_limba_engleza_babel_650.png": "/static/media/cursuri_limba_engleza_babel_650.03bb45ce67c3fb2e6292.png",
+    "static/media/poza_tibi.jpg": "/static/media/poza_tibi.53a144672801f896e1a3.jpg",
     "index.html": "/index.html",
-    "main.936e9773.css.map": "/static/css/main.936e9773.css.map",
-    "main.440d48b6.js.map": "/static/js/main.440d48b6.js.map"
+    "main.0f5deb61.css.map": "/static/css/main.0f5deb61.css.map",
+    "main.953febb2.js.map": "/static/js/main.953febb2.js.map"
   },
   "entrypoints": [
-    "static/css/main.936e9773.css",
-    "static/js/main.440d48b6.js"
+    "static/css/main.0f5deb61.css",
+    "static/js/main.953febb2.js"
   ]
 }
