@@ -26,9 +26,9 @@ const Contact = () => {
         </h2>
         <div className="md:flex max-d:flex-row w-[85%] mx-auto gap-5 md:py-10 px-0">
           {couses &&
-            couses.map((cause) => {
+            couses.map((cause, index) => {
               return (
-                <div className="text-center bg-gray-100 rounded-lg max-md:mt-10 md:flex md:flex-col gap-3 py-10 px-5">
+                <div key={index} className="text-center bg-gray-100 rounded-lg max-md:mt-10 md:flex md:flex-col gap-3 py-10 px-5">
                   <h3 className="text-gray-900 font-semibold text-2xl">
                     {cause.title}
                   </h3>

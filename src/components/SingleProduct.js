@@ -76,14 +76,15 @@ const SingleProduct = ({ product }) => {
         state={product}
         className="hover:text-rose-500 duration-300 flex justify-between items-center"
       >
-        <h2 className="text-stone-950 font-semibold text-xl capitalize">
+        <h2 className="text-stone-950 font-semibold text-xl capitalize max-h-16 leading-7 relative">
           {product.name}
         </h2>
       </Link>
-      <p className="text-sm text-gray-600">
+      <div className="mt-auto">
+      <p className="text-sm text-gray-600 mt-auto mb-3">
         Preț: <span className="text-rose-500 font-semibold">{price === "free" ? "Gratis" : price}</span>
       </p>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-auto">
         <Link
           to={name}
           state={product}
@@ -99,6 +100,7 @@ const SingleProduct = ({ product }) => {
         >
           Participă
         </button>
+      </div>
       </div>
       {visibleRegistrationService && <RegistrationService onClose={closeRegistrationService} service_id={product.service_id}
       service_name={name} service_price={price} service_image_path={img_path}></RegistrationService>}
