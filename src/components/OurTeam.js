@@ -6,6 +6,8 @@ import poza_teodora_minea from "../images/poza_teodora_minea.jpg";
 import poza_tibi from "../images/poza_tibi.jpg";
 import poza_irina_vadan from "../images/poza_irina_vadan.jpg";
 import poza_madalina_hamciuc from "../images/poza_madalina_hamciuc.jpg";
+import poza_melisa_staicu from "../images/poza_melisa_staicu.jpg";
+import poza_adrian_sandu from "../images/poza_adrian_sandu.jpg";
 
 const OurTeam = () => {
   const teamMembers = [
@@ -40,6 +42,11 @@ const OurTeam = () => {
       img: poza_tibi,
     },
     {
+      name: "Melisa Staicu",
+      designation: "Strategic Partnerships",
+      img: poza_melisa_staicu,
+    },
+    {
       name: "Irina Vădan",
       designation: "UI/UX Designer",
       img: poza_irina_vadan,
@@ -48,6 +55,11 @@ const OurTeam = () => {
       name: "Mădălina Hamciuc",
       designation: "UI/UX Designer",
       img: poza_madalina_hamciuc,
+    },
+    {
+      name: "Adrian Sandu",
+      designation: "UI/UX Designer",
+      img: poza_adrian_sandu,
     }
   ];
 
