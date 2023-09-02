@@ -179,38 +179,71 @@ const Navbar = () => {
       </nav>
       {visibleCartPanel && <CartPanel onClose={closeCartPanel}></CartPanel>}
     </div>
-    {verticalMenu && <ul className="flex flex-col lg:hidden border-b ">
-            <button className="flex items-center px-4 py-2 border-t-2 border-b-2 bg-gray-50 hover:bg-gray-200"
-                onClick={() => navigate("/")}>
-                <span>Pagina principală</span>
-            </button>
-            <button className="flex items-center px-4 py-2 border-b-2 bg-gray-50 hover:bg-gray-200"
-              onClick={() => navigate("/product")}>
-              <span>Servicii</span>
-            </button>
-            <button className="flex items-center px-4 py-2 border-b-2 bg-gray-50 hover:bg-gray-200"
-              onClick={() => navigate("/about")}>
-              <span>Despre noi</span>
-            </button>
-            <button className="flex items-center px-4 py-2 border-b-2 bg-gray-50 hover:bg-gray-200"
-              onClick={() => navigate("/contact")}>
-              <span>Contact</span>
-            </button>
-            <button className="flex items-center px-4 py-2 border-b-2 bg-gray-50 hover:bg-gray-200"
-              onClick={() => navigate("/login")}>
-              <span>Autentificare</span>
-            </button>
-            <button className="flex items-center px-4 py-2 border-b-2 bg-gray-50 hover:bg-gray-200"
-              onClick={toggleCartPanel}>
-              {<FaShoppingCart className="mr-2" /> }
-              <span>Coș de cumpărături</span>
-            </button>
-            {isAdmin && ( // Conditionally render the "Admin" link based on user permission
-              <li className="px-4 py-2 bg-gray-50 hover:bg-gray-200">
-                <NavLink to="/adminPage">Admin</NavLink>
-              </li>
-            )}
-          </ul>} 
+    {verticalMenu && (
+    <ul className="lg:hidden border-b">
+      <li className="relative group">
+        <button
+          className="flex items-center justify-between w-full px-4 py-3 border-t-2 border-b-2 bg-gray-100 hover:bg-gray-300"
+          onClick={() => navigate("/")}
+        >
+          <span>Pagina principală</span>
+        </button>
+      </li>
+      <li className="relative group">
+        <button
+          className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
+          onClick={() => navigate("/product")}
+        >
+          <span>Servicii</span>
+        </button>
+      </li>
+      <li className="relative group">
+        <button
+          className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
+          onClick={() => navigate("/about")}
+        >
+          <span>Despre noi</span>
+        </button>
+      </li>
+      <li className="relative group">
+        <button
+          className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
+          onClick={() => navigate("/contact")}
+        >
+          <span>Contact</span>
+        </button>
+      </li>
+      <li className="relative group">
+        <button
+          className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
+          onClick={() => navigate("/login")}
+        >
+          <span>Autentificare</span>
+        </button>
+      </li>
+      <li className="relative group">
+        <button
+          className="flex items-center w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
+          onClick={toggleCartPanel}
+        >
+          {<FaShoppingCart className="mr-2" /> }
+          <span className="">
+            Coș de cumpărături
+          </span>
+        </button>
+      </li>
+      {isAdmin && (
+        <li className="relative group">
+          <NavLink
+            to="/adminPage"
+            className="block w-full px-4 py-3 bg-gray-100 hover:bg-gray-300"
+          >
+            Admin
+          </NavLink>
+        </li>
+      )}
+    </ul>
+  )}
     </div>
   );
 };
