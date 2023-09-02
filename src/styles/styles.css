@@ -223,3 +223,13 @@ input[type="admin-add-service-description"] {
 .registrationService-button-container:hover {
   background: #6cf0c2;
 }
+
+.nav-link.active {
+  background-color:  #cccccc;
+  color: white;
+  font-size: 19px;
+  border-radius: 999px; /* This creates a rounded rectangle effect */
+  padding: 0.4rem 0.8rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+

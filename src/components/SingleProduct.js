@@ -52,7 +52,6 @@ const SingleProduct = ({ product }) => {
 
   const closeRegistrationService = () => {
     setVisibleRegistrationService(false);
-    console.log("Function" + visibleRegistrationService)
   };
 
   return (
