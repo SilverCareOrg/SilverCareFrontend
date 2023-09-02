@@ -67,6 +67,7 @@ const ProductDetails = () => {
             <span className="font-semibold">
             Preț: <span className="text-2xl text-green-500">{price === "free" ? "Gratis" : price}</span> {price === "free" ? "" : "Ron"}
             </span>
+            <span className="font-semibold">Organizator: {organiser}</span>
             <div className="flex flex-col gap-3">
               <h1 className="text-2xl">Descriere</h1>
               <p className="product-details-description">{description}</p>

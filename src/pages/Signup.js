@@ -85,11 +85,24 @@ function Signup() {
   );
 
   return (
-    <div className="login">
-      <div className="login-form">
-        <div className="login-title">Înregistrare</div>
-        {isSubmitted ? <div>Cont creat cu success!</div> : renderForm}
-      </div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+     <div className="w-full max-w-md p-4">
+       <div className="bg-white rounded-lg shadow-xl">
+         <div className="px-6 py-8">
+           <div className="text-2xl text-center text-gray-800 login-title">Înregistrare</div>
+           {isSubmitted ? <div className="text-center">Cont creat cu success!</div> : renderForm}
+         </div>
+         
+         <div className="px-6 py-4 text-center">
+           <p className="text-sm text-gray-600 max-md:flex max-md:flex-col">
+             Nu ți-ai creat un cont încă?{" "}
+             <span className="text-green-500">
+               <Link to="/signup">Apasă aici pentru înregistrare</Link>
+             </span>
+           </p>
+         </div>
+       </div>
+     </div>
     </div>
   );
 }

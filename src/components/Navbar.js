@@ -92,7 +92,7 @@ const Navbar = () => {
     <div className="lg:shadow-lg max-lg:items-start max-lg:flex-column backdrop-blur-lg py-5 text-gray-900 bg-gray-50">
       <nav className="mt-30 max-lg:flex-columns max-lg:items-start flex items-center container mx-auto">
         <div>
-          <Link to="/" className="text-gray-700 italic ml-5 text-3xl lg:text-8xl">
+          <Link to="/" className="text-gray-700 italic ml-5 text-3xl xl:text-8xl">
             SilverCare
           </Link>
         </div>
@@ -105,9 +105,8 @@ const Navbar = () => {
       <ul className="list-none flex justify-center items-center px-10 ml-auto mr-70 gap-7 text-xl">
         <li>
           <NavLink
-            exact
             to="/"
-            className={`nav-link ${location.pathname === "/" ? "active-nav-link" : ""}`}
+            className="nav-link" //{`nav-link ${location.pathname === "/" ? "active" : ""}`}
           >
             Pagina principală
           </NavLink>
@@ -115,7 +114,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/product"
-            className={`nav-link ${location.pathname === "/product" ? "active-nav-link" : ""}`}
+            className="nav-link"
           >
             Servicii
           </NavLink>
@@ -123,7 +122,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/about"
-            className={`nav-link ${location.pathname === "/about" ? "active-nav-link" : ""}`}
+            className="nav-link"
           >
             Despre noi
           </NavLink>
@@ -131,7 +130,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/contact"
-            className={`nav-link ${location.pathname === "/contact" ? "active-nav-link" : ""}`}
+            className="nav-link"
           >
             Contact
           </NavLink>
@@ -141,14 +140,14 @@ const Navbar = () => {
             <NavLink
               to="#"
               onClick={handleLogout}
-              className={`nav-link ${location.pathname === "#" ? "active-nav-link" : ""}`}
+              className="nav-link"
             >
               Logout
             </NavLink>
           ) : (
             <NavLink
               to="/login"
-              className={`nav-link ${location.pathname === "/login" ? "active-nav-link" : ""}`}
+              className="nav-link"
             >
               Autentificare
             </NavLink>
@@ -161,7 +160,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/adminPage"
-              className={`nav-link ${location.pathname === "/adminPage" ? "active-nav-link" : ""}`}
+              className="nav-link"
             >
               Admin
             </NavLink>
@@ -169,7 +168,6 @@ const Navbar = () => {
         )}
       </ul>
     </div>
-
 
         {/* Smaller Screen Navbar Components */}
         <div className="mt-auto px-8 ml-auto mr-70 lg:hidden flex-column items-start">
