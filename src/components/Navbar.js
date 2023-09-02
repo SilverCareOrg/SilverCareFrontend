@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation  } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import '../styles/styles.css';
 import { useEffect, useRef  } from "react";
@@ -20,6 +20,8 @@ const Navbar = () => {
   const clickTimeoutRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activeLink, setActiveLink] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("token") ? setIsLoggedIn(true) : setIsLoggedIn(false);
@@ -58,6 +60,13 @@ const Navbar = () => {
   };
 
 
+  // Use useEffect to set the active link when the route changes
+  useEffect(() => {
+    // Get the current route
+    const currentRoute = window.location.pathname;
+    setActiveLink(currentRoute);
+  }, []);
+
   useEffect(() => {
     // Check if the user has admin permission
     const trigger = async () => {
@@ -91,35 +100,75 @@ const Navbar = () => {
 
         {/* Larger Screen Navbar Components */}
   
+        
         <div className="ml-auto mr-70 max-lg:hidden">
-        <ul className="list-none flex justify-center items-center px-10 ml-auto mr-70 gap-7 text-xl">
-          <li>
-            <NavLink to="/">Pagina principală </NavLink>
-          </li>
-          <li>
-            <NavLink to="/product">Servicii </NavLink>
-          </li>
-          <li>
-            <NavLink to="/about">Despre noi </NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">Contact</NavLink>
-          </li>
-          <li>
-            {isLoggedIn ? <NavLink to="#" onClick={handleLogout}>Logout</NavLink>:<NavLink to="/login">Autentificare</NavLink>}
-          </li>
-            <button
-              onClick={toggleCartPanel}
+      <ul className="list-none flex justify-center items-center px-10 ml-auto mr-70 gap-7 text-xl">
+        <li>
+          <NavLink
+            exact
+            to="/"
+            className={`nav-link ${location.pathname === "/" ? "active-nav-link" : ""}`}
+          >
+            Pagina principală
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/product"
+            className={`nav-link ${location.pathname === "/product" ? "active-nav-link" : ""}`}
+          >
+            Servicii
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/about"
+            className={`nav-link ${location.pathname === "/about" ? "active-nav-link" : ""}`}
+          >
+            Despre noi
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/contact"
+            className={`nav-link ${location.pathname === "/contact" ? "active-nav-link" : ""}`}
+          >
+            Contact
+          </NavLink>
+        </li>
+        <li>
+          {isLoggedIn ? (
+            <NavLink
+              to="#"
+              onClick={handleLogout}
+              className={`nav-link ${location.pathname === "#" ? "active-nav-link" : ""}`}
             >
-              {<FaShoppingCart />}
-            </button>
-          {isAdmin && ( // Conditionally render the "Admin" link based on user permission
-            <li>
-              <NavLink to="/adminPage">Admin</NavLink>
-            </li>
+              Logout
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/login"
+              className={`nav-link ${location.pathname === "/login" ? "active-nav-link" : ""}`}
+            >
+              Autentificare
+            </NavLink>
           )}
-        </ul>
-        </div>
+        </li>
+        <button onClick={toggleCartPanel}>
+          <FaShoppingCart />
+        </button>
+        {isAdmin && (
+          <li>
+            <NavLink
+              to="/adminPage"
+              className={`nav-link ${location.pathname === "/adminPage" ? "active-nav-link" : ""}`}
+            >
+              Admin
+            </NavLink>
+          </li>
+        )}
+      </ul>
+    </div>
 
 
         {/* Smaller Screen Navbar Components */}
