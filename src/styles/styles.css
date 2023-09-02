@@ -74,60 +74,69 @@
 }
 
 .login {
-  font-family: sans-serif;
+  font-family: 'Roboto';
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 20px;
   height: 80vh;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   background-color: #f8f9fd;
 }
 
-input[type="login-text"] {
-  height: 25px;
-  padding-left: 10px;
+input[type="login-text"],
+input[type="password"] {
+  height: 35px;
+  padding: 20px 10px 20px 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 13px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
 }
 
-input[type="login-password"] {
-  height: 25px;
-  padding-left: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+input[type="login-text"]:focus,
+input[type="password"]:focus {
+  border-color: #01d28e; /* Change border color on focus */
 }
 
+/* Submit button styles */
 input[type="login-submit"] {
-  margin-top: 10px;
+  margin-top: 20px;
   cursor: pointer;
-  font-size: 15px;
-  background: #01d28e;
-  border: 1px solid #01d28e;
+  font-size: 18px;
+  background:  #01b277;
+  border: none;
+  border-radius: 5px;
   color: #fff;
   padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 input[type="login-submit"]:hover {
   background: #6cf0c2;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
-
 .login-button-container {
+  font-family: 'Roboto';
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 20px;
   cursor: pointer;
   font-size: 15px;
-  background: #01d28e;
+  background: #019866;
   border: 1px solid #01d28e;
+  border-radius: 20px;
   color: #fff;
   padding: 10px 20px;
 }
 
 .login-button-container:hover {
-  background: #6cf0c2;
+  background: #01cb88;
 }
 
 .login-form {
+  font-family: 'Roboto';
   background-color: rgb(247, 247, 247);
   padding: 2rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -143,18 +152,22 @@ input[type="login-submit"]:hover {
 }
 
 .login-title {
+  font-family: 'Roboto';
   font-size: 25px;
   margin-bottom: 20px;
 }
 
 .login-input-container {
+  font-family: 'Roboto';
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 10px;
+  padding: 10px 0px;
 }
 
 .login-text-for-signup {
+  font-family: 'Roboto';
   font-size: 17px;
   margin-top: 10px;
   font-family: Times New Roman;
@@ -162,6 +175,7 @@ input[type="login-submit"]:hover {
 }
 
 .login-signup-link {
+  font-family: 'Roboto';
   color: #01d28e;
   font-size: 17px;
   font-family: Times New Roman;
@@ -224,12 +238,43 @@ input[type="admin-add-service-description"] {
   background: #6cf0c2;
 }
 
-.nav-link.active {
-  background-color:  #cccccc;
-  color: white;
+
+.nav-link {
+  transition: color 0.3s ease, border-color 0.3s ease; /* Transition for text color and border-color over 0.3 seconds */
+  border: 1px solid transparent; /* Invisible border */
+  font-family: 'Roboto';
   font-size: 19px;
-  border-radius: 999px; /* This creates a rounded rectangle effect */
-  padding: 0.4rem 0.8rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #262626;
+  text-decoration: none;
+  padding: 10px 5px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative; /* Required for pseudo-element */
 }
 
+.nav-link::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%; /* Start from the middle */
+  width: 0; /* Initially no width */
+  height: 2px; /* Adjust the thickness of the underline */
+  background-color: #0066cc; /* Color for the underline */
+  opacity: 0; /* Initially hidden */
+  transition: width 0.5s ease, opacity 0.5s ease; /* Transition for the underline effect */
+  transform: translateX(-50%); /* Center the underline */
+}
+
+.nav-link:hover, .nav-link.active:hover {
+  color: #0066cc; /* Black text color on hover */
+}
+
+.nav-link:hover::after, .nav-link.active:hover::after {
+  width: 100%; /* Expand the underline to the edges on hover */
+  opacity: 1; /* Show the underline on hover */
+}
+
+.nav-link.active {
+  color: #000; /* Black text color when active */
+}

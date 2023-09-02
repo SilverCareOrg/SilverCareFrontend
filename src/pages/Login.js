@@ -114,7 +114,7 @@ function Login() {
         </div>
         <div className="login-input-container">
           <label>Parolă </label>
-          <input className="h-6 px-4 border border-gray-300" type="password" name="pass" required />
+          <input  type="password" name="pass" required />
           {renderErrorMessage("pass")}
         </div>
         <div className="login-button-container" onClick={handleSubmit}>
@@ -125,20 +125,27 @@ function Login() {
   );
 
   return (
-    <div className="max-md:transform max-md:translate-y-1/8 max-md:pl-2 max-md:pr-2 login">
-      <div className="login-form">
-        <div className="login-title">Autentificare</div>
-        {errorMessages.name === "cooldown" && renderErrorMessage("cooldown")}
-        {showSuccessMessage ? <div>V-ați autentificat cu succes!</div> : null}
-        {(isSubmitted && showSuccessMessage) ? <div/>:
-        errorMessages.name === "cooldown" ? <div/> : renderForm}
-      </div>
-        <div className="text-center login-text-for-signup">
-            <p className="max-md:flex max-md:flex-col">Nu ți-ai creat un cont încă? <span className="login-signup-link">
-              
-                <Link to="/signup">Apasă aici pentru întregistrare</Link>
-                </span></p>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md p-4">
+        <div className="bg-white rounded-lg shadow-xl">
+          <div className="px-6 py-8">
+            <div className="text-2xl text-center text-gray-800 login-title">Autentificare</div>
+            {errorMessages.name === "cooldown" && renderErrorMessage("cooldown")}
+            {showSuccessMessage ? <div className="text-center">V-ați autentificat cu succes!</div> : null}
+            {(isSubmitted && showSuccessMessage) ? <div/>:
+            errorMessages.name === "cooldown" ? <div/> : renderForm}
+          </div>
+          
+          <div className="px-6 py-4 text-center">
+            <p className="text-sm text-gray-600 max-md:flex max-md:flex-col">
+              Nu ți-ai creat un cont încă?{" "}
+              <span className="text-green-500">
+                <Link to="/signup">Apasă aici pentru înregistrare</Link>
+              </span>
+            </p>
+          </div>
         </div>
+      </div>
     </div>
   );
 }
