@@ -136,16 +136,16 @@ export default function RegistrationService({ onClose, service_id,
         </div>
         <div className="login-input-container">
           <label>Număr de telefon </label>
-          <input type="login-password" name="phone_number" required />
+          <input type="login-text" name="phone_number" required />
           {renderErrorMessage("phone_number")}
         </div>
         <div className="login-input-container">
           <label>Însoțitor</label>
-          <input type="login-password" name="companion"/>
+          <input type="login-text" name="companion"/>
         </div>
         <div className="login-input-container">
           <label>Email</label>
-          <input type="login-password" name="email" required />
+          <input type="login-text" name="email" required />
           {renderErrorMessage("email")}
         </div>
         <div className="registrationService-button-container" onClick={handleSubmit}>
