@@ -17,14 +17,18 @@ import CartPanel from "./components/CartPanel";
 import RegistrationService from "./components/RegistrationService";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
+import CheckoutDetails from "./components/CheckoutDetails";
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from "@stripe/stripe-js/pure";
 
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const App = () => {
   return (
-    <section className="">
+    <section className="flex flex-col min-h-screen">
       <Navbar />
 
-      <main>
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -36,6 +40,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cartPanel" element={<CartPanel />} />
+          <Route path="/checkoutDetails" element={<Elements stripe={stripePromise}><CheckoutDetails /></Elements>} />
           <Route path="/registrationService" element={<RegistrationService />} />
           <Route path="/adminPage" element={<Admin />} />
           <Route path="/adminAddService" element={<AdminAddService />} />

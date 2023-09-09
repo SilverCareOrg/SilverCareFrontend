@@ -2,7 +2,6 @@ import axios from 'axios';
 import cors from 'cors'
 
 const api = process.env.REACT_APP_API;
-console.log(api);
 const axios_api = axios.create({
   baseURL: api, // Set your API base URL
   withCredentials: true, // Include credentials (cookies) with requests
