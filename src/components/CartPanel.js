@@ -238,7 +238,31 @@ export default function CartPanel({ onClose }) {
       });
   };
 
-  
+  // For Guest users after checkout
+  useEffect(() => {
+    const guestCheckoutSessionId = localStorage.getItem("guestCheckoutSessionId");
+    if (guestCheckoutSessionId) {
+      const pollInterval = setInterval(async () => {
+        try {
+          const response = await axios_api.get(`/check_payment_status/${guestCheckoutSessionId}`);
+
+          if (response.status === 200) {
+            const data = response.data;
+            if (data["status"] === 'completed') {
+              clearInterval(pollInterval);
+              localStorage.removeItem("services");
+              localStorage.removeItem("guestCheckoutSessionId");
+              getData();
+            } else if (data["status"] === 'pending') {
+              // Payment is still pending
+            }
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }, 1000);
+    }
+  }, []);
 
   const handleGuestCheckoutDataSubmit = async (event) => {
     event.preventDefault();
