@@ -10,6 +10,7 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import {
   ImHappy
 } from "react-icons/im";
+import {loadStripe} from "@stripe/stripe-js/pure";
 
 export default function CartPanel({ onClose }) {
   const [open, setOpen] = useState(true)
@@ -156,43 +157,94 @@ export default function CartPanel({ onClose }) {
   };
 
   const handleCheckout = () => {   
-    if (isLoggedIn) {
-      setCheckout(true);
-      axios_api.post("/checkout_send_email", {withCredentials: true}).then((response) => {
-        if (response) {
-          var res = response.data["message"];
-          if (res != null && res === "Nu exista servicii in cos!") {
-            setTypeCheckout(1);
-            setPopUpColor("bg-yellow-200")
-          } else if (res != null) {
-            setTypeCheckout(0);
-          }
-        }
-      }).catch((error) => {
-          console.log("Error:", error);
-      });
-  } else {
-    var services = localStorage.getItem("services");
+  //   if (isLoggedIn) {
+  //     setCheckout(true);
+  //     axios_api.post("/checkout_send_email", {withCredentials: true}).then((response) => {
+  //       if (response) {
+  //         var res = response.data["message"];
+  //         if (res != null && res === "Nu exista servicii in cos!") {
+  //           setTypeCheckout(1);
+  //           setPopUpColor("bg-yellow-200")
+  //         } else if (res != null) {
+  //           setTypeCheckout(0);
+  //         }
+  //       }
+  //     }).catch((error) => {
+  //         console.log("Error:", error);
+  //     });
+  // } else {
+  //   var services = localStorage.getItem("services");
     
+  //   if (services) {
+  //     services = JSON.parse(services);
+  //   } else {
+  //     services = [];
+  //   }
+
+  //   if (services.length === 0) {
+  //     setTypeCheckout(1);
+  //     setPopUpColor("bg-yellow-200")
+  //     setCheckout(true);
+  //     setGuestCheckout(false);
+  //   } else {
+  //     setGuestCheckout(true);
+  //     setCheckout(false);
+  //     setTypeCheckout(0);
+  //   }
+
+  //   setIsGuestCheckoutSubmit(false);
+    var services = localStorage.getItem("services");
+
     if (services) {
       services = JSON.parse(services);
     } else {
       services = [];
     }
 
-    if (services.length === 0) {
-      setTypeCheckout(1);
-      setPopUpColor("bg-yellow-200")
-      setCheckout(true);
-      setGuestCheckout(false);
-    } else {
-      setGuestCheckout(true);
-      setCheckout(false);
-      setTypeCheckout(0);
-    }
+    // if (!isLoggedIn) {
+    //   if (services.length === 0) {
+    //     setTypeCheckout(1);
+    //     setPopUpColor("bg-yellow-200")
+    //     setCheckout(true);
+    //     setGuestCheckout(false);
+    //   } else {
+    //     setGuestCheckout(true);
+    //     setCheckout(false);
+    //     setTypeCheckout(0);
+    //   }
+    // }
 
-    setIsGuestCheckoutSubmit(false);
-  }};
+    var data = {"services": services, "isGuest": !isLoggedIn};
+
+    axios_api.post("/create_checkout_session", data, {withCredentials: true})
+      .then(async response => {
+        console.log(response);
+
+        if (response.status === 200) {
+          const checkoutSessionId = response.data["id"];
+          console.log(checkoutSessionId);
+          const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+          const stripe = await stripePromise;
+          
+          try {
+            const { error } = await stripe.redirectToCheckout({
+              sessionId: checkoutSessionId,
+            });
+
+            if (error) {
+              console.error(error.message);
+            }
+          } catch (error) {
+            // Handle any unexpected errors
+            console.error(error);
+          }
+        }
+      })
+      .catch(error => {
+        // Handle API request error
+        console.log(error);
+      });
+  };
 
   const handleGuestCheckoutDataSubmit = async (event) => {
     event.preventDefault();
@@ -440,8 +492,9 @@ export default function CartPanel({ onClose }) {
         
       {isGuestCheckoutSubmit && finalMessage}
 
+    
       {/* Guest checkout */}
-      {guestCheckout && !isGuestCheckoutSubmit && 
+      {/* {guestCheckout && !isGuestCheckoutSubmit && 
         <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
           <Transition.Child
@@ -493,7 +546,7 @@ export default function CartPanel({ onClose }) {
           </div>
         </Dialog>
       </Transition.Root>
-      }
+      } */}
     </div>
   )
 }

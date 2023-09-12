@@ -15,6 +15,8 @@ import { Route, Routes } from "react-router-dom";
 import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
 import RegistrationService from "./components/RegistrationService";
+import PaymentSuccess from "./pages/PaymentSuccess"
+import PaymentFail from "./pages/PaymentFail"
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import CheckoutDetails from "./components/CheckoutDetails";
@@ -41,7 +43,9 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/cartPanel" element={<CartPanel />} />
           <Route path="/checkoutDetails" element={<Elements stripe={stripePromise}><CheckoutDetails /></Elements>} />
-          <Route path="/registrationService" element={<RegistrationService />} />
+          <Route path="/cartPanel" element={<CartPanel />} />
+          <Route path="/checkout-success" element={<PaymentSuccess />} />
+          <Route path="/checkout-fail" element={<PaymentFail />} />
           <Route path="/adminPage" element={<Admin />} />
           <Route path="/adminAddService" element={<AdminAddService />} />
           <Route path="*" element={<Notfound />} />
