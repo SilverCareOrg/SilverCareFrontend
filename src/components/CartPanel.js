@@ -26,6 +26,7 @@ export default function CartPanel({ onClose }) {
   const cancelButtonRef = useRef(null)
   const [isGuestCheckoutSubmit, setIsGuestCheckoutSubmit] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
+  var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}`;
 
   const handleClose = () => {
     setGuestCheckout(false);
@@ -429,7 +430,7 @@ export default function CartPanel({ onClose }) {
                                 <li key={product.service_id} className="flex py-6">
                                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
-                                      src={require(`../images/${product.service_image_path}`)}
+                                      src={`${final_img_path}${product.service_image_path}`}
                                       alt={product.service_image_path}
                                       className="h-full w-full object-cover object-center" />
                                   </div>
