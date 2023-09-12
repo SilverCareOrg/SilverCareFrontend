@@ -201,19 +201,6 @@ export default function CartPanel({ onClose }) {
       services = [];
     }
 
-    // if (!isLoggedIn) {
-    //   if (services.length === 0) {
-    //     setTypeCheckout(1);
-    //     setPopUpColor("bg-yellow-200")
-    //     setCheckout(true);
-    //     setGuestCheckout(false);
-    //   } else {
-    //     setGuestCheckout(true);
-    //     setCheckout(false);
-    //     setTypeCheckout(0);
-    //   }
-    // }
-
     var data = {"services": services, "isGuest": !isLoggedIn};
 
     axios_api.post("/create_checkout_session", data, {withCredentials: true})
@@ -222,10 +209,13 @@ export default function CartPanel({ onClose }) {
 
         if (response.status === 200) {
           const checkoutSessionId = response.data["id"];
-          console.log(checkoutSessionId);
           const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
           const stripe = await stripePromise;
           
+          if (!isLoggedIn) {
+            localStorage.setItem("guestCheckoutSessionId", checkoutSessionId);
+          }
+
           try {
             const { error } = await stripe.redirectToCheckout({
               sessionId: checkoutSessionId,
@@ -234,6 +224,7 @@ export default function CartPanel({ onClose }) {
             if (error) {
               console.error(error.message);
             }
+
           } catch (error) {
             // Handle any unexpected errors
             console.error(error);
@@ -245,6 +236,30 @@ export default function CartPanel({ onClose }) {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    const guestCheckoutSessionId = localStorage.getItem("guestCheckoutSessionId");
+    if (guestCheckoutSessionId) {
+      const pollInterval = setInterval(async () => {
+        try {
+          const response = await axios_api.get(`/check_payment_status/${guestCheckoutSessionId}`);
+
+          if (response.status === 200) {
+            const data = response.data;
+            if (data["status"] === 'completed') {
+              clearInterval(pollInterval);
+              localStorage.removeItem("services");
+              localStorage.removeItem("guestCheckoutSessionId");
+            } else if (data["status"] === 'pending') {
+              // Payment is still pending
+            }
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }, 1000);
+    }
+  }, []);
 
   const handleGuestCheckoutDataSubmit = async (event) => {
     event.preventDefault();
