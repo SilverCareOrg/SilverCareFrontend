@@ -220,7 +220,7 @@ function Login() {
                         
           {/* Text overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white pr-20 pl-20 z-10 mt-96" style={{ pointerEvents: showSuccessMessage ? 'none' : 'auto' }}>
-            <p className="text-2xl">Conectează-te și trăiește viața la maxim. Noi îți putem oferi toate experiențele de care ai nevoie pentru a face asta!</p>
+            <p className="text-2xl">Conectează-te și trăiește viața din plin. Noi îți putem oferi toate experiențele de care ai nevoie pentru a face asta!</p>
           </div>
           </div>
         </div>
