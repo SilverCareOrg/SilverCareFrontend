@@ -5,6 +5,10 @@ import '../styles/styles.css';
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import { useNavigate   } from 'react-router-dom';
+import homepage_photo_4 from "../images/homepage-photo-4.jpg";
+import homepage_photo_3 from "../images/homepage-photo-3.jpg";
+import homepage_photo_2 from "../images/homepage-photo-2.jpg";
+import homepage_photo_1 from "../images/homepage-photo-1.jpg";
 
 function Login() {
   // React States
@@ -13,6 +17,24 @@ function Login() {
   const [refreshToken, setRefreshToken] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const sliderImages = [
+    homepage_photo_4,
+    homepage_photo_2,
+    homepage_photo_3,
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentSlide((currentSlide + 1) % sliderImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((currentSlide - 1 + sliderImages.length) % sliderImages.length);
+  };
 
   const errors = {
     email: "invalid username",
@@ -20,7 +42,7 @@ function Login() {
   };
 
   const handleSubmit = async (event) => {
-    //Prevent page reload
+    // Prevent page reload
     event.preventDefault();
 
     var axiosConfig = {
@@ -31,16 +53,15 @@ function Login() {
       },
     };
 
-    var { email, pass } = document.forms[0];
     var token = localStorage.getItem("token");
-    
+
     if (token !== null) {
       axiosConfig.headers['Authorization'] = `Bearer ${token}`;
     }
 
     axios_api.post("/login", {
-        email: email.value,
-        password: pass.value
+      email: email,
+      password: password
     }, axiosConfig)
       .then((response) => {
         // Handle the response
@@ -69,18 +90,19 @@ function Login() {
       })
       .catch((error) => {
 
-        if (error.response && error.response.status === 429) { 
-          setIsSubmitted(false); 
+        if (error.response && error.response.status === 429) {
+          setIsSubmitted(false);
           setErrorMessages({
             name: "cooldown",
-            message: "Ai încercat să te conectezi de prea multe ori. Vei putea încerca din nou în 2 minute."
+            message: "You have attempted to log in too many times. Please try again in 2 minutes."
           });
 
           // After 2 minutes, reset the error message and enable the form again
           setTimeout(() => {
             setErrorMessages({});
-      }, 2 * 60 * 1000);
-      }});
+          }, 2 * 60 * 1000);
+        }
+      });
   };
 
   // Generate JSX code for error message
@@ -105,44 +127,101 @@ function Login() {
 
   // JSX code for login form
   const renderForm = (
-    <div className="login-form">
-      <form onSubmit={handleSubmit}>
-        <div className="login-input-container">
-          <label>Email </label>
-          <input  type="login-text" name="email" required />
-          {renderErrorMessage("email")}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-96">
+        <h2 className="text-3xl font-semibold mb-4 text-center text-black">Autentificare</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm font-medium mb-2" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="w-full p-3 border border-black rounded-md focus:outline-none input-style"
+              type="email"
+              id="email"
+              placeholder="Introdu adresa de email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-600 text-sm font-medium mb-2" htmlFor="password">
+              Parolă
+            </label>
+            <input
+              className="w-full p-3 border border-black rounded-md focus:outline-none input-style"
+              type="password"
+              id="password"
+              placeholder="Introdu parola"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            className="w-full py-3 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition duration-300 ease-in-out"
+            type="submit"
+          >
+            Conectare
+          </button>
+        </form>
+        <div className="text-sm text-gray-600 mt-4 text-center">
+        Nu ți-ai creat un cont încă?{' '}
+          <span className="text-blue-500">
+            <Link to="/signup">Nu ți-ai creat un cont încă?</Link>
+          </span>
         </div>
-        <div className="login-input-container">
-          <label>Parolă </label>
-          <input  type="password" name="pass" required />
-          {renderErrorMessage("pass")}
-        </div>
-        <div className="login-button-container" onClick={handleSubmit}>
-            <button>Conectare</button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-4">
-        <div className="bg-white rounded-lg shadow-xl">
-          <div className="px-6 py-8">
-            <div className="text-2xl text-center text-gray-800 login-title">Autentificare</div>
-            {errorMessages.name === "cooldown" && renderErrorMessage("cooldown")}
-            {showSuccessMessage ? <div className="text-center">V-ați autentificat cu succes!</div> : null}
-            {(isSubmitted && showSuccessMessage) ? <div/>:
-            errorMessages.name === "cooldown" ? <div/> : renderForm}
+    <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
+      {/* Left side with login form (40% width on large screens) */}
+      <div className="md:w-2/5 p-4 md:p-8 bg-gray-100">
+        <div className="max-w-md mx-auto">
+          {renderForm}
+        </div>
+      </div>
+
+      {/* Right side with image and text (60% width on large screens) */}
+      <div className="md:w-3/5 relative overflow-hidden">
+        {/* Background image container */}
+        <div
+          className="bg-cover bg-center h-full relative"
+          style={{
+            backgroundImage: `url(${sliderImages[currentSlide]})`,
+            backgroundSize: "cover",
+          }}
+        >
+          {/* Image slider */}
+          <div className="relative w-full h-full">
+            {sliderImages.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Slide ${index}`}
+                className={`absolute w-full h-full object-cover transition-opacity brightness-50 ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
+              />
+            ))}
+            <div className="absolute bottom-4 right-4 flex space-x-4 z-20">
+              <button onClick={prevSlide} className="w-10 h-10 rounded-full bg-transparent border border-white cursor-pointer hover:bg-gray-300 transition duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button onClick={nextSlide} className="w-10 h-10 rounded-full bg-transparent border border-white cursor-pointer hover:bg-gray-300 transition duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+                        
+          {/* Text overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white pr-20 pl-20 z-10 mt-96" style={{ pointerEvents: showSuccessMessage ? 'none' : 'auto' }}>
+            <p className="text-2xl">Conectează-te și trăiește viața la maxim. Noi îți putem oferi toate experiențele de care ai nevoie pentru a face asta!</p>
           </div>
-          
-          <div className="px-6 py-4 text-center">
-            <p className="text-sm text-gray-600 max-md:flex max-md:flex-col">
-              Nu ți-ai creat un cont încă?{" "}
-              <span className="text-green-500">
-                <Link to="/signup">Apasă aici pentru înregistrare</Link>
-              </span>
-            </p>
           </div>
         </div>
       </div>

@@ -53,6 +53,10 @@
   padding-right: 2rem;
 }
 
+.slider-image {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow properties as needed */
+}
+
 .product-details-description {
   width: 80%;
   color: #4a5568;
@@ -84,8 +88,7 @@
   background-color: #f8f9fd;
 }
 
-input[type="login-text"],
-input[type="password"] {
+input[type="login-text"] {
   height: 35px;
   padding: 20px 10px 20px 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -94,8 +97,7 @@ input[type="password"] {
   transition: border-color 0.3s ease;
 }
 
-input[type="login-text"]:focus,
-input[type="password"]:focus {
+input[type="login-text"]:focus {
   border-color: #01d28e; /* Change border color on focus */
 }
 
@@ -279,4 +281,24 @@ input[type="admin-add-service-description"] {
   color: #000; /* Black text color when active */
 }
 
+.input-style {
+  font-family: inherit;
+  padding: 0.75rem;
+  border: 1px solid #000;
+  border-radius: 0.25rem;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s ease-in-out;
+}
 
+.input-style:focus {
+  border-color: #000;
+}
+
+/* Additional CSS to hide password characters */
+.password-input {
+  -webkit-text-security: disc;
+  background-color: white;
+  color: black;
+  /* You can adjust colors to match your design */
+}
