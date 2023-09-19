@@ -1,14 +1,38 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import axios_api from '../api/axios_api';
 import '../styles/styles.css';
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import homepage_photo_4 from "../images/homepage-photo-4.jpg";
+import homepage_photo_3 from "../images/homepage-photo-3.jpg";
+import homepage_photo_2 from "../images/homepage-photo-2.jpg";
+import homepage_photo_1 from "../images/homepage-photo-1.jpg";
+import { useNavigate   } from 'react-router-dom';
 
 function Signup() {
   // React States
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [refreshToken, setRefreshToken] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const sliderImages = [
+    homepage_photo_2,
+    homepage_photo_3,
+    homepage_photo_4,
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentSlide((currentSlide + 1) % sliderImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((currentSlide - 1 + sliderImages.length) % sliderImages.length);
+  };
 
   const errors = {
     email: "invalid email",
@@ -17,33 +41,46 @@ function Signup() {
   };
 
   const handleSubmit = async (event) => {
-    //Prevent page reload
+    // Prevent page reload
     event.preventDefault();
 
-    var { email, username, pass } = document.forms[0];
-    localStorage.removeItem("token");
+    var axiosConfig = {
+      sameSite: 'none',
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    var token = localStorage.getItem("token");
+
+    if (token !== null) {
+      axiosConfig.headers['Authorization'] = `Bearer ${token}`;
+    }
+
     axios_api.post("/signup", {
-        email: email.value,
-        username: username.value,
-        password: pass.value
-    }, {sameSite: 'none', withCredentials: true,
-    headers: {
-      // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
-      'Content-Type': 'application/json'
-  }})
+      email: email,
+      username: username,
+      password: password
+    }, axiosConfig)
       .then((response) => {
         // Handle the response
-        console.log(response);
         if (response.status === 200) {
-            console.log("eu is aici ai");
           setIsSubmitted(true);
           const csrfToken = response.headers['csrftoken'];
-          console.log(csrfToken);
-          localStorage.setItem("token", response.data['access']);
-          localStorage.setItem("refresh", response.data['refresh']);
-          setRefreshToken(response.data['refresh']);
+
+          if (token !== null) {
+            localStorage.removeItem("token");
+          }
+
+          setShowSuccessMessage(true);
+          setTimeout(() => {
+            setShowSuccessMessage(false);
+            navigate("/");
+            window.location.reload();
+          }, 1000);
         } else {
-          console.log("Failed to send login data to the API");
+          console.log("Failed to send signup data to the API");
         }
       })
       .catch((error) => {
@@ -58,51 +95,120 @@ function Signup() {
       <div className="login-error">{errorMessages.message}</div>
     );
 
-  // JSX code for login form
+  // JSX code for signup form
   const renderForm = (
-    <div className="login-form">
-      <form onSubmit={handleSubmit}>
-        <div className="login-input-container">
-          <label>Email </label>
-          <input type="login-text" name="email" required />
-          {renderErrorMessage("email")}
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-96">
+        <h2 className="text-3xl font-semibold mb-4 text-center text-black">Înregistrare</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm font-medium mb-2" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="w-full p-3 border border-black rounded-md focus:outline-none input-style"
+              type="email"
+              id="email"
+              placeholder="Introdu adresa de email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm font-medium mb-2" htmlFor="username">
+              Nume utilizator
+            </label>
+            <input
+              className="w-full p-3 border border-black rounded-md focus:outline-none input-style"
+              type="text"
+              id="username"
+              placeholder="Introdu numele de utilizator"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-600 text-sm font-medium mb-2" htmlFor="password">
+              Parolă
+            </label>
+            <input
+              className="w-full p-3 border border-black rounded-md focus:outline-none input-style"
+              type="password"
+              id="password"
+              placeholder="Introdu parola"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            className="w-full py-3 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition duration-300 ease-in-out"
+            type="submit"
+          >
+            Înregistrare
+          </button>
+        </form>
+        <div className="text-sm text-gray-600 mt-4 text-center">
+          Ai deja un cont?{' '}
+          <span className="text-blue-500">
+            <Link to="/login">Autentifică-te aici</Link>
+          </span>
         </div>
-        <div className="login-input-container">
-          <label>Nume utilizator </label>
-          <input type="login-text" name="username" required />
-          {renderErrorMessage("username")}
-        </div>
-        <div className="login-input-container">
-          <label>Parolă </label>
-          <input className="h-6 px-4 border border-gray-300" type="password" name="pass" required />
-          {renderErrorMessage("pass")}
-        </div>
-        <div className="login-button-container" onClick={handleSubmit}>
-            <button>Înregistrare</button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-     <div className="w-full max-w-md p-4">
-       <div className="bg-white rounded-lg shadow-xl">
-         <div className="px-6 py-8">
-           <div className="text-2xl text-center text-gray-800 login-title">Înregistrare</div>
-           {isSubmitted ? <div className="text-center">Cont creat cu success!</div> : renderForm}
-         </div>
-         
-         <div className="px-6 py-4 text-center">
-           <p className="text-sm text-gray-600 max-md:flex max-md:flex-col">
-             Nu ți-ai creat un cont încă?{" "}
-             <span className="text-green-500">
-               <Link to="/signup">Apasă aici pentru înregistrare</Link>
-             </span>
-           </p>
-         </div>
-       </div>
-     </div>
+    <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
+      {/* Left side with signup form (40% width on large screens) */}
+      <div className="md:w-2/5 p-4 md:p-8 bg-gray-100">
+        <div className="max-w-md mx-auto">
+          {isSubmitted ? <div className="text-center"></div> : renderForm}
+        </div>
+      </div>
+
+        {/* Right side with image and text (60% width on large screens) */}
+      <div className="md:w-3/5 relative overflow-hidden">
+        {/* Background image container */}
+        <div
+          className="bg-cover bg-center h-full relative"
+          style={{
+            backgroundImage: `url(${sliderImages[currentSlide]})`,
+            backgroundSize: "cover",
+          }}
+        >
+          {/* Image slider */}
+          <div className="relative w-full h-full">
+            {sliderImages.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Slide ${index}`}
+                className={`absolute w-full h-full object-cover transition-opacity brightness-50 ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
+              />
+            ))}
+            <div className="absolute bottom-4 right-4 flex space-x-4 z-20">
+              <button onClick={prevSlide} className="w-10 h-10 rounded-full bg-transparent border border-white cursor-pointer hover:bg-gray-300 transition duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button onClick={nextSlide} className="w-10 h-10 rounded-full bg-transparent border border-white cursor-pointer hover:bg-gray-300 transition duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+                        
+          {/* Text overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white pr-20 pl-20 z-10 mt-96" style={{ pointerEvents: showSuccessMessage ? 'none' : 'auto' }}>
+            <p className="text-2xl">Conectează-te și trăiește viața din plin. Noi îți putem oferi toate experiențele de care ai nevoie pentru a face asta!</p>
+          </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
