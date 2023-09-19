@@ -8,6 +8,8 @@ import poza_irina_vadan from "../images/poza_irina_vadan.jpg";
 import poza_madalina_hamciuc from "../images/poza_madalina_hamciuc.jpg";
 import poza_melisa_staicu from "../images/poza_melisa_staicu.jpg";
 import poza_adrian_sandu from "../images/poza_adrian_sandu.jpg";
+import poza_sorin from "../images/poza_sorin.jpg";
+import poza_iulia from "../images/poza_iulia.jpg";
 
 const OurTeam = () => {
   const teamMembers = [
@@ -60,6 +62,16 @@ const OurTeam = () => {
       name: "Adrian Sandu",
       designation: "UI/UX Designer",
       img: poza_adrian_sandu,
+    },
+    {
+      name: "Iulia Cailean",
+      designation: "UI/UX Designer",
+      img: poza_iulia,
+    },
+    {
+      name: "Sorin Birchi",
+      designation: "UI/UX Designer",
+      img: poza_sorin,
     }
   ];
 
