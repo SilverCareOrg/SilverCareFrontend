@@ -127,7 +127,7 @@ function Login() {
 
   // JSX code for login form
   const renderForm = (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="w-96">
         <h2 className="text-3xl font-semibold mb-4 text-center text-black">Autentificare</h2>
         <form onSubmit={handleSubmit}>
@@ -169,7 +169,7 @@ function Login() {
         <div className="text-sm text-gray-600 mt-4 text-center">
         Nu ți-ai creat un cont încă?{' '}
           <span className="text-blue-500">
-            <Link to="/signup">Nu ți-ai creat un cont încă?</Link>
+            <Link to="/signup">Apasă aici pentru înregistrare</Link>
           </span>
         </div>
       </div>
