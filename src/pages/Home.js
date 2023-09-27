@@ -12,7 +12,7 @@ const Home = () => {
     <div className="home overflow-x-hidden">
       <Slider />
       <div className="flex items-center justify-center mt-10  justify-center">
-        <Lottie className="max-w-[700px] max-h-[700px]" animationData={caring_family} />;
+        <Lottie className="max-w-[700px] max-h-[700px]" animationData={caring_family} />
       </div>
       <BestSelling />
       {/* <FeatureProducts /> */}
