@@ -18,7 +18,7 @@ const Products = () => {
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [err, setErr] = useState(null);
   var FileSaver = require('file-saver');
-  const [catPath, setCatPath] = useState("Toate serviciile");
+  const [catPath, setCatPath] = useState("Toate experiențele");
   // const fs = require('fs');
 
   const para = useRef(null);
@@ -36,7 +36,7 @@ const Products = () => {
   ];
 
   const sm_categories = [
-    "Toate serviciile",
+    "Toate experiențele",
     "Spiritualitate",
     "Excursii",
     "Cursuri de limbi străine",
@@ -113,10 +113,10 @@ const Products = () => {
             className="select-none cursor-pointer flex justify-between"
             onClick={() => {
               setFilterProducts(products);
-              setCatPath("Toate serviciile");
+              setCatPath("Toate experiențele");
             }}
           >
-            <span className="font-semibold">Toate serviciile</span>
+            <span className="font-semibold">Toate experiențele</span>
             <span>{`(${products.length})`}</span>
           </h3>
           {categories.map((cat, i) => (
@@ -175,9 +175,9 @@ const Products = () => {
                                   setFilterProducts(filters);
                                   setCatPath(sm_categories[i]);
 
-                                  if (sm_categories[i] === "Toate serviciile") {
+                                  if (sm_categories[i] === "Toate experiențele") {
                                     setFilterProducts(products);
-                                    setCatPath("Toate serviciile");
+                                    setCatPath("Toate experiențele");
                                   }
                                 }}
                                 className={classNames(

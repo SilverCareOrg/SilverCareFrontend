@@ -9,6 +9,8 @@ import CartPanel from "./CartPanel";
 import { LuMenu } from 'react-icons/lu';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useNavigate   } from 'react-router-dom';
+import logo_img from "../images/logo_sc.png";
+
 
 const Navbar = () => {
   // React States
@@ -91,9 +93,9 @@ const Navbar = () => {
     <div className="relative flex-column items-center">
     <div className="lg:shadow-lg max-lg:items-start max-lg:flex-column backdrop-blur-lg py-5 text-gray-900 bg-gray-50">
       <nav className="mt-30 max-lg:flex-columns max-lg:items-start flex items-center container mx-auto">
-        <div>
-          <Link to="/" className="text-gray-700 italic ml-5 text-3xl xl:text-8xl">
-            SilverCare
+        <div className="ml-5">
+          <Link to="/">
+            <img src={logo_img} alt="logo" className="object-contain max-w-full max-h-full w-32"/>
           </Link>
         </div>
 
@@ -116,7 +118,7 @@ const Navbar = () => {
             to="/product"
             className="nav-link"
           >
-            Servicii
+            Experiențe
           </NavLink>
         </li>
         <li>
@@ -194,7 +196,7 @@ const Navbar = () => {
           className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
           onClick={() => navigate("/product")}
         >
-          <span>Servicii</span>
+          <span>Experiențe</span>
         </button>
       </li>
       <li className="relative group">
@@ -214,12 +216,20 @@ const Navbar = () => {
         </button>
       </li>
       <li className="relative group">
-        <button
-          className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
-          onClick={() => navigate("/login")}
-        >
-          <span>Autentificare</span>
-        </button>
+        {isLoggedIn ? (
+            <button
+            className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
+            onClick={handleLogout}
+          >
+            <span>Logout</span>
+          </button> ) : (
+            <button
+            className="flex items-center justify-between w-full px-4 py-3 border-b-2 bg-gray-100 hover:bg-gray-300"
+            onClick={() => navigate("/login")}
+          >
+            <span>Autentificare</span>
+          </button>
+          )}
       </li>
       <li className="relative group">
         <button
