@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import axios_api from '../api/axios_api';
 import RegistrationService from "./RegistrationService";
 import { useEffect, useRef, useState  } from "react";
@@ -6,16 +6,14 @@ import { useEffect, useRef, useState  } from "react";
 const SingleProduct = ({ product }) => {
 
   const { img_path, name, price } = product;
+  const url = "/" + name;
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
-  var dev;
-  var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
+  const baseUrl = window.location.origin;
+  var final_img_path = baseUrl + "/images/" + img_path;
+  // var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
+  // console.log(final_img_path);
 
-  // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  //   dev = false;
-  // } else {
-  //   dev = true;
-  //   final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
-  // }
+
 
   const handleAddCart = async (event) => {
     //Prevent page reload
@@ -71,7 +69,7 @@ const SingleProduct = ({ product }) => {
           {/* } */}
       </div>
       <Link
-        to={name}
+        to={url}
         state={product}
         className="hover:text-rose-500 duration-300 flex justify-between items-center"
       >
@@ -84,15 +82,15 @@ const SingleProduct = ({ product }) => {
         Preț: <span className="text-rose-500 font-semibold">{price === "free" ? "Gratis" : price}</span>
       </p>
       <div className="flex justify-between items-center mt-auto">
-        <Link
-          to={name}
+        <NavLink
+          to={url}
           state={product}
           className="hover:text-rose-50 text-gray-900 duration-300 flex justify-between items-center"
         >
           <button className="text-sky-400 px-2 py-1 border border-sky-400 rounded-md hover:bg-sky-400 hover:text-sky-50 duration-300">
             Mai multe informații
           </button>
-        </Link>
+        </NavLink>
         <button
           onClick={toggleRegistrationService}
           className="bg-sky-400 text-sky-50 hover:bg-sky-50 hover:text-sky-400 duration-300 border border-sky-400 px-2 py-1 rounded-md"
