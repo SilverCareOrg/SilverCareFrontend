@@ -1,3 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.button-link {
+  text-decoration: none;
+  color: black;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.button-link:hover {
+  color: white;
+  background-color: black;
+  border-color: white;
+}
+
+.red-svg {
+  fill: red;
+}
+
 .navbar-text {
   color: #4a5568;
   font-style: italic;

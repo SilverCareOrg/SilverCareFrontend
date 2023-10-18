@@ -1,11 +1,12 @@
 import { Fragment, useState, useEffect, useRef } from "react";
 import SingleProduct from "../components/SingleProduct";
-import { Link } from "react-router-dom";
+import { Link, useParams  } from "react-router-dom";
 import axios_api from '../api/axios_api';
 import { saveAs } from 'file-saver';
 import { GoFilter } from "react-icons/go";
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Menu, Transition } from '@headlessui/react'
+import { useLocation } from 'react-router-dom';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -19,7 +20,12 @@ const Products = () => {
   const [err, setErr] = useState(null);
   var FileSaver = require('file-saver');
   const [catPath, setCatPath] = useState("Toate experiențele");
-  // const fs = require('fs');
+  const { category } = useParams();
+  const { search_input } = useParams();
+
+  const location = useLocation();
+  const currentURL = location.pathname;
+  const [isStringInURL, setIsStringInUrl] = useState(currentURL.includes('product/search/'));
 
   const para = useRef(null);
 
@@ -48,41 +54,79 @@ const Products = () => {
     "Arta"
   ];
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        setIsLoading(true);
+  const get_all_services =  (cat) => {
+    try {
+      setIsLoading(true);
 
-        axios_api.get("/get_all_services", {withCredentials: true}).then((response) => {
-          if (response.status === 200) {
-            // Save file on local frontend server - FOR FUTURE USE
-            // for (let i = 0; i < response.data.length; i++) {
-            //   const encodedPhoto = response.data[i]["image"];
-            //   const decodedPhoto = atob(encodedPhoto);
-            //   const photoBlob = new Blob([decodedPhoto], { type: 'image/' + response.data[i]["image_type"] });
-            //   // saveAs(photoBlob, '../images/' + response.data[i]["image_path"]);
-            //   fs.writeFile("../images/" + response.data[i]["image_path"], decodedPhoto, (err) => {
-            //     if (err) {
-            //         return console.log(err);
-            //     }
-            //     console.log("file saved!");
-            // }); 
-            //   // FileSaver.saveAs("../images/", response.data[i]["image_path"]);
-            // }
+      axios_api.get("/get_all_services", {withCredentials: true}).then((response) => {
+        if (response.status === 200) {
+          const json = response.data;
+          setIsLoading(false);
+          setProducts(json);
 
-            const json = response.data;
-            setIsLoading(false);
-            setProducts(json);
+          if (category) {
+            const filters = json.filter(
+              (product) => product.category === category
+            );
+            setFilterProducts(filters);
+            setCatPath(category);
+          } else {
             setFilterProducts(json);
           }
-        }).catch((error) => {
-          console.log("Error:", error);
-        });
-      } catch (err) {
-        setIsLoading(false);
-        setErr(err.message);
+
+          if (cat) {
+            const filters = products.filter(
+              (product) => product.category === cat
+            );
+            setFilterProducts(filters);
+          }
+
+        }
+      }).catch((error) => {
+        console.log("Error:", error);
+      });
+
+    } catch (err) {
+      setIsLoading(false);
+      setErr(err.message);
+    }
+  };
+
+  const getData = async () => {
+    try {
+      setIsLoading(true);
+      console.log(isStringInURL);
+      if (isStringInURL) {
+
+        if (search_input === "") {
+          setIsStringInUrl(false);
+        } else {
+          axios_api.post("/search_ex", {
+            searched: search_input
+          }, {withCredentials: true}).then((response) => {
+            if (response.status === 200) {
+              const json = response.data;
+              setIsLoading(false);
+              setProducts(json);
+              setFilterProducts(json);
+              setCatPath("Toate experiențele");
+            }
+          }).catch((error) => {
+            console.log("Error:", error);
+          });
+        }
+        
+      } else {
+        get_all_services(null);
       }
-    };
+
+    } catch (err) {
+      setIsLoading(false);
+      setErr(err.message);
+    }
+  };
+
+  useEffect(() => {
     getData();
   }, []);
 
@@ -112,6 +156,11 @@ const Products = () => {
           <h3
             className="select-none cursor-pointer flex justify-between"
             onClick={() => {
+              if (isStringInURL) {
+                setIsStringInUrl(false);
+                get_all_services();
+              }
+
               setFilterProducts(products);
               setCatPath("Toate experiențele");
             }}
@@ -125,9 +174,15 @@ const Products = () => {
               className="select-none cursor-pointer capitalize font-semibold"
               key={i}
               onClick={() => {
+                if (isStringInURL) {
+                  setIsStringInUrl(false);
+                  get_all_services(cat);
+                }
+
                 const filters = products.filter(
                   (product) => product.category === cat
                 );
+
                 setFilterProducts(filters);
                 setCatPath(categories[i]);
               }}
@@ -169,9 +224,15 @@ const Products = () => {
                                 ref={para}
                                 key={i}
                                 onClick={() => {
+                                  if (isStringInURL) {
+                                    setIsStringInUrl(false);
+                                    get_all_services(cat);
+                                  }
+
                                   const filters = products.filter(
                                     (product) => product.category === cat
                                   );
+
                                   setFilterProducts(filters);
                                   setCatPath(sm_categories[i]);
 

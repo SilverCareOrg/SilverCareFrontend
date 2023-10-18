@@ -17,6 +17,7 @@ import CartPanel from "./components/CartPanel";
 import RegistrationService from "./components/RegistrationService";
 import PaymentSuccess from "./pages/PaymentSuccess"
 import PaymentFail from "./pages/PaymentFail"
+import Categories from "./pages/Categories";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import CheckoutDetails from "./components/CheckoutDetails";
@@ -34,8 +35,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/product/:category" element={<Product />} />
+          <Route path="/product/search/:search_input" element={<Product />} />
           <Route path="/product" element={<Product />} />
           <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="/category" element={<Categories />} />
           <Route path="/:id" element={<ProductDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
