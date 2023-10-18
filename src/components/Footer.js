@@ -3,15 +3,12 @@ import linkedin_svg from "../styles/icons/linkedin.svg";
 import instagram_svg from "../styles/icons/instagram.svg";
 import slash_svg from "../styles/icons/slash.svg";
 import {NavLink} from "react-router-dom";
+import JoinUs from './JoinUs';
 
 const Footer = () => {
   return (
-  //   <>
-  //   <div className="flex-grow"></div>
-  //   <div className="bg-gray-200 py-5 text-gray-900 text-center w-full  bottom-0">
-  //     <p>Copyright © 2023 SilverCare. Powered by SilverCare.</p>
-  //   </div>
-  // </>
+  <div>
+  <JoinUs />
   <div className="self-stretch bg-midnightblue flex flex-col items-center justify-center text-base text-light-grey">
   <div className="w-[1232px] flex flex-col items-center justify-center">
     <div className="self-stretch flex flex-col items-center justify-center pt-[120px] px-0 pb-20 gap-[64px]">
@@ -200,8 +197,8 @@ const Footer = () => {
             alt=""
             src={slash_svg}
           />
-          <div className="relative text-sm tracking-[0.08em] leading-[120%] font-semibold">
-            Termeni si conditii
+          <div className="relative tracking-[0.05em] leading-[24px] font-medium">
+            Termeni și conditii
           </div>
           <img
             className="relative w-[1rem] h-[1rem]"
@@ -209,12 +206,13 @@ const Footer = () => {
             src={slash_svg}
           />
           <div className="relative tracking-[0.05em] leading-[24px] font-medium">
-            Politica de confidentialitate
+            Politică de confidențialitate
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
   );
 };

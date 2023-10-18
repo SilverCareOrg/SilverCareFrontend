@@ -370,7 +370,7 @@ const Navbar = () => {
     <div className="w-[77rem] flex flex-row items-center justify-center">
       <div className="flex-1 flex flex-row items-start justify-start py-[0rem] px-[12rem] gap-[2rem]">
       
-      <NavLink to="/product">
+      <NavLink to="/category">
         <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
           EXPERIENTE
         </b>
@@ -380,13 +380,13 @@ const Navbar = () => {
           LOCATIE
         </b> */}
 
-      <NavLink to="/product">
+      <NavLink to="/category">
         <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
           OCAZIE
         </b>
         </NavLink>
 
-        <NavLink to="/product">
+        <NavLink to="/category">
         <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[5rem] h-[2rem] shrink-0">
           CADOU
         </b>

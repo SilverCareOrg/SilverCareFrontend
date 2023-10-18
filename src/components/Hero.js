@@ -45,7 +45,7 @@ const Hero = () => {
           <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[31.25rem] h-[0rem] shrink-0">
             Armonie în corp, minte și suflet!
           </div>
-          <a href="/product">
+          <a href="/category">
             <div className="rounded bg-accent w-[17.13rem] h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border text-center text-[0.88rem]">
                 <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
                     CUMPĂRĂ EXPERIENȚE
