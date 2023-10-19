@@ -331,7 +331,24 @@ const Navbar = () => {
           </div>
           </NavLink>
 
-          <NavLink
+          {isLoggedIn ? (
+           
+           <button onClick={handleLogout}>
+            <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem]">
+            <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+              <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+              <img
+                className="absolute my-0 mx-[!important] h-3/6 w-[50.75%] top-[22.82%] right-[29.17%] bottom-[27.18%] left-[27.08%] max-w-full overflow-hidden max-h-full z-[1]"
+                alt=""
+                src={user_svg}
+              />
+              </div>
+              <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+              Logout
+            </b>
+            </div>
+            </button>
+          ) : (<NavLink
             to="/login"
             >
               <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem]">
@@ -344,10 +361,10 @@ const Navbar = () => {
                   />
                 </div>
                 <b className="relative tracking-[0.15em] leading-[120%] uppercase">
-                  Autentifica-te
+                  Autentifică-te
                 </b>
               </div>
-          </NavLink>
+          </NavLink>)}
 
           <button
             className="relative group"
