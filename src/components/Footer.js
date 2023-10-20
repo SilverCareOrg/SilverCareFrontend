@@ -66,7 +66,7 @@ const LocationRow = ({ locations }) => {
 
 const AboutSection = () => {
   return (
-    <div className="flex-1 flex flex-col items-start justify-start gap-[24px]">
+    <div className="flex-1 flex flex-col items-start justify-start max-lg:gap-[10px] lg:gap-[24px]">
       <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-extrabold">
         Despre SilverCare
       </div>
@@ -97,7 +97,7 @@ const AboutSection = () => {
 const OptionsSection = () => {
   return (
     <div className="self-stretch flex-1 flex flex-row justify-start items-start lg:gap-[96px]">
-      <div className="flex-1 flex flex-col items-start justify-start gap-[24px]">
+      <div className="flex-1 flex flex-col items-start justify-start max-lg:gap-[5px] lg:gap-[24px]">
         <div className="relative tracking-[0.05em] leading-[24px] font-extrabold">
           Categorii
         </div>
@@ -105,7 +105,7 @@ const OptionsSection = () => {
           <CategoryRow categories={categories}/>
         </div>
       </div>
-      <div className="flex-1 flex flex-col items-start justify-start gap-[24px]">
+      <div className="flex-1 flex flex-col items-start justify-start max-lg:gap-[5px] lg:gap-[24px]">
         <div className="relative tracking-[0.05em] leading-[24px] font-extrabold">
           Locații
         </div>
