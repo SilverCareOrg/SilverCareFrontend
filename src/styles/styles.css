@@ -7,14 +7,14 @@
 
 .button-link {
   text-decoration: none;
-  color: black;
+  color: #13194c;
   border-radius: 0.25rem;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .button-link:hover {
   color: white;
-  background-color: black;
+  background-color: #13194c;
   border-color: white;
 }
 
