@@ -15,7 +15,6 @@ import user_svg from "../styles/icons/user.svg";
 import command_svg from "../styles/icons/command.svg";
 import chat_svg from "../styles/icons/chat.svg";
 
-
 const Navbar = () => {
   // React States
   const [isAdmin, setIsAdmin] = useState(false);
@@ -264,9 +263,7 @@ const Navbar = () => {
     <div className="w-[77rem] flex flex-row items-center justify-center">
       <div className="flex-1 flex flex-row items-center justify-between">
         <div className="flex flex-row items-start justify-start">
-        <NavLink
-            to="/"
-            >
+        <NavLink to="/">
           <div className="flex flex-row items-center justify-center">
             <img
               className="relative w-[7.72rem] h-[2.5rem]"
