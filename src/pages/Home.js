@@ -10,23 +10,22 @@ import HomeSearch from "../components/HomeSearch";
 import Lottie from "lottie-react";
 import caring_family from "../animations/caring-family.json";
 
+const Bar = () => {
+  return (
+    <div className="self-stretch flex items-center justify-center pb-10 pt-[3rem]">
+      <div className="relative box-border max-lg:w-5/6 lg:w-[77.09rem] h-[0.09rem] border-t-[1.5px] border-solid border-text-fields-grey-hf" />
+    </div>
+  );
+}
+
 const Home = () => {
   return (
-    <div className="home overflow-x-hidden">
-      {/* <Slider /> */}
-
-{/*       
-      <div className="flex items-center justify-center mt-10  justify-center">
-        <Lottie className="max-w-[700px] max-h-[700px]" animationData={caring_family} />
-      </div>
-      <BestSelling /> */}
-      {/* <FeatureProducts /> */}
-      {/* <Consultation /> */}
-      {/* <AuthRecommandation /> */}
-
+    <div className="home overflow-x-hidden overflow-hidden">
       <HomeSearch />
       <Hero />
+      <Bar />
       <FindMore />
+      <Bar />
       <Whyme />
     </div>
   );

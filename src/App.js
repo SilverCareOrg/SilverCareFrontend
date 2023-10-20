@@ -28,7 +28,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const App = () => {
   return (
-    <section className="flex flex-col min-h-screen">
+    <section className="flex flex-col min-h-screen overflow-x-hidden overflow-hidden">
       <Navbar />
 
       <main className="flex-grow">
