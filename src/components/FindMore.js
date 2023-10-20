@@ -243,7 +243,7 @@ const FindMore = () => {
                             </div>
                         </a>
                     </div>
-                <div className="relative box-border w-[77.09rem] h-[0.09rem] border-t-[1.5px] border-solid border-text-fields-grey-hf" />
+                <div className="relative box-border pl-5 max-lg:w-[50rem] lg:w-[77.09rem] h-[0.09rem] border-t-[1.5px] border-solid border-text-fields-grey-hf" />
                 </div>
             </div>
             </div>
