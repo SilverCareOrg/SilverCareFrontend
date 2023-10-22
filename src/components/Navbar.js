@@ -14,6 +14,9 @@ import cart_svg from "../styles/icons/cart.svg";
 import user_svg from "../styles/icons/user.svg";
 import command_svg from "../styles/icons/command.svg";
 import chat_svg from "../styles/icons/chat.svg";
+import menu_svg from "../styles/icons/menu_icon.svg";
+import x_svg from "../styles/icons/x_icon.svg";
+import { CSSTransition } from 'react-transition-group';
 
 const Navbar = () => {
   // React States
@@ -27,6 +30,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeLink, setActiveLink] = useState("");
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token") ? setIsLoggedIn(true) : setIsLoggedIn(false);
@@ -62,6 +66,10 @@ const Navbar = () => {
 
   const closeVerticalMenu = () => {
     setVerticalMenu(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(prevState => !prevState)
   };
 
 
@@ -258,97 +266,83 @@ const Navbar = () => {
   //   </ul>
   // )}
   //   </div>
-  <div className="relative left-[calc(50%_-_720px)] w-[90rem] flex flex-col items-center justify-start text-center text-[0.88rem]">
-  <div className="bg-white w-[90rem] h-[5rem] overflow-hidden shrink-0 flex flex-row items-center justify-center py-[0rem] px-[1.5rem] box-border">
-    <div className="w-[77rem] flex flex-row items-center justify-center">
-      <div className="flex-1 flex flex-row items-center justify-between">
-        <div className="flex flex-row items-start justify-start">
-        <NavLink to="/">
-          <div className="flex flex-row items-center justify-center">
-            <img
-              className="relative w-[7.72rem] h-[2.5rem]"
-              alt=""
-              src={logo_img}
-            />
-          </div>
-          </NavLink>
-        </div>
-        <div className="w-[66.91rem] overflow-hidden shrink-0 flex flex-row items-center justify-end gap-[1rem]">
-          {/* <div className="flex-1 hidden flex-col items-center justify-end py-[0rem] px-[2rem] text-left text-[1rem] text-text-fields-grey">
-            <div className="self-stretch rounded bg-white box-border h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] border-[1px] border-solid border-black">
-              <div className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]">
-                Cauta o experienta
+
+  <div>
+  <div className="max-lg:hidden">
+    <div className="relative left-[calc(50%_-_720px)] w-[90rem] flex flex-col items-center justify-start text-center text-[0.88rem]">
+      <div className="bg-white w-[90rem] h-[5rem] overflow-hidden shrink-0 flex flex-row items-center justify-center py-[0rem] px-[1.5rem] box-border">
+        <div className="w-[77rem] flex flex-row items-center justify-center">
+          <div className="flex-1 flex flex-row items-center justify-between">
+            <div className="flex flex-row items-start justify-start">
+            <Link to="/">
+              <div className="flex flex-row items-center justify-center">
+                <img
+                  className="relative w-[7.72rem] h-[2.5rem]"
+                  alt=""
+                  src={logo_img}
+                />
               </div>
-              <img
-                className="relative w-[1.5rem] h-[1.5rem]"
-                alt=""
-                src={command_svg}
-              />
+              </Link>
             </div>
-          </div> */}
-          {/* <div className="flex flex-row items-center justify-start">
-            <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6.44rem] h-[2rem] shrink-0">
-              RO/EN
-            </b>
-          </div> */}
+            <div className="w-[66.91rem] overflow-hidden shrink-0 flex flex-row items-center justify-end gap-[1rem]">
+              {/* <div className="flex-1 hidden flex-col items-center justify-end py-[0rem] px-[2rem] text-left text-[1rem] text-text-fields-grey">
+                <div className="self-stretch rounded bg-white box-border h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] border-[1px] border-solid border-black">
+                  <div className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]">
+                    Cauta o experienta
+                  </div>
+                  <img
+                    className="relative w-[1.5rem] h-[1.5rem]"
+                    alt=""
+                    src={command_svg}
+                  />
+                </div>
+              </div> */}
+              {/* <div className="flex flex-row items-center justify-start">
+                <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6.44rem] h-[2rem] shrink-0">
+                  RO/EN
+                </b>
+              </div> */}
 
-        <NavLink
-            to="/product"
-            >
-          <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem] text-accent">
-            <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
-              <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
-              <img
-                className="absolute my-0 mx-[!important] h-[43.33%] w-8/12 top-[37.33%] right-[25%] bottom-[33.33%] left-[25%] max-w-full overflow-hidden max-h-full z-[1]"
-                alt=""
-                src={command_svg}
-              />
-            </div>
-            <b className="relative tracking-[0.15em] leading-[120%] uppercase">
-              rezerva acum
-            </b>
-          </div>
-          </NavLink>
-
-          <NavLink
-            to="/contact"
-            >
-          <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem]">
-            <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
-              <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
-              <img
-                className="absolute my-0 mx-[!important] h-[43.74%] w-8/12 top-[29.17%] right-[25%] bottom-[27.09%] left-[25%] max-w-full overflow-hidden max-h-full z-[1]"
-                alt=""
-                src={chat_svg}
-              />
-            </div>
-            <b className="relative tracking-[0.15em] leading-[120%] uppercase">
-              CONTACT
-            </b>
-          </div>
-          </NavLink>
-
-          {isLoggedIn ? (
-           
-           <button onClick={handleLogout}>
-            <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem]">
-            <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
-              <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
-              <img
-                className="absolute my-0 mx-[!important] h-3/6 w-[50.75%] top-[22.82%] right-[29.17%] bottom-[27.18%] left-[27.08%] max-w-full overflow-hidden max-h-full z-[1]"
-                alt=""
-                src={user_svg}
-              />
+            <Link
+                to="/product"
+                >
+              <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem] text-accent">
+                <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+                  <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+                  <img
+                    className="absolute my-0 mx-[!important] h-[43.33%] w-8/12 top-[37.33%] right-[25%] bottom-[33.33%] left-[25%] max-w-full overflow-hidden max-h-full z-[1]"
+                    alt=""
+                    src={command_svg}
+                  />
+                </div>
+                <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                  rezerva acum
+                </b>
               </div>
-              <b className="relative tracking-[0.15em] leading-[120%] uppercase">
-              Logout
-            </b>
-            </div>
-            </button>
-          ) : (<NavLink
-            to="/login"
-            >
+              </Link>
+
+              <Link
+                to="/contact"
+                >
               <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem]">
+                <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+                  <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+                  <img
+                    className="absolute my-0 mx-[!important] h-[43.74%] w-8/12 top-[29.17%] right-[25%] bottom-[27.09%] left-[25%] max-w-full overflow-hidden max-h-full z-[1]"
+                    alt=""
+                    src={chat_svg}
+                  />
+                </div>
+                <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                  CONTACT
+                </b>
+              </div>
+              </Link>
+
+              {isLoggedIn ? (
+              
+              <button onClick={handleLogout}>
+                <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem]">
                 <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
                   <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
                   <img
@@ -356,61 +350,231 @@ const Navbar = () => {
                     alt=""
                     src={user_svg}
                   />
-                </div>
-                <b className="relative tracking-[0.15em] leading-[120%] uppercase">
-                  Autentifică-te
+                  </div>
+                  <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                  Logout
                 </b>
-              </div>
-          </NavLink>)}
+                </div>
+                </button>
+              ) : (<Link
+                to="/login"
+                >
+                  <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border gap-[0.5rem]">
+                    <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+                      <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+                      <img
+                        className="absolute my-0 mx-[!important] h-3/6 w-[50.75%] top-[22.82%] right-[29.17%] bottom-[27.18%] left-[27.08%] max-w-full overflow-hidden max-h-full z-[1]"
+                        alt=""
+                        src={user_svg}
+                      />
+                    </div>
+                    <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                      Autentifică-te
+                    </b>
+                  </div>
+              </Link>)}
 
-          <button
-            className="relative group"
-            onClick={toggleCartPanel}
-          >
-            <div className="rounded-31xl bg-accent overflow-hidden flex flex-row items-center justify-start relative gap-[0.63rem]">
-              <div className="relative bg-accent w-[3rem] h-[3rem] z-[0]" />
-              <img
-                className="absolute my-0 mx-[!important] top-[0.27rem] left-[0.04rem] w-[3rem] h-[2.5rem] z-[1]"
-                alt=""
-                src={cart_svg}
-              />
+              <button
+                className="relative group"
+                onClick={toggleCartPanel}
+              >
+                <div className="rounded-31xl bg-accent overflow-hidden flex flex-row items-center justify-start relative gap-[0.63rem]">
+                  <div className="relative bg-accent w-[3rem] h-[3rem] z-[0]" />
+                  <img
+                    className="absolute my-0 mx-[!important] top-[0.27rem] left-[0.04rem] w-[3rem] h-[2.5rem] z-[1]"
+                    alt=""
+                    src={cart_svg}
+                  />
+                </div>
+              </button>
             </div>
-          </button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div className="bg-white w-[90rem] h-[3.5rem] overflow-hidden shrink-0 flex flex-row items-center justify-center py-[0rem] px-[1.5rem] box-border">
-    <div className="w-[77rem] flex flex-row items-center justify-center">
-      <div className="flex-1 flex flex-row items-start justify-start py-[0rem] px-[12rem] gap-[2rem]">
-      
-      <NavLink to="/category">
-        <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
-          EXPERIENTE
-        </b>
-        </NavLink>
+      <div className="bg-white w-[90rem] h-[3.5rem] overflow-hidden shrink-0 flex flex-row items-center justify-center py-[0rem] px-[1.5rem] box-border">
+        <div className="w-[77rem] flex flex-row items-center justify-center">
+          <div className="flex-1 flex flex-row items-start justify-start py-[0rem] px-[12rem] gap-[2rem]">
+          
+          <Link to="/category">
+            <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
+              EXPERIENTE
+            </b>
+            </Link>
 
-        {/* <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
-          LOCATIE
-        </b> */}
+            {/* <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
+              LOCATIE
+            </b> */}
 
-      <NavLink to="/category">
-        <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
-          OCAZIE
-        </b>
-        </NavLink>
+          <Link to="/category">
+            <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
+              OCAZIE
+            </b>
+            </Link>
 
-        <NavLink to="/category">
-        <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[5rem] h-[2rem] shrink-0">
-          CADOU
-        </b>
-        </NavLink>
+            <Link to="/category">
+            <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[5rem] h-[2rem] shrink-0">
+              CADOU
+            </b>
+            </Link>
 
+          </div>
+        </div>
       </div>
+      {visibleCartPanel && <CartPanel onClose={closeCartPanel}></CartPanel>}
     </div>
   </div>
-  {visibleCartPanel && <CartPanel onClose={closeCartPanel}></CartPanel>}
-</div>
+
+    <div className="lg:hidden">
+      <div className="relative top-[1rem] left-[0rem] h-[6.5rem] mb-5 text-[0.75rem]">
+          <div className="absolute h-[53.85%] w-full top-[0%] right-[0%] bottom-[46.15%] left-[0%] flex flex-col items-center justify-start">
+            <div className="flex-1 w-[20.44rem] flex flex-col items-center justify-center">
+              <div className="self-stretch flex-1 flex flex-row items-center justify-between">
+                <div className="flex flex-row items-start justify-start">
+                <NavLink to="/">
+                  <div className="flex flex-row items-center justify-center">
+                    <img
+                      className="relative w-[6rem] h-[2rem]"
+                      alt=""
+                      src={logo_img}
+                    />
+                  </div>
+                </NavLink>
+                </div>
+                <div className="flex-1 overflow-hidden flex flex-row items-center justify-end gap-[1rem]">
+                  <div className="flex-1 hidden" />
+                  <button onClick={toggleCartPanel} className="rounded-31xl bg-accent w-[2rem] h-[2rem] overflow-hidden shrink-0 flex flex-row items-center justify-center">
+                    <img
+                      className="relative w-[3rem] h-[2.5rem] z-[1]"
+                      alt=""
+                      src={cart_svg}
+                    />
+                  </button>
+                  <button onClick={toggleMenu} className="rounded-31xl w-[2rem] h-[2rem] overflow-hidden shrink-0 flex flex-row items-center justify-center">
+                  <CSSTransition
+                    in={isMenuOpen}
+                    timeout={200} // Adjust the animation duration as needed
+                    classNames="menu-icon"
+                  >
+                    {isMenuOpen ? (
+                      <img className="w-6 h-8 relative" alt="" src={x_svg} />
+                    ) : (
+                      <img className="w-6 h-8 relative" alt="" src={menu_svg} />
+                    )}
+                  </CSSTransition>
+                  </button>
+                </div>
+              </div>
+                      
+            {isMenuOpen && (
+            <div className="z-50 absolute top-0 right-0 mt-12 mr-4 mr-11 bg-white border border-gray-300 p-2 rounded-lg shadow-md">
+                <Link
+                  to="/product"
+                  >
+                <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] pr-[2rem] box-border gap-[0.5rem] text-accent">
+                  <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+                    <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+                    <img
+                      className="absolute my-0 mx-[!important] h-[43.33%] w-8/12 top-[37.33%] right-[25%] bottom-[33.33%] left-[25%] max-w-full overflow-hidden max-h-full z-[1]"
+                      alt=""
+                      src={command_svg}
+                    />
+                  </div>
+                  <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                    rezerva acum
+                  </b>
+                </div>
+                </Link>
+
+                <Link
+                  to="/contact"
+                  >
+                <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] box-border gap-[0.5rem]">
+                  <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+                    <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+                    <img
+                      className="absolute my-0 mx-[!important] h-[43.74%] w-8/12 top-[29.17%] right-[25%] bottom-[27.09%] left-[25%] max-w-full overflow-hidden max-h-full z-[1]"
+                      alt=""
+                      src={chat_svg}
+                    />
+                  </div>
+                  <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                    CONTACT
+                  </b>
+                </div>
+                </Link>
+
+                
+                {isLoggedIn ? (
+              
+              <button onClick={handleLogout}>
+                <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] box-border gap-[0.5rem]">
+                <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+                  <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+                  <img
+                    className="absolute my-0 mx-[!important] h-3/6 w-[50.75%] top-[22.82%] right-[29.17%] bottom-[27.18%] left-[27.08%] max-w-full overflow-hidden max-h-full z-[1]"
+                    alt=""
+                    src={user_svg}
+                  />
+                  </div>
+                  <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                  Logout
+                </b>
+                </div>
+                </button>
+              ) : (<Link
+                to="/login"
+                >
+                  <div className="rounded bg-white h-[3rem] flex flex-row items-center justify-start py-[0rem] box-border gap-[0.5rem]">
+                    <div className="flex flex-row items-center justify-start relative gap-[0.63rem]">
+                      <div className="relative rounded-3xl bg-white w-[3rem] h-[3rem] z-[0]" />
+                      <img
+                        className="absolute my-0 mx-[!important] h-3/6 w-[50.75%] top-[22.82%] right-[29.17%] bottom-[27.18%] left-[27.08%] max-w-full overflow-hidden max-h-full z-[1]"
+                        alt=""
+                        src={user_svg}
+                      />
+                    </div>
+                    <b className="relative tracking-[0.15em] leading-[120%] uppercase">
+                      Autentifică-te
+                    </b>
+                  </div>
+              </Link>)}
+            </div>
+            )}
+            </div>
+          </div>
+          <div className="absolute h-[46.15%] w-full top-[53.85%] right-[0%] bottom-[0%] left-[0%] flex flex-col items-center justify-start">
+            <div className="flex-1 w-[20.44rem] flex flex-col items-center justify-center">
+              <div className="self-stretch flex flex-row items-center justify-center">
+                <div className="flex-1 flex flex-row items-start justify-between">
+
+                  <Link to="/category">
+                    <div className="relative tracking-[0.15em] leading-[120%] uppercase font-semibold">
+                      EXPERIENTE
+                    </div>
+                  </Link>
+
+                  {/* <div className="relative tracking-[0.15em] leading-[120%] uppercase font-semibold">
+                    LOCATIE
+                  </div> */}
+
+                  <Link to="/category">
+                    <div className="relative tracking-[0.15em] leading-[120%] uppercase font-semibold">
+                      OCAZIE
+                    </div>
+                  </Link>
+
+                  <Link to="/category">
+                    <div className="relative tracking-[0.15em] leading-[120%] uppercase font-semibold">
+                      CADOU
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
   );
 };
 

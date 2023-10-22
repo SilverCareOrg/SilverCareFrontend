@@ -5,6 +5,28 @@
 @tailwind components;
 @tailwind utilities;
 
+.menu-icon-enter {
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+.menu-icon-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: transform 200ms, opacity 200ms;
+}
+
+.menu-icon-exit {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.menu-icon-exit-active {
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 200ms, opacity 200ms;
+}
+
 .button-link {
   text-decoration: none;
   color: #13194c;
