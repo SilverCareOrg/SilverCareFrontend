@@ -63,14 +63,14 @@ const CategoryRow = ({ categories }) => {
     };
     
 const categories = [
-    { name: 'Spiritualitate', link: '/product/Spiritualitate', big_image: findmore_spiritualitate_mare, small_image: findmore_spiritualitate },
-    { name: 'Excursii', link: '/product/Excursii', big_image: findmore_excursii_mare, small_image: findmore_excursii },
-    { name: 'Sănătate', link: '/product/Sanatate', big_image: findmore_sanatate_mare, small_image: findmore_sanatate },
-    { name: 'Sport', link: '/product/Sport', big_image: findmore_sport_mare, small_image: findmore_sport },
-    { name: 'Evenimente', link: '/product/Evenimente', big_image: findmore_evenimente_mare, small_image: findmore_evenimente },
-    { name: 'Artă', link: '/product/Arta', big_image: findmore_arta_mare, small_image: findmore_arta },
-    { name: 'Cursuri', link: '/product/Cursuri%20de%20limbi%20străine', big_image: findmore_cursuri_mare, small_image: findmore_cursuri },
-    { name: 'Hobby', link: '/product/Hobby', big_image: findmore_hobby_mare, small_image: findmore_hobby },
+    { name: 'Spiritualitate', link: '/product?category=Spiritualitate', big_image: findmore_spiritualitate_mare, small_image: findmore_spiritualitate },
+    { name: 'Excursii', link: '/product?category=Excursii', big_image: findmore_excursii_mare, small_image: findmore_excursii },
+    { name: 'Sănătate', link: '/product?category=Sanatate', big_image: findmore_sanatate_mare, small_image: findmore_sanatate },
+    { name: 'Sport', link: '/product?category=Sport', big_image: findmore_sport_mare, small_image: findmore_sport },
+    { name: 'Evenimente', link: '/product?category=Evenimente', big_image: findmore_evenimente_mare, small_image: findmore_evenimente },
+    { name: 'Artă', link: '/product?category=Arta', big_image: findmore_arta_mare, small_image: findmore_arta },
+    { name: 'Cursuri', link: '/product?category=Cursuri%20de%20limbi%20străine', big_image: findmore_cursuri_mare, small_image: findmore_cursuri },
+    { name: 'Hobby', link: '/product?category=Hobby', big_image: findmore_hobby_mare, small_image: findmore_hobby },
 ];
 
 const category_hero_style = {

@@ -6,27 +6,27 @@ import {NavLink} from "react-router-dom";
 import JoinUs from './JoinUs';
 
 const categories = [
-  { name: 'Spiritualitate', link: '/product/Spiritualitate'},
-  { name: 'Excursii', link: '/product/Excursii'},
-  { name: 'Sănătate', link: '/product/Sanatate'},
-  { name: 'Sport', link: '/product/Sport'},
-  { name: 'Divertisment', link: '/product/Divertisment'},
-  { name: 'Artă', link: '/product/Arta'},
-  { name: 'Cursuri', link: '/product/Cursuri%20de%20limbi%20străine'},
-  { name: 'Hobby', link: '/product/Hobby'},
+  { name: 'Spiritualitate', link: '/product?category=Spiritualitate'},
+  { name: 'Excursii', link: '/product?category=Excursii'},
+  { name: 'Sănătate', link: '/product?category=Sanatate'},
+  { name: 'Sport', link: '/product?category=Sport'},
+  { name: 'Divertisment', link: '/product?category=Divertisment'},
+  { name: 'Artă', link: '/product?category=Arta'},
+  { name: 'Cursuri', link: '/product?category=Cursuri%20de%20limbi%20străine'},
+  { name: 'Hobby', link: '/product?category=Hobby'},
 ];
 
 const locations = [
-  { name: 'Bucharest', link: '/product/Bucharest'},
-  { name: 'Cluj', link: '/product/Cluj'},
-  { name: 'Timisoara', link: '/product/Timisoara'},
-  { name: 'Iasi', link: '/product/Iasi'},
-  { name: 'Constanta', link: '/product/Constanta'},
-  { name: 'Sibiu', link: '/product/Sibiu'},
-  { name: 'Oradea', link: '/product/Oradea'},
-  { name: 'Brasov', link: '/product/Brasov'},
-  { name: 'Craiova', link: '/product/Craiova'},
-]
+  { name: 'Bucharest', link: '/product?location=Bucharest'},
+  { name: 'Cluj', link: '/product?location=Cluj'},
+  { name: 'Timisoara', link: '/product?location=Timisoara'},
+  { name: 'Iasi', link: '/product?location=Iasi'},
+  { name: 'Constanta', link: '/product?location=Constanta'},
+  { name: 'Sibiu', link: '/product?location=Sibiu'},
+  { name: 'Oradea', link: '/product?location=Oradea'},
+  { name: 'Brasov', link: '/product?location=Brasov'},
+  { name: 'Craiova', link: '/product?location=Craiova'},
+];
 
 const CategoryRow = ({ categories }) => {
   return (

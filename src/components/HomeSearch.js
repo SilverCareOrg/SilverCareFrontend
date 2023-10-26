@@ -8,7 +8,7 @@ const HomeSearch = () => {
   
     const handleSearch = () => {
       // Redirect to the search results page with the search term
-      navigate(`/product/search/${searchTerm}`);
+      navigate(`/product?search=${searchTerm}`);
     };
 
     const handleSearchChange = (e) => {

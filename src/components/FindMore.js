@@ -8,14 +8,14 @@ import findmore_cursuri from "../images/findmore_cursuri.png";
 import findmore_hobby from "../images/findmore_hobby.png";
 
 const categories = [
-    { name: 'Spiritualitate', link: '/product/Spiritualitate', image: findmore_spiritualitate },
-    { name: 'Excursii', link: '/product/Excursii', image: findmore_excursii },
-    { name: 'Sănătate', link: '/product/Sanatate', image: findmore_sanatate },
-    { name: 'Sport', link: '/product/Sport', image: findmore_sport },
-    { name: 'Divertisment', link: '/product/Divertisment', image: findmore_evenimente },
-    { name: 'Artă', link: '/product/Arta', image: findmore_arta },
-    { name: 'Cursuri', link: '/product/Cursuri%20de%20limbi%20străine', image: findmore_cursuri },
-    { name: 'Hobby', link: '/product/Hobby', image: findmore_hobby },
+    { name: 'Spiritualitate', link: '/product?category=Spiritualitate', image: findmore_spiritualitate },
+    { name: 'Excursii', link: '/product?category=Excursii', image: findmore_excursii },
+    { name: 'Sănătate', link: '/product?category=Sanatate', image: findmore_sanatate },
+    { name: 'Sport', link: '/product?category=Sport', image: findmore_sport },
+    { name: 'Divertisment', link: '/product?category=Divertisment', image: findmore_evenimente },
+    { name: 'Artă', link: '/product?category=Arta', image: findmore_arta },
+    { name: 'Cursuri', link: '/product?category=Cursuri%20de%20limbi%20străine', image: findmore_cursuri },
+    { name: 'Hobby', link: '/product?category=Hobby', image: findmore_hobby },
 ]
 
 const Category = ({ category }) => {
