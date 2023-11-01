@@ -16,6 +16,17 @@ function AdminAddService() {
     "Beneficiile alegerii acestei experiente",
   ];
 
+  const categories = [
+    'Spiritualitate',
+    'Excursii',
+    'Sănătate',
+    'Sport',
+    'Divertisment',
+    'Artă',
+    'Cursuri de limbi străine',
+    'Hobby',
+  ];
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -28,6 +39,8 @@ function AdminAddService() {
     map_location: '',
     city: '',
     county: '',
+    category: '',
+    iban: '',
   });
   const [options, setOptions] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -111,6 +124,8 @@ function AdminAddService() {
       map_location: "",
       details: "",
       option_has_location: false,
+      city: "",
+      county: "",
     };
     setOptions([...options, newOption]);
   };
@@ -270,6 +285,26 @@ function AdminAddService() {
       </div>
 
       <div className="mb-4">
+        <label htmlFor="category" className="block font-semibold">Category</label>
+        <select
+          id="category"
+          name="category"
+          value={formData.category}
+          onChange={handleInputChange}
+          className="w-full border rounded-md p-2"
+        >
+          <option value="" disabled>
+            Select a Category
+          </option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-4">
         <label htmlFor="description" className="block font-semibold">Description</label>
         <textarea
           id="description"
@@ -278,6 +313,20 @@ function AdminAddService() {
           onChange={handleInputChange}
           required
           rows="4"
+          className="w-full border rounded-md p-2"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="iban" className="block font-semibold">
+          IBAN
+        </label>
+        <input
+          type="number"
+          id="iban"
+          name="iban"
+          value={formData.iban}
+          onChange={handleInputChange}
           className="w-full border rounded-md p-2"
         />
       </div>
@@ -355,7 +404,7 @@ function AdminAddService() {
       </div>}
 
       {formData.options_common_city && formData.common_location && <div className="mb-4">
-          <label htmlFor="location" className="block font-semibold">Location</label>
+          <label htmlFor="location" className="block font-semibold">Location (Address)</label>
           <input
             type="text"
             id="location"
@@ -525,8 +574,43 @@ function AdminAddService() {
                 </div>
               </div>}
 
+              {option.option_has_location && 
+                 <div className="mb-4">
+                 <label htmlFor={`optionCity${index}`} className="block font-semibold">
+                   City
+                 </label>
+                 <input
+                   type="text"
+                   id={`optionCity${index}`}
+                   name="city"
+                   value={option.city}
+                   onChange={(e) =>
+                     handleOptionChange(index, "city", e.target.value)
+                   }
+                   className="w-full border rounded-md p-2"
+                 />
+               </div>}
+
+              {option.option_has_location &&
+               <div className="mb-4">
+                 <label htmlFor={`optionCounty${index}`} className="block font-semibold">
+                   County
+                 </label>
+                 <input
+                   type="text"
+                   id={`optionCounty${index}`}
+                   name="county"
+                   value={option.county}
+                   onChange={(e) =>
+                     handleOptionChange(index, "county", e.target.value)
+                   }
+                   className="w-full border rounded-md p-2"
+                 />
+               </div>
+              }
+
               {option.option_has_location && <div className="mb-4">
-                <label htmlFor={`optionLocation${index}`} className="block font-semibold">Location</label>
+                <label htmlFor={`optionLocation${index}`} className="block font-semibold">Location (Address)</label>
                 <input
                   type="text"
                   id={`optionLocation${index}`}
