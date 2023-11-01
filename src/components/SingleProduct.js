@@ -5,7 +5,7 @@ import { useEffect, useRef, useState  } from "react";
 
 const SingleProduct = ({ product }) => {
 
-  const { img_path, name, price } = product;
+  const { img_path, name } = product;
   const url = "/" + name;
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   const baseUrl = window.location.origin;
@@ -13,7 +13,23 @@ const SingleProduct = ({ product }) => {
   // var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
   // console.log(final_img_path);
 
+  const DisplayPriceText = () => {
+    var min = product.options[0].price;
 
+    for (let i = 1; i < product.options.length; i++) {
+      if (product.options[i].price < min) {
+        min = product.options[i].price;
+      }
+    }
+
+    if (min == "0") {
+      return (<span className="text-blue-500">Gratis</span>);
+    } else if (product.options.length == 1) {
+      return (<span>{min} RON</span>);
+    } else {
+      return (<span>De la {min} RON</span>);
+    }
+  };
 
   const handleAddCart = async (event) => {
     //Prevent page reload
@@ -94,8 +110,7 @@ const SingleProduct = ({ product }) => {
             </div>
 
             <div className="self-stretch absolute bottom-2 right-2 lg:px-[1rem] text-black tracking-[0.05em] leading-[110%] font-semibold max-lg:text-[1.1rem] lg:text-[1rem] mt-auto">
-              {/* <span className="">{price === "free" ? "Gratis" : price + " RON"}</span> */}
-              {price == "free" ? <span className="text-blue-500">Gratis</span> : <span className="">{price} RON</span> }
+              <DisplayPriceText />
             </div>
           </div>
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import linkedin_svg from "../styles/icons/linkedin.svg";
 import instagram_svg from "../styles/icons/instagram.svg";
 import slash_svg from "../styles/icons/slash.svg";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import JoinUs from './JoinUs';
 
 const categories = [
@@ -71,23 +71,23 @@ const AboutSection = () => {
         Despre SilverCare
       </div>
       <div className="self-stretch flex flex-col items-start justify-start gap-[8px]">
-        <NavLink to="/about">
+        <Link to="/about">
         <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-medium">
           Povestea noastră
         </div>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/contact">
+        <Link to="/contact">
         <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-medium">
           Devino partener
         </div>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/contact">
+        <Link to="/contact">
         <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-medium">
           Intrebari și raspunsuri
         </div>
-        </NavLink>
+        </Link>
 
       </div>
     </div>

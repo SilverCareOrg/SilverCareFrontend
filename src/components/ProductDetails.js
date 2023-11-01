@@ -3,13 +3,19 @@ import '../styles/styles.css';
 import axios_api from '../api/axios_api';
 import { useEffect, useRef, useState  } from "react";
 import RegistrationService from "./RegistrationService";
+import product_page_location_icon from '../images/product_page_location_icon.svg';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import L from 'leaflet';
+import marker_icon_png from '../images/marker_icon.png';
 
 const ProductDetails = () => {
   const { state: product } = useLocation();
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
-  const { img_path, name, description, category, rating, price, organiser } = product;
+  const { city, county, common_location, options_common_city, img_path, name, description, category, organiser, sections, options, location, map_location } = product;
   var final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
 
+  const main_option = options.length > 0 ? options[0] : null;
+  console.log(main_option);
   const handleAddCart = async (event) => {
     //Prevent page reload
     event.preventDefault();
@@ -48,9 +54,46 @@ const ProductDetails = () => {
     console.log("Function" + visibleRegistrationService)
   };
 
+  const markerIcon = new L.Icon({
+    iconUrl: marker_icon_png,
+    iconRetinaUrl: marker_icon_png,
+    popupAnchor:  [-0, -0],
+    iconSize: [25,25],     
+  });
+
+  const MapSection = (e) => {
+    console.log(e);
+
+    const map_e = {
+      lat: e.e[0],
+      lng: e.e[1]
+    };
+    console.log(map_e);
+
+    // const [lat, lng] = e;
+
+    return (
+      <div className="w-full h-80 border rounded-md">
+        <MapContainer
+          center={map_e}
+          zoom={5}
+          style={{ height: "100%" }}
+          // onClick={handleMapLocationChange}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={map_e} icon={markerIcon}>
+            <Popup>Selected Location</Popup>
+          </Marker>
+        </MapContainer>
+      </div>
+    );
+  };
+
   const DetailsBlock = () => {
     return (
-      <div className="w-[44.13rem] flex flex-col items-start justify-center gap-[2.5rem]">
+      <div className="mb-5 w-[44.13rem] flex flex-col items-start justify-center gap-[2.5rem]">
       <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-text-fields-grey-hf flex items-center w-[44rem] shrink-0">
         {description}
       </div>
@@ -140,36 +183,149 @@ const ProductDetails = () => {
     );
   }
 
-  return (
-  <div>
-    <div className="max-lg:hidden self-stretch flex flex-col items-center justify-start">
-            <div className="flex flex-col items-center justify-center">
-              <div className="self-stretch flex flex-row items-center justify-start gap-[1rem]">
-                {/* <img
-                  className="relative rounded-sm w-[0.83rem] h-[1.63rem]"
-                  alt=""
-                  src={final_img_path}
-                /> */}
-                <div className="flex flex-col items-center justify-center gap-[1.5rem]">
-                  <img
-                    className="relative rounded-lg w-[77rem] h-[33rem] object-cover"
-                    alt=""
-                    src={final_img_path}
-                  />
-                  {/* <img
-                    className="relative w-[7rem] h-[1rem]"
-                    alt=""
-                    src="/group-18357.svg"
-                  /> */}
+  const RatingStarsBlock = () => {
+    return (
+      <div>
+          {/* <div className="h-[0.75rem] flex flex-row items-start justify-start gap-[0.25rem]">
+            <img
+              className="relative w-[0.75rem] h-[0.72rem]"
+              alt=""
+              src="/-icon-star1.svg"
+            />
+            <img
+              className="relative w-[0.75rem] h-[0.72rem]"
+              alt=""
+              src="/-icon-star1.svg"
+            />
+            <img
+              className="relative w-[0.75rem] h-[0.72rem]"
+              alt=""
+              src="/-icon-star1.svg"
+            />
+            <img
+              className="relative w-[0.75rem] h-[0.72rem]"
+              alt=""
+              src="/-icon-star1.svg"
+            />
+            <img
+              className="relative w-[0.75rem] h-[0.72rem]"
+              alt=""
+              src="/-icon-star1.svg"
+            />
+          </div> */}
+        </div>
+    );
+  };
+
+  const HeroSection = () => {
+    return (
+      <div className="max-lg:hidden self-stretch flex flex-col items-center justify-start">
+      <div className="flex flex-col items-center justify-center">
+        <div className="self-stretch flex flex-row items-center justify-start gap-[1rem]">
+          {/* <img
+            className="relative rounded-sm w-[0.83rem] h-[1.63rem]"
+            alt=""
+            src={final_img_path}
+          /> */}
+          <div className="flex flex-col items-center justify-center gap-[1.5rem]">
+            <img
+              className="relative rounded-lg w-[77rem] h-[33rem] object-cover"
+              alt=""
+              src={final_img_path}
+            />
+            {/* <img
+              className="relative w-[7rem] h-[1rem]"
+              alt=""
+              src="/group-18357.svg"
+            /> */}
+          </div>
+          {/* <img
+            className="relative rounded-sm w-[0.83rem] h-[1.63rem]"
+            alt=""
+            src="/vector-2.svg"
+          /> */}
+        </div>
+      </div>
+    </div>
+    );
+  };
+
+  const HeaderSection = () => {
+    return (
+      <div className="w-[17.5rem] flex flex-col items-end justify-start gap-[1rem] text-[0.88rem] text-text-fields-grey-hf">
+        <div className="w-[17.5rem] flex flex-row items-center justify-start gap-[0.63rem]">
+          <b className="relative tracking-[0.15em] leading-[120%] uppercase">{`ORGANIZATOR: `}</b>
+          <div className="flex-1 relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-dark-navy text-right">
+            {organiser}
+          </div>
+        </div>
+        {(main_option != null || options_common_city) &&
+        <div className="flex flex-row items-center justify-start gap-[1rem] text-[1rem] text-dark-navy">
+          <img
+            className="relative w-[1.13rem] h-[1.5rem]"
+            alt=""
+            src={product_page_location_icon}
+          />
+          <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
+            {city != null && options_common_city ? city : ""}
+            {main_option != null ? main_option.city : ""}
+
+            {county != null && county != city && options_common_city ? ", " + county : ""}
+            {main_option != null && main_option.city != main_option.county ? ", " + main_option.county : ""}
+          </div>
+        </div>}
+      </div>
+
+    );
+  };
+
+  const CartSection = () => {
+    return (
+      <div className="self-stretch flex flex-row items-start justify-start">
+          <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[3.5rem] px-[2rem] box-border">
+            <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
+              <div className="w-[20.25rem] flex flex-col items-start justify-start gap-[1rem]">
+                <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center h-[1.5rem] shrink-0">{`Masaj terapeutic `}</div>
+                <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
+                  <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+                    <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
+                    <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center w-[3.13rem] shrink-0">{`26 sep `}</div>
+                  </div>
+                  <div className="flex flex-row items-center justify-center gap-[0.25rem]">
+                    <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Ora: `}</div>
+                    <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
+                      11:00am
+                    </div>
+                  </div>
                 </div>
-                {/* <img
-                  className="relative rounded-sm w-[0.83rem] h-[1.63rem]"
-                  alt=""
-                  src="/vector-2.svg"
-                /> */}
+              </div>
+            </div>
+            <div className="self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
+              <div className="self-stretch flex flex-row items-center justify-start gap-[1.5rem]">
+                <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Pret : `}</div>
+                <div className="flex-1 relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center h-[2rem]">
+                  195RON
+                </div>
+              </div>
+              <div
+                className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
+                // onClick={openFrame}
+              >
+                <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
+                  <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
+                    ADAUGA IN COS
+                  </b>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+    );
+  };
+
+  return (
+  <div className="mb-5">
+          <HeroSection />
           <div className="pt-[2rem] pb-[01rem] self-stretch flex flex-col items-center justify-start">
             <div className="w-[77rem] h-[4rem] flex flex-col items-center justify-center">
               <div className="self-stretch flex-1 flex flex-row items-center justify-center">
@@ -177,52 +333,9 @@ const ProductDetails = () => {
                   <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center h-[2rem] shrink-0 text-[2rem]">
                     {name}
                   </div>
-                  {/* <div className="h-[0.75rem] flex flex-row items-start justify-start gap-[0.25rem]">
-                    <img
-                      className="relative w-[0.75rem] h-[0.72rem]"
-                      alt=""
-                      src="/-icon-star1.svg"
-                    />
-                    <img
-                      className="relative w-[0.75rem] h-[0.72rem]"
-                      alt=""
-                      src="/-icon-star1.svg"
-                    />
-                    <img
-                      className="relative w-[0.75rem] h-[0.72rem]"
-                      alt=""
-                      src="/-icon-star1.svg"
-                    />
-                    <img
-                      className="relative w-[0.75rem] h-[0.72rem]"
-                      alt=""
-                      src="/-icon-star1.svg"
-                    />
-                    <img
-                      className="relative w-[0.75rem] h-[0.72rem]"
-                      alt=""
-                      src="/-icon-star1.svg"
-                    />
-                  </div> */}
+                  <RatingStarsBlock />
                 </div>
-                <div className="w-[17.5rem] flex flex-col items-end justify-start gap-[1rem] text-[0.88rem] text-text-fields-grey-hf">
-                  <div className="w-[17.5rem] flex flex-row items-center justify-start gap-[0.63rem]">
-                    <b className="relative tracking-[0.15em] leading-[120%] uppercase">{`ORGANIZATOR: `}</b>
-                    <div className="flex-1 relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-dark-navy text-right">
-                      {organiser}
-                    </div>
-                  </div>
-                  <div className="flex flex-row items-center justify-start gap-[1rem] text-[1rem] text-dark-navy">
-                    <img
-                      className="relative w-[1.13rem] h-[1.5rem]"
-                      alt=""
-                      src="/icon-location.svg"
-                    />
-                    <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
-                      BUCURESTI
-                    </div>
-                  </div>
-                </div>
+                <HeaderSection />
               </div>
             </div>
           </div>
@@ -230,60 +343,7 @@ const ProductDetails = () => {
             <div className="w-[77rem] flex flex-row items-center justify-center">
               <div className="flex flex-row items-center justify-center py-[0rem] pr-[0rem] pl-[4.5rem] gap-[4rem] flex-grow">
                 <DetailsBlock />
-                <div className="self-stretch flex flex-row items-start justify-start">
-                  <div className="rounded-lg bg-light-purple w-[24.25rem] h-[30rem] flex flex-col items-start justify-between py-[3.5rem] px-[2rem] box-border">
-                    <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
-                      <div className="w-[20.25rem] flex flex-col items-start justify-start gap-[1rem]">
-                        <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center h-[1.5rem] shrink-0">{`Masaj terapeutic `}</div>
-                        <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
-                          <div className="flex flex-row items-start justify-start gap-[0.25rem]">
-                            <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
-                            <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center w-[3.13rem] shrink-0">{`26 sep `}</div>
-                          </div>
-                          <div className="flex flex-row items-center justify-center gap-[0.25rem]">
-                            <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Ora: `}</div>
-                            <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
-                              11:00am
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="self-stretch h-[5.13rem] flex flex-col items-start justify-center gap-[1rem] text-[1rem]">
-                        <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[15rem]">
-                          Numar de participanti
-                        </div>
-                        <div className="self-stretch rounded bg-white box-border h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
-                          <div className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]">
-                            o persoana
-                          </div>
-                          <img
-                            className="relative w-[1.5rem] h-[0.91rem]"
-                            alt=""
-                            src="/-icon-chevrondown.svg"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
-                      <div className="self-stretch flex flex-row items-center justify-start gap-[1.5rem]">
-                        <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Pret : `}</div>
-                        <div className="flex-1 relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center h-[2rem]">
-                          195RON
-                        </div>
-                      </div>
-                      <div
-                        className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
-                        // onClick={openFrame}
-                      >
-                        <div className="self-stretch rounded bg-tomato h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
-                          <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
-                            ADAUGA IN COS
-                          </b>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <CartSection />
               </div>
             </div>
           </div>
@@ -294,11 +354,7 @@ const ProductDetails = () => {
                   <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[39.5rem] h-[1.5rem] shrink-0">
                     LOCATIE
                   </div>
-                  <img
-                    className="relative w-[44.13rem] h-[25.31rem] object-cover"
-                    alt=""
-                    src="/img2@2x.png"
-                  />
+                  <MapSection e={options[0].map_location} />
                   <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[43.94rem] h-[1rem] shrink-0">
                     str. Horatiu 28, Bucuresti 010834
                   </div>
