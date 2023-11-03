@@ -8,7 +8,6 @@
 @tailwind utilities;
 
 
-
 .menu-icon-enter {
   transform: scale(0.9);
   opacity: 0;

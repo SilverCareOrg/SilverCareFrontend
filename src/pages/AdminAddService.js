@@ -146,10 +146,26 @@ function AdminAddService() {
   };
 
   const handleOptionChange = (index, name, value) => {
-    const updatedOptions = [...options];
-    updatedOptions[index][name] = value;
-    setOptions(updatedOptions);
-  };
+    if (name === "date_time") {
+      // Parse the date string into a JavaScript Date object
+      const selectedDate = new Date(value);
+
+      // Adjust the date to the desired timezone (Bucharest)
+      const bucharestTimezoneOffset = -120; // Bucharest timezone offset in minutes (UTC+2)
+      selectedDate.setMinutes(selectedDate.getMinutes() - bucharestTimezoneOffset);
+
+      // Format the date with the timezone offset
+      const formattedDate = selectedDate.toISOString().slice(0, 16);
+
+      const updatedOptions = [...options];
+      updatedOptions[index][name] = formattedDate;
+      setOptions(updatedOptions);
+    } else {
+      const updatedOptions = [...options];
+      updatedOptions[index][name] = value;
+      setOptions(updatedOptions);
+    }
+  }
   
   const handleRemoveOption = (index) => {
     const updatedOptions = [...options];
@@ -173,11 +189,12 @@ function AdminAddService() {
     // Append other fields
     formDataToSubmit.append('options', JSON.stringify(options));
   
-    // Append sections as pairs of enums
+    const sect = [];
     Object.keys(sectionText).forEach((section) => {
-      formDataToSubmit.append('sections', JSON.stringify({ question: section, answer: sectionText[section] }));
+      sect.push({ question: section, answer: sectionText[section] });
     });
-
+    formDataToSubmit.append('sections', JSON.stringify({sections: sect}));
+  
     axios_api.post("/create_service/",
     formDataToSubmit
     , {withCredentials: true,
@@ -331,7 +348,7 @@ function AdminAddService() {
         />
       </div>
 
-      <div className="mb-4 relative  flex flex-row">
+      <div className="mb-4 relative flex flex-row">
         <label className="block font-semibold">
           Options Share the Same City
           <input
@@ -349,7 +366,7 @@ function AdminAddService() {
           >
             <span className="info-icon text-white font-semibold">i</span>
           </div>
-          <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 bg-white shadow-md p-2 mt-2 rounded-lg">
+          <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 shadow-md p-2 mt-2 rounded-lg">
             <p>If there are more options that may differ with price or coordinator etc., but the activities are taking place in the same city, check this box</p>
           </div>
         </div>
@@ -397,7 +414,7 @@ function AdminAddService() {
           >
             <span className="info-icon text-white font-semibold">i</span>
           </div>
-          <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 bg-white shadow-md p-2 mt-2 rounded-lg">
+          <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 shadow-md p-2 mt-2 rounded-lg">
             <p>If there are more options that may differ with price or coordinator etc., but the activities are taking place at the same location, check this box.</p>
           </div>
         </div>
@@ -450,7 +467,7 @@ function AdminAddService() {
           >
             <span className="info-icon text-white font-semibold">i</span>
           </div>
-          <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 bg-white shadow-md p-2 mt-2 rounded-lg">
+          <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 shadow-md p-2 mt-2 rounded-lg">
             <p>The options represent the details of a service. For example, if the service is a trip, then the options represent the different days of the trip. If the service is a course, then the options represent the different days of the course. If there is only one option, it means that it is a singular service and all data from the options will be represented as it must be. There should be at least one option, as it includes price, date etc.</p>
           </div>
         </div>
@@ -568,13 +585,13 @@ function AdminAddService() {
                   >
                     <span className="info-icon text-white font-semibold">i</span>
                   </div>
-                  <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 bg-white shadow-md p-2 mt-2 rounded-lg">
+                  <div className="flex flex-1 w-[15rem] bg-blue-400 text-white text-[0.8rem] hidden group-hover:block absolute z-10 shadow-md p-2 mt-2 rounded-lg">
                     <p>If there is a physical location for this option then please enter it. If, for all options, there is a common location, check the "common location" box.</p>
                   </div>
                 </div>
               </div>}
 
-              {option.option_has_location && 
+              {formData.options_common_city === false && option.option_has_location && 
                  <div className="mb-4">
                  <label htmlFor={`optionCity${index}`} className="block font-semibold">
                    City
@@ -591,7 +608,7 @@ function AdminAddService() {
                  />
                </div>}
 
-              {option.option_has_location &&
+              {formData.options_common_city === false && option.option_has_location &&
                <div className="mb-4">
                  <label htmlFor={`optionCounty${index}`} className="block font-semibold">
                    County
@@ -609,7 +626,7 @@ function AdminAddService() {
                </div>
               }
 
-              {option.option_has_location && <div className="mb-4">
+              {formData.common_location === false && option.option_has_location && <div className="mb-4">
                 <label htmlFor={`optionLocation${index}`} className="block font-semibold">Location (Address)</label>
                 <input
                   type="text"

@@ -17,14 +17,14 @@ const categories = [
 ];
 
 const locations = [
-  { name: 'Bucharest', link: '/product?location=Bucharest'},
+  { name: 'București', link: '/product?location=Bucuresti'},
   { name: 'Cluj', link: '/product?location=Cluj'},
-  { name: 'Timisoara', link: '/product?location=Timisoara'},
-  { name: 'Iasi', link: '/product?location=Iasi'},
-  { name: 'Constanta', link: '/product?location=Constanta'},
+  { name: 'Timișoara', link: '/product?location=Timisoara'},
+  { name: 'Iași', link: '/product?location=Iasi'},
+  { name: 'Constanța', link: '/product?location=Constanta'},
   { name: 'Sibiu', link: '/product?location=Sibiu'},
   { name: 'Oradea', link: '/product?location=Oradea'},
-  { name: 'Brasov', link: '/product?location=Brasov'},
+  { name: 'Brașov', link: '/product?location=Brasov'},
   { name: 'Craiova', link: '/product?location=Craiova'},
 ];
 
