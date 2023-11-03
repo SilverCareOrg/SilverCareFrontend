@@ -5,7 +5,7 @@ import { useEffect, useRef, useState  } from "react";
 
 const SingleProduct = ({ product }) => {
 
-  const { img_path, name, price } = product;
+  const { img_path, name } = product;
   const url = "/" + name;
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   const baseUrl = window.location.origin;
@@ -13,7 +13,23 @@ const SingleProduct = ({ product }) => {
   // var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
   // console.log(final_img_path);
 
+  const DisplayPriceText = () => {
+    var min = product.options[0].price;
 
+    for (let i = 1; i < product.options.length; i++) {
+      if (product.options[i].price < min) {
+        min = product.options[i].price;
+      }
+    }
+
+    if (min == "0") {
+      return (<span className="text-blue-500">Gratis</span>);
+    } else if (product.options.length == 1) {
+      return (<span>{min} RON</span>);
+    } else {
+      return (<span>De la {min} RON</span>);
+    }
+  };
 
   const handleAddCart = async (event) => {
     //Prevent page reload
@@ -53,56 +69,52 @@ const SingleProduct = ({ product }) => {
   };
 
   return (
-    <div className="max-sm:w-screen single-product flex flex-col bg-gray-50 gap-3 shadow-md hover:shadow-xl hover:scale-105 duration-300 px-4 py-7 rounded-sm overflow-hidden">
-      <div className="flex justify-center">
-        {/* {dev &&
-        <img
-          className="w-72 h-48 object-contain hover:scale-110 duration-500"
-          src={final_img_path}
-          alt={name}
-        />} */}
-        {/* {!dev &&  */}
+      <div className="bg-white relative top-[0rem] rounded-lg  max-lg:w-[21rem] lg:w-[17.75rem] h-[23.5rem] overflow-hidden border lg:border-gray-200 max-lg:border-gray-300"
+          style={{
+            transition: "transform 0.2s"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.03)";
+            e.currentTarget.style.boxShadow = "0px 16px 32px rgba(0, 0, 0, 0.1)"; // Adjust the shadow on hover
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0px 8px 16px rgba(0, 0, 0, 0)";
+          }}>
+        
+
+        <Link to={url} state={product}>
+        <div className="bg-white relative h-[18rem]  lg:w-[99.91%] top-[0%] right-[0.09%] bottom-[0%] left-[0%] flex flex-col items-end justify-between lg:py-[1.5rem] lg:px-[2rem] box-border">
           <img
-          className="w-72 h-48 object-contain hover:scale-110 duration-500"
-          src={final_img_path}
-          alt={name}/>
-          {/* } */}
+            className="absolute h-full w-full top-[0%] right-[0%] bottom-[0%] left-[0%] max-w-full overflow-hidden max-h-full object-cover"
+            alt=""
+            src={final_img_path}
+          />
+  
+          <div className="max-lg:hidden absolute top-0 left-0" style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0))", width: "23rem", height: "18rem" }} />
+        
+        </div>
+        </Link>
+
+          <div className="">
+            <div className="flex-1 flex flex-col py-[0.7rem] max-lg:px-[1rem] lg:px-[1rem] box-border">
+                <Link to={url} state={product}>
+                    <div className="self-stretch relative flex text-black tracking-[0.03em] leading-[110%] font-semibold max-lg:text-[1.1rem] lg:text-[1rem]">
+                      {product.name}
+                    </div>
+                </Link>
+
+                <div className="self-stretch absolute bottom-2  flex text-gray-500 pt-[0.2rem] tracking-[0.03em] leading-[110%] font-semibold max-lg:text-[1.1rem] lg:text-[0.8rem]">
+                      {product.organiser}
+                </div>
+            </div>
+
+            <div className="self-stretch absolute bottom-2 right-2 lg:px-[1rem] text-black tracking-[0.05em] leading-[110%] font-semibold max-lg:text-[1.1rem] lg:text-[1rem] mt-auto">
+              <DisplayPriceText />
+            </div>
+          </div>
       </div>
-      <Link
-        to={url}
-        state={product}
-        className="hover:text-rose-500 duration-300 flex justify-between items-center"
-      >
-        <h2 className="text-stone-950 font-semibold text-xl capitalize max-h-16 leading-7 relative">
-          {product.name}
-        </h2>
-      </Link>
-      <div className="mt-auto">
-      <p className="text-sm text-gray-600 mt-auto mb-3">
-        Preț: <span className="text-rose-500 font-semibold">{price === "free" ? "Gratis" : price}</span>
-      </p>
-      <div className="flex justify-between items-center mt-auto">
-        <NavLink
-          to={url}
-          state={product}
-          className="hover:text-rose-50 text-gray-900 duration-300 flex justify-between items-center"
-        >
-          <button className="text-sky-400 px-2 py-1 border border-sky-400 rounded-md hover:bg-sky-400 hover:text-sky-50 duration-300">
-            Mai multe informații
-          </button>
-        </NavLink>
-        <button
-          onClick={toggleRegistrationService}
-          className="bg-sky-400 text-sky-50 hover:bg-sky-50 hover:text-sky-400 duration-300 border border-sky-400 px-2 py-1 rounded-md"
-        >
-          Participă
-        </button>
-      </div>
-      </div>
-      {visibleRegistrationService && <RegistrationService onClose={closeRegistrationService} service_id={product.service_id}
-      service_name={name} service_price={price} service_image_path={img_path}></RegistrationService>}
-    </div>
-  );
+    );
 };
 
 export default SingleProduct;

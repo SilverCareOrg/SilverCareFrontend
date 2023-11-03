@@ -2,31 +2,31 @@ import React from 'react';
 import linkedin_svg from "../styles/icons/linkedin.svg";
 import instagram_svg from "../styles/icons/instagram.svg";
 import slash_svg from "../styles/icons/slash.svg";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import JoinUs from './JoinUs';
 
 const categories = [
-  { name: 'Spiritualitate', link: '/product/Spiritualitate'},
-  { name: 'Excursii', link: '/product/Excursii'},
-  { name: 'Sănătate', link: '/product/Sanatate'},
-  { name: 'Sport', link: '/product/Sport'},
-  { name: 'Divertisment', link: '/product/Divertisment'},
-  { name: 'Artă', link: '/product/Arta'},
-  { name: 'Cursuri', link: '/product/Cursuri%20de%20limbi%20străine'},
-  { name: 'Hobby', link: '/product/Hobby'},
+  { name: 'Spiritualitate', link: '/product?category=Spiritualitate'},
+  { name: 'Excursii', link: '/product?category=Excursii'},
+  { name: 'Sănătate', link: '/product?category=Sanatate'},
+  { name: 'Sport', link: '/product?category=Sport'},
+  { name: 'Divertisment', link: '/product?category=Divertisment'},
+  { name: 'Artă', link: '/product?category=Arta'},
+  { name: 'Cursuri', link: '/product?category=Cursuri%20de%20limbi%20străine'},
+  { name: 'Hobby', link: '/product?category=Hobby'},
 ];
 
 const locations = [
-  { name: 'Bucharest', link: '/product/Bucharest'},
-  { name: 'Cluj', link: '/product/Cluj'},
-  { name: 'Timisoara', link: '/product/Timisoara'},
-  { name: 'Iasi', link: '/product/Iasi'},
-  { name: 'Constanta', link: '/product/Constanta'},
-  { name: 'Sibiu', link: '/product/Sibiu'},
-  { name: 'Oradea', link: '/product/Oradea'},
-  { name: 'Brasov', link: '/product/Brasov'},
-  { name: 'Craiova', link: '/product/Craiova'},
-]
+  { name: 'București', link: '/product?location=Bucuresti'},
+  { name: 'Cluj', link: '/product?location=Cluj'},
+  { name: 'Timișoara', link: '/product?location=Timisoara'},
+  { name: 'Iași', link: '/product?location=Iasi'},
+  { name: 'Constanța', link: '/product?location=Constanta'},
+  { name: 'Sibiu', link: '/product?location=Sibiu'},
+  { name: 'Oradea', link: '/product?location=Oradea'},
+  { name: 'Brașov', link: '/product?location=Brasov'},
+  { name: 'Craiova', link: '/product?location=Craiova'},
+];
 
 const CategoryRow = ({ categories }) => {
   return (
@@ -71,23 +71,23 @@ const AboutSection = () => {
         Despre SilverCare
       </div>
       <div className="self-stretch flex flex-col items-start justify-start gap-[8px]">
-        <NavLink to="/about">
+        <Link to="/about">
         <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-medium">
           Povestea noastră
         </div>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/contact">
+        <Link to="/contact">
         <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-medium">
           Devino partener
         </div>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/contact">
+        <Link to="/contact">
         <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-medium">
           Intrebari și raspunsuri
         </div>
-        </NavLink>
+        </Link>
 
       </div>
     </div>
