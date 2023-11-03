@@ -63,25 +63,27 @@ const ProductDetails = () => {
   const parentRef = useRef(null);
   const cartRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
+
+  const handleScroll = () => {
+    if (parentRef.current && cartRef.current) {
+      const parentRect = parentRef.current.getBoundingClientRect();
+      const cartRect = cartRef.current.getBoundingClientRect();
+      
+      var pos_cond = parentRect.top <= 0 && parentRect.bottom >= cartRect.height;
+
+      setIsSticky(pos_cond);
+
+      if (pos_cond) {
+        cartRef.current.style.position = 'fixed';
+        cartRef.current.style.top = '0px';
+      } else {
+        cartRef.current.style.position = 'relative';
+      }
+    }
+  };
   
   useEffect(() => {
-    const handleScroll = () => {
-      if (parentRef.current && cartRef.current) {
-        const parentRect = parentRef.current.getBoundingClientRect();
-        const cartRect = cartRef.current.getBoundingClientRect();
-        
-        var pos_cond = parentRect.top <= 0 && parentRect.bottom >= cartRect.height;
-
-        setIsSticky(pos_cond);
-
-        if (pos_cond) {
-          cartRef.current.style.position = 'fixed';
-          cartRef.current.style.top = '0px';
-        } else {
-          cartRef.current.style.position = 'relative';
-        }
-      }
-    };
+    
 
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -95,7 +97,40 @@ const ProductDetails = () => {
 
   const closeRegistrationService = () => {
     setVisibleRegistrationService(false);
-    console.log("Function" + visibleRegistrationService)
+  };
+
+  const participantsMapper = {'o persoana' : 1,
+                                'doua persoane': 2,
+                                'trei persoane': 3,
+                                'patru persoane': 4,
+                                'cinci persoane': 5};
+  const participants_options = Object.keys(participantsMapper);
+  const [strNumberOfParticipants, setStrNumberOfParticipants] = useState('o persoana');
+  const [numberOfParticipants, setNumberOfParticipants] = useState(1);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleParticipantsOptionChange = (event) => {
+    setNumberOfParticipants(participantsMapper[event.target.value]);
+    setStrNumberOfParticipants(event.target.value);
+    handleScroll();
+
+    setTimeout(() => {
+      setIsSticky(true);
+      cartRef.current.style.position = 'fixed';
+      cartRef.current.style.top = '0px';
+    }, 1);
+  };
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(parseInt(event.target.value));
+    handleScroll();
+    setIsSticky(true);
+
+    setTimeout(() => {
+      setIsSticky(true);
+      cartRef.current.style.position = 'fixed';
+      cartRef.current.style.top = '0px';
+    }, 1);
   };
 
   const markerIcon = new L.Icon({
@@ -104,6 +139,7 @@ const ProductDetails = () => {
     popupAnchor:  [-0, -0],
     iconSize: [25,25],     
   });
+
 
   const MapSection = (e) => {
     const map_e = {
@@ -250,7 +286,7 @@ const ProductDetails = () => {
               </div>
             </div>
               
-              <div className="relative flex mt-5 text-[1rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]">
+              <div className="relative flex mt-5 text-[1rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem] shring-0">
                 {option.details}
               </div>
               
@@ -268,7 +304,6 @@ const ProductDetails = () => {
   };
 
   const CommonLocationBlock = () => {
-    console.log(main_option);
     return (
       <div className="mt-[2rem]">
         {common_location && map_location != "" && (main_option === null || (main_option != null && main_option.map_location == "")) && <div className="w-[44.13rem] flex flex-col items-start justify-center gap-[1.5rem]">
@@ -290,7 +325,7 @@ const ProductDetails = () => {
     return (
       <div className="mb-5 w-[44.13rem] flex flex-col items-start justify-center">
         <div className="mb-5 w-[44.13rem] flex flex-col items-start justify-center gap-[2rem]">
-          <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-text-fields-grey-hf flex items-center w-[44rem] shrink-0">
+          <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-text-fields-grey-hf flex items-center shrink-0">
             {description}
           </div>
             
@@ -403,7 +438,88 @@ const ProductDetails = () => {
     );
   };
 
-  const CartSectionMoreOptions = () => {
+  const CartSectionMoreOptions = ({ options, selectedOption, handleOptionChange }) => {
+    return (
+      <div className="flex-1 relative">
+      <div ref={cartRef} className={`${isSticky ? 'top-0' : ''}`}>
+        <div className="self-stretch flex flex-row items-start justify-start">
+            <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[3.5rem] px-[2rem] box-border">
+            <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
+                <div className="w-[20.25rem] flex flex-col items-start justify-start">
+                <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
+                  {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{location}</span></div>}
+                </div>
+              </div>
+              <div className="self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
+                  
+              <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem] select-label">
+                Alege varianta dorită:
+              </div>
+              <div className="flex flex-col items-start justify-start gap-[0.5rem]">
+                  {options.map((option) => (
+                    
+                    <div className="flex flex-row items-center justify-start gap-1rem" key={option.id}>
+                      <div className="relative rounded-50% box-border border-2px border-solid border-text-fields-grey-hf" />
+                      <div className="relative tracking-0.05em leading-1.5rem font-medium flex items-center shrink-0">
+                        <label className="flex flex-row gap-[1rem] text-[1.2rem]">
+                          <input
+                            type="radio"
+                            name="option"
+                            value={option.id}
+                            checked={selectedOption === option.id}
+                            onChange={handleOptionChange}
+                            style={{ backgroundColor: 'red' }}
+                          />
+                          {option.name} - {option.price === 0 ? <span className="text-blue-500">Gratis</span>: option.price + " RON"}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="self-stretch h-[5.13rem] flex flex-col items-start justify-center gap-[1rem] text-[1rem]">
+                  <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[15rem]">
+                    Număr de participanti
+                  </div>
+                  <div className="self-stretch rounded bg-white box-border h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                    <select
+                      value={strNumberOfParticipants}
+                      onChange={handleParticipantsOptionChange}
+                      className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
+                      style={{ border: 'none' }}
+                    >
+                      {participants_options.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="self-stretch flex flex-row items-center justify-start gap-[1.5rem]">
+                  <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Preț : `}</div>
+                  <div className="flex-1 relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center h-[2rem]">
+                    {selectedOption ? <span className="text-[1.5rem]">{numberOfParticipants * options.find(option => option.id === selectedOption).price} RON</span> : <span className="text-[1.5rem]">0 RON</span>}
+                  </div>
+                </div>
+                
+                <div
+                  className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
+                  onClick={handleAddCart}
+                >
+                  <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
+                    <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
+                      ADAUGĂ IN COS
+                    </b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    );
   }
 
   const CartSectionOneOption = ({ option }) => {
@@ -452,7 +568,7 @@ const ProductDetails = () => {
                 >
                   <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
                     <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
-                      ADAUGA IN COS
+                      ADAUGĂ IN COS
                     </b>
                   </div>
                 </div>
@@ -486,7 +602,11 @@ const ProductDetails = () => {
                 <DetailsBlock />
                 
                 {options.length === 1 && <CartSectionOneOption option={main_option} />}
-                {options.length > 1 && <CartSectionMoreOptions />}
+                {options.length > 1 && <CartSectionMoreOptions
+                                        options={options}
+                                        selectedOption={selectedOption}
+                                        handleOptionChange={handleOptionChange}
+                                      />}
               </div>
             </div>
           </div>

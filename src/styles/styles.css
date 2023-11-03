@@ -7,6 +7,9 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type='radio'] {
+  accent-color: #232323;
+}
 
 .menu-icon-enter {
   transform: scale(0.9);
