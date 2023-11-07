@@ -870,9 +870,9 @@ const ProductDetails = () => {
   const CartSectionMoreMobileOptions = ({ options, selectedOption, handleOptionChange }) => {
     return (
       <div className="flex-1 relative">
-      <div ref={cartRef} className={`${isSticky ? 'top-0' : ''}`}>
-        <div className="pl-[4.5rem] self-stretch flex flex-row items-start justify-start">
-            <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[3.5rem] px-[2rem] box-border">
+      <div ref={mobileCartRef} className={`${isSticky ? 'top-0' : ''}`}>
+        <div className="self-stretch flex flex-row items-start justify-start">
+            <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
                 <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
@@ -881,58 +881,58 @@ const ProductDetails = () => {
               </div>
               <div className="self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
                   
-              <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem] select-label">
-                Alege varianta dorită:
-              </div>
-              <div className="flex flex-col items-start justify-start gap-[0.5rem]">
-                  {options.map((option) => (
-                    
-                    <div className="flex flex-row items-center justify-start gap-1rem" key={option.id}>
-                      <div className="relative rounded-50% box-border border-2px border-solid border-text-fields-grey-hf" />
-                      <div className="relative tracking-0.05em leading-1.5rem font-medium flex items-center shrink-0">
-                        <label className="flex flex-row gap-[1rem] text-[1.2rem]">
-                          <input
-                            type="radio"
-                            name="option"
-                            value={option.id}
-                            checked={selectedOption === option.id}
-                            onChange={handleOptionChange}
-                            style={{ backgroundColor: 'red' }}
-                          />
-                          {option.name} - {option.price === 0 ? <span className="text-blue-500">Gratis</span>: option.price + " RON"}
-                        </label>
-                      </div>
-                    </div>
-                  ))}
+              <div className="self-stretch flex flex-col items-start justify-start gap-[0.5rem]">
+                <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-start justify-start shrink-0 text-[1rem] select-label">
+                  Alege dintre variantele următoare:
                 </div>
-
-                <div className="self-stretch h-[5.13rem] flex flex-col items-start justify-center gap-[1rem] text-[1rem]">
-                  <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[15rem]">
-                    Număr de participanti
-                  </div>
-                  <div className="self-stretch rounded bg-white box-border h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                <div className="flex-1 w-full">
+                  <div className="self-stretch rounded bg-white box-border h-[2rem] flex flex-row items-center justify-start py-[0rem] w-full gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
                     <select
-                      value={strNumberOfParticipants}
-                      onChange={handleParticipantsOptionChange}
-                      className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
-                      style={{ border: 'none' }}
+                      value={selectedOption}
+                      onChange={handleMobileOptionChange}
+                      className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
+                      style={{ border: 'none', width: '100%' }}
                     >
-                      {participants_options.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
+                      {options.map((option) => (
+                        <option key={option.id} value={option.id}>
+                          {option.name} - {option.price === 0 ? 'Gratis' : option.price + ' RON'}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
+              </div>
 
-                <div className="self-stretch flex flex-row items-center justify-start gap-[1.5rem]">
-                  <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Preț : `}</div>
-                  <div className="flex-1 relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center h-[2rem]">
-                    {selectedOption ? <span className="text-[1.5rem]">{numberOfParticipants * options.find(option => option.id === selectedOption).price} RON</span> : <span className="text-[1.5rem]">0 RON</span>}
+                <div className="w-full flex items-center">
+                <div className="flex-1">
+                  <div className="self-stretch flex flex-row items-start justify-start gap-[0.8rem]">
+                    <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Preț : `}</div>
+                    <div className="relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center">
+                      {selectedOption ? <span className="flex-1 text-[1rem]">{numberOfParticipants * options.find(option => option.id === selectedOption).price} RON</span> : <span className="text-[1.5rem]">0 RON</span>}
+                    </div>
                   </div>
                 </div>
-                
+
+                <div className="flex-1">
+                  <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[0.9rem]">
+                    <div className="self-stretch rounded bg-white box-border h-[2rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                      <select
+                        value={strNumberOfParticipants}
+                        onChange={handleMobileParticipantsOptionChange}
+                        className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
+                        style={{ border: 'none' }}
+                      >
+                        {participants_options.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
                 <div
                   className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
                   onClick={handleAddCart}
@@ -1000,7 +1000,7 @@ const ProductDetails = () => {
                       <select
                         value={strNumberOfParticipants}
                         onChange={handleMobileParticipantsOptionChange}
-                        className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.9rem]"
+                        className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
                         style={{ border: 'none' }}
                       >
                         {participants_options.map((option, index) => (
@@ -1012,7 +1012,6 @@ const ProductDetails = () => {
                     </div>
                   </div>
                 </div>
-                
               </div>
 
               <div className="mt-5 self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
