@@ -69,7 +69,7 @@ const Hero = () => {
           <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center max-lg:h-[0.5rem] max-lg:w-[14.4rem] lg:w-[31.25rem] lg:h-[3rem] shrink-0 max-lg:text-[1.1rem] lg:text-[1.7rem]">
             Armonie în corp, minte și suflet!
           </div>
-          <a className="lg:h-[6rem]" href="/category">
+          <a className="lg:h-[6rem]" href="/product">
             <div className="relative rounded bg-accent w-[17.13rem] h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border text-center text-[0.88rem]">
                 <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
                     CUMPĂRĂ EXPERIENȚE

@@ -97,7 +97,7 @@ function Signup() {
 
   // JSX code for signup form
   const renderForm = (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="max-lg:mt-[5rem] max-lg:mb-[5rem] lg:min-h-screen flex items-center justify-center">
       <div className="w-96">
         <h2 className="text-3xl font-semibold mb-4 text-center text-black">Înregistrare</h2>
         <form onSubmit={handleSubmit}>
@@ -144,7 +144,7 @@ function Signup() {
             />
           </div>
           <button
-            className="w-full py-3 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition duration-300 ease-in-out"
+            className="login-button-link w-full py-3 px-4 rounded-md"
             type="submit"
           >
             Înregistrare
@@ -161,7 +161,7 @@ function Signup() {
   );
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
+    <div className="flex flex-col md:flex-row lg:min-h-screen overflow-hidden">
       {/* Left side with signup form (40% width on large screens) */}
       <div className="md:w-2/5 p-4 md:p-8 bg-gray-100">
         <div className="max-w-md mx-auto">

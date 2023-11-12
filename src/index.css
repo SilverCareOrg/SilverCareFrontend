@@ -4,6 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.login-button-link {
+    text-decoration: none;
+    color: white;
+    background-color: #13194c;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .login-button-link:hover {
+    background-color: #2b3477;
+  }
+
 .red-svg {
     fill: red;
   }

@@ -8,14 +8,24 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaf
 import L from 'leaflet';
 import marker_icon_png from '../images/marker_icon.png';
 import e from "cors";
+import CartPanel from "./CartPanel";
 
 const ProductDetails = () => {
   const { state: product } = useLocation();
+  const [visibleCartPanel, setVisibleCartPanel] = useState(false);
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   const { city, county, common_location, options_common_city, img_path, name, description, category, organiser, sections, options, location, map_location } = product;
   var final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
 
   const main_option = options.length === 1 ? options[0] : null;
+
+  const toggleCartPanel = () => {
+    setVisibleCartPanel(prevState => !prevState);
+  };
+
+  const closeCartPanel = () => {
+    setVisibleCartPanel(false);
+  };
 
   const monthNumberToAbbreviationMap = {
     1: 'ian',
@@ -33,16 +43,47 @@ const ProductDetails = () => {
   };
 
   const handleAddCart = async (event) => {
-    //Prevent page reload
     event.preventDefault();
 
+    // check if local storage contains a token
+    var token = localStorage.getItem("token");
+
+    // if there is no token set, it means that there's a guest user
+    if (token === null) {
+      // add the product to cart using the localstorage
+      // store the name of the product, the number of participants, the id of the product
+      // the price and the option
+      var cart = localStorage.getItem("cart");
+
+      if (cart === null) {
+        cart = [{
+          name: product.name,
+          participants: numberOfParticipants,
+          id: product.service_id,
+          option_id: main_option === null ? selectedOption : main_option.id,
+          price: main_option === null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+        }];
+        localStorage.setItem("cart", JSON.stringify(cart));
+      } else { 
+        cart = JSON.parse(cart);
+        cart.push({
+          name: product.name,
+          participants: numberOfParticipants,
+          id: product.service_id,
+          price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+        });
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      return; 
+    }
+
+    // otherwise, if the token is set, we send the request back to the api to keep track of the cart
     axios_api.post("/add_to_cart", {
-        service_id: product.service_id,
-        senior_name: "senior1",
-        adult_name: "adult1",
-        phone_number: "1234567890",
-        companion: "companion1",
-        email: "user@user"
+        service_id: product.id,
+        number_of_participants: numberOfParticipants,
+        option_id: main_option === null ? selectedOption : main_option.id,
+        price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
     }, {sameSite: 'none', withCredentials: true,
     headers: {
       // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
@@ -59,6 +100,8 @@ const ProductDetails = () => {
         // Handle errors
         console.log("Error:", error);
       });
+
+      toggleCartPanel();
   };
 
   const parentRef = useRef(null);
@@ -229,7 +272,6 @@ const ProductDetails = () => {
     popupAnchor:  [-0, -0],
     iconSize: [25,25],     
   });
-
 
   const MapSection = (e) => {
     const map_e = {
@@ -867,11 +909,9 @@ const ProductDetails = () => {
     );
   };
 
-  const CartSectionMoreMobileOptions = ({ options, selectedOption, handleOptionChange }) => {
+  const CartMobileMoreOptionsMain = ({ options, selectedOption, handleOptionChange }) => {
     return (
-      <div className="flex-1 relative">
-      <div ref={mobileCartRef} className={`${isSticky ? 'top-0' : ''}`}>
-        <div className="self-stretch flex flex-row items-start justify-start">
+      <div className="self-stretch flex flex-row items-start justify-start">
             <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
@@ -946,15 +986,13 @@ const ProductDetails = () => {
               </div>
             </div>
             </div>
-            </div>
-        </div>
     );
   }
 
-  const CartSectionOneMobileOption = ({ option }) => {
+  const CartMobileOneOptionMain = ({ option }) => {
     const dateString = option.date;
     const date = new Date(dateString);
-    
+
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -962,9 +1000,7 @@ const ProductDetails = () => {
     const minutes = ('0' + date.getMinutes()).slice(-2);
 
     return (
-      <div className="flex-1 relative">
-      <div ref={mobileCartRef} className={`${mobileIsSticky ? 'top-0' : ''}`}>
-        <div className="self-stretch flex flex-row items-start justify-start">
+      <div className="self-stretch flex flex-row items-start justify-start">
             <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
@@ -1029,14 +1065,59 @@ const ProductDetails = () => {
               </div>
             </div>
             </div>
-            </div>
-        </div>
     );
+  };
+
+  const CartSectionMoreMobileOptions = ({ options, selectedOption, handleOptionChange }) => {
+    return (
+        <>
+        {/* Fixed position cart */}
+        <div
+          ref={mobileCartRef}
+          className={`${mobileIsSticky ? 'top-0 fixed' : 'hidden'}`}
+          style={{zIndex: mobileIsSticky ? '1500' : 'auto'}}
+        >
+          <CartMobileMoreOptionsMain options={options} selectedOption={selectedOption} handleOptionChange={handleOptionChange} />
+        </div>
+
+        {/* Static position cart */}
+        <div
+          ref={mobileCartRef}
+          className={`${!mobileIsSticky ? 'relative' : 'hidden'}`}
+        >
+          <CartMobileMoreOptionsMain options={options} selectedOption={selectedOption} handleOptionChange={handleOptionChange} />
+        </div>
+        </>
+    );
+  }
+
+  const CartSectionOneMobileOption = ({ option }) => {
+
+    return (
+      <>
+      {/* Fixed position cart */}
+      <div
+        ref={mobileCartRef}
+        className={`${mobileIsSticky ? 'top-0 fixed' : 'hidden'}`}
+        style={{zIndex: mobileIsSticky ? '1500' : 'auto'}}
+      >
+        <CartMobileOneOptionMain option={option} />
+      </div>
+
+      {/* Static position cart */}
+      <div
+        ref={mobileCartRef}
+        className={`${!mobileIsSticky ? 'relative' : 'hidden'}`}
+      >
+        <CartMobileOneOptionMain option={option} />
+      </div>
+      </>
+  );
   };
 
   return (
     <div>
-
+      {visibleCartPanel && <CartPanel onClose={closeCartPanel}></CartPanel>}
       {/* Desktop view */}
       <div className="mb-5 max-lg:hidden">
           <HeroSection />

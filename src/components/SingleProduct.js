@@ -11,7 +11,6 @@ const SingleProduct = ({ product }) => {
   const baseUrl = window.location.origin;
   var final_img_path = baseUrl + "/images/" + img_path;
   // var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
-  // console.log(final_img_path);
 
   const DisplayPriceText = () => {
     var min = product.options[0].price;
