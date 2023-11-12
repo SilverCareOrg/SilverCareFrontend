@@ -26,7 +26,9 @@ export default function CartPanel({ onClose }) {
   const cancelButtonRef = useRef(null)
   const [isGuestCheckoutSubmit, setIsGuestCheckoutSubmit] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
-  var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}`;
+  const baseUrl = window.location.origin;
+  var final_img_path = baseUrl + "/images/";
+  // var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}`;
 
   const handleClose = () => {
     setGuestCheckout(false);
@@ -59,8 +61,8 @@ export default function CartPanel({ onClose }) {
   const calculateTotalPrice = () => {
     let total = 0;
     for (let i = 0; i < products.length; i++) {
-        if (products[i].service_price !== "free") {
-            total += parseFloat(products[i].service_price);
+        if (products[i].price !== "free") {
+            total += parseFloat(products[i].price);
         }
     }
     return total;
@@ -194,6 +196,12 @@ export default function CartPanel({ onClose }) {
   //   }
 
   //   setIsGuestCheckoutSubmit(false);
+
+
+    // go to checkout page
+    window.location.href = "/paymentCartPanel";
+    return;
+
     var services = localStorage.getItem("services");
 
     if (services) {
@@ -381,6 +389,8 @@ export default function CartPanel({ onClose }) {
       </Transition.Root>
   );
 
+  var image_path;
+
   return (
     <div>
       {!checkout && !guestCheckout && <Transition.Root show={open} as={Fragment}>
@@ -429,10 +439,11 @@ export default function CartPanel({ onClose }) {
                           <div className="flow-root">
                             <ul role="list" className="-my-6 divide-y divide-gray-200">
                               {products.map((product) => (
+                                image_path = final_img_path + product.service_image_path,
                                 <li key={product.service_id} className="flex py-6">
                                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
-                                      src={`${final_img_path}${product.service_image_path}`}
+                                      src={image_path}
                                       alt={product.service_image_path}
                                       className="h-full w-full object-cover object-center" />
                                   </div>
@@ -445,18 +456,25 @@ export default function CartPanel({ onClose }) {
                                         </h3>
                                         <p className="ml-4"></p>
                                       </div>
-                                      <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                    </div>
+                                    <div> 
+                                      <div className="flex justify-between text-base font-medium text-gray-900">
+                                        <div className="text-[0.8rem] text-gray-500">
+                                          Număr participanți: {product.number_of_participants}
+                                        </div>
+                                        <p className="ml-4"></p>
+                                      </div>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
-                                      <p className="text-green-500 font-medium">{product.service_price == "free" ? "Gratis" : product.service_price + " Ron"}  </p>
+                                      <p className="text-green-500 font-medium">{product.price === 0 ? "Gratis" : product.price + " Ron"}  </p>
 
                                       <div className="flex">
                                         <button
                                           type="button"
                                           className="font-medium text-indigo-600 hover:text-indigo-500"
-                                          onClick={() => handleRemoveButton(product.service_id, product.service_price)}
+                                          onClick={() => handleRemoveButton(product.service_id, product.price)}
                                         >
-                                          Remove
+                                          Șterge
                                         </button>
                                       </div>
                                     </div>
@@ -477,9 +495,9 @@ export default function CartPanel({ onClose }) {
                         <div className="mt-6">
                           <button
                             onClick={handleCheckout}
-                            className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                            className="w-full flex items-center justify-center rounded-md border border-transparent login-button-link px-6 py-3 text-base font-medium text-white shadow-sm"
                           >
-                            Continuă plata
+                            Finalizează și plătește
                           </button>
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

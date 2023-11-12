@@ -22,6 +22,7 @@ import CheckoutDetails from "./components/CheckoutDetails";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import ScrollOnTopOnRefresh from "./components/ScrollOnTopOnRefresh";
+import PaymentCartPanel from "./components/PaymentCartPanel";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/checkout-fail" element={<PaymentFail />} />
           <Route path="/adminPage" element={<Admin />} />
           <Route path="/adminAddService" element={<AdminAddService />} />
+          <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
       </main>

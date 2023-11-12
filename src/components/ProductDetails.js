@@ -7,14 +7,25 @@ import product_page_location_icon from '../images/product_page_location_icon.svg
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import L from 'leaflet';
 import marker_icon_png from '../images/marker_icon.png';
+import e from "cors";
+import CartPanel from "./CartPanel";
 
 const ProductDetails = () => {
   const { state: product } = useLocation();
+  const [visibleCartPanel, setVisibleCartPanel] = useState(false);
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   const { city, county, common_location, options_common_city, img_path, name, description, category, organiser, sections, options, location, map_location } = product;
   var final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
 
   const main_option = options.length === 1 ? options[0] : null;
+
+  const toggleCartPanel = () => {
+    setVisibleCartPanel(prevState => !prevState);
+  };
+
+  const closeCartPanel = () => {
+    setVisibleCartPanel(false);
+  };
 
   const monthNumberToAbbreviationMap = {
     1: 'ian',
@@ -32,16 +43,47 @@ const ProductDetails = () => {
   };
 
   const handleAddCart = async (event) => {
-    //Prevent page reload
     event.preventDefault();
 
+    // check if local storage contains a token
+    var token = localStorage.getItem("token");
+
+    // if there is no token set, it means that there's a guest user
+    if (token === null) {
+      // add the product to cart using the localstorage
+      // store the name of the product, the number of participants, the id of the product
+      // the price and the option
+      var cart = localStorage.getItem("cart");
+
+      if (cart === null) {
+        cart = [{
+          name: product.name,
+          participants: numberOfParticipants,
+          id: product.service_id,
+          option_id: main_option === null ? selectedOption : main_option.id,
+          price: main_option === null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+        }];
+        localStorage.setItem("cart", JSON.stringify(cart));
+      } else { 
+        cart = JSON.parse(cart);
+        cart.push({
+          name: product.name,
+          participants: numberOfParticipants,
+          id: product.service_id,
+          price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+        });
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      return; 
+    }
+
+    // otherwise, if the token is set, we send the request back to the api to keep track of the cart
     axios_api.post("/add_to_cart", {
-        service_id: product.service_id,
-        senior_name: "senior1",
-        adult_name: "adult1",
-        phone_number: "1234567890",
-        companion: "companion1",
-        email: "user@user"
+        service_id: product.id,
+        number_of_participants: numberOfParticipants,
+        option_id: main_option === null ? selectedOption : main_option.id,
+        price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
     }, {sameSite: 'none', withCredentials: true,
     headers: {
       // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
@@ -58,11 +100,16 @@ const ProductDetails = () => {
         // Handle errors
         console.log("Error:", error);
       });
+
+      toggleCartPanel();
   };
 
   const parentRef = useRef(null);
+  const mobileParentRef = useRef(null);
   const cartRef = useRef(null);
+  const mobileCartRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
+  const [mobileIsSticky, setMobileIsSticky] = useState(false);
 
   const handleScroll = () => {
     if (parentRef.current && cartRef.current) {
@@ -81,12 +128,32 @@ const ProductDetails = () => {
       }
     }
   };
+
+  const handleMobileScroll = () => {
+    if (mobileParentRef.current && mobileCartRef.current) {
+      // const parentRect = parentRef.current.getBoundingClientRect();
+      const cartRect = mobileCartRef.current.getBoundingClientRect();
+      const parentRect = mobileParentRef.current.getBoundingClientRect();
+      
+      const pos_cond = cartRect.top <= 0 && !(mobileCartRef.current.style.position == 'fixed' && cartRect.bottom <= parentRect.top - 40);
+
+      setMobileIsSticky(pos_cond);
+
+      if (pos_cond) {
+        mobileCartRef.current.style.position = 'fixed';
+        mobileCartRef.current.style.top = '0px';
+        mobileCartRef.current.style.zIndex = '1500';
+      } else {
+        mobileCartRef.current.style.position = 'relative';
+      }
+    }
+  };
   
   useEffect(() => {
-    
-
+    window.addEventListener('scroll', handleMobileScroll);
     window.addEventListener('scroll', handleScroll);
     return () => {
+      window.removeEventListener('scroll', handleMobileScroll);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -112,24 +179,90 @@ const ProductDetails = () => {
   const handleParticipantsOptionChange = (event) => {
     setNumberOfParticipants(participantsMapper[event.target.value]);
     setStrNumberOfParticipants(event.target.value);
-    handleScroll();
 
     setTimeout(() => {
-      setIsSticky(true);
-      cartRef.current.style.position = 'fixed';
-      cartRef.current.style.top = '0px';
+      if (parentRef.current && cartRef.current) {
+        const parentRect = parentRef.current.getBoundingClientRect();
+        const cartRect = cartRef.current.getBoundingClientRect();
+        
+        var pos_cond = parentRect.top <= 0 && parentRect.bottom >= cartRect.height;
+  
+        setIsSticky(pos_cond);
+        if (pos_cond) {
+          cartRef.current.style.position = 'fixed';
+          cartRef.current.style.top = '0px';
+        } else {
+          cartRef.current.style.position = 'relative';
+        }
+      }
     }, 1);
   };
 
   const handleOptionChange = (event) => {
     setSelectedOption(parseInt(event.target.value));
-    handleScroll();
     setIsSticky(true);
 
     setTimeout(() => {
-      setIsSticky(true);
-      cartRef.current.style.position = 'fixed';
-      cartRef.current.style.top = '0px';
+      if (parentRef.current && cartRef.current) {
+        const parentRect = parentRef.current.getBoundingClientRect();
+        const cartRect = cartRef.current.getBoundingClientRect();
+        
+        var pos_cond = parentRect.top <= 0 && parentRect.bottom >= cartRect.height;
+  
+        setIsSticky(pos_cond);
+        if (pos_cond) {
+          cartRef.current.style.position = 'fixed';
+          cartRef.current.style.top = '0px';
+        } else {
+          cartRef.current.style.position = 'relative';
+        }
+      }
+    }, 1);
+  };
+
+  const handleMobileParticipantsOptionChange = (event) => {
+    setNumberOfParticipants(participantsMapper[event.target.value]);
+    setStrNumberOfParticipants(event.target.value);
+
+    setTimeout(() => {
+      if (mobileParentRef.current && mobileCartRef.current) {
+        const parentRect = mobileParentRef.current.getBoundingClientRect();
+        const cartRect = mobileCartRef.current.getBoundingClientRect();
+        
+        const pos_cond = cartRect.top <= 0 && !(mobileCartRef.current.style.position == 'fixed' && cartRect.bottom <= parentRect.top - 40);
+  
+        setMobileIsSticky(pos_cond);
+        if (pos_cond) {
+          mobileCartRef.current.style.position = 'fixed';
+          mobileCartRef.current.style.top = '0px';
+          mobileCartRef.current.style.zIndex = '1500';
+        } else {
+          mobileCartRef.current.style.position = 'relative';
+        }
+      }
+    }, 1);
+  };
+
+  const handleMobileOptionChange = (event) => {
+    setSelectedOption(parseInt(event.target.value));
+    setIsSticky(true);
+
+    setTimeout(() => {
+      if (mobileParentRef.current && cartRef.current) {
+        const parentRect = mobileParentRef.current.getBoundingClientRect();
+        const cartRect = mobileCartRef.current.getBoundingClientRect();
+        
+        const pos_cond = cartRect.top <= 0 && !(mobileCartRef.current.style.position == 'fixed' && cartRect.bottom <= parentRect.top - 40);
+  
+        setMobileIsSticky(pos_cond);
+        if (pos_cond) {
+          mobileCartRef.current.style.position = 'fixed';
+          mobileCartRef.current.style.top = '0px';
+          mobileCartRef.current.style.zIndex = '1500';
+        } else {
+          mobileCartRef.current.style.position = 'relative';
+        }
+      }
     }, 1);
   };
 
@@ -139,7 +272,6 @@ const ProductDetails = () => {
     popupAnchor:  [-0, -0],
     iconSize: [25,25],     
   });
-
 
   const MapSection = (e) => {
     const map_e = {
@@ -175,6 +307,24 @@ const ProductDetails = () => {
               {section.question}
             </div>
             <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-text-fields-grey-hf flex items-center w-[43.94rem] shrink-0">
+              {section.answer}
+            </div>
+            {index != sections.length - 1 ? <div className="mb-8"/> : <div/>}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const ExtraDetailsMobileBlock = ({ sections }) => {
+    return (
+      <div>
+        {sections.map((section, index) => (
+          <div className="flex flex-col items-start justify-start">
+            <div className="mb-4 self-stretch relative tracking-[0.1em] leading-[120%] text-[1.3rem] font-semibold flex items-center shrink-0">
+              {section.question}
+            </div>
+            <div className="relative text-[0.88rem] tracking-[0.05em] leading-[1.31rem] font-medium text-text-fields-grey-hf flex items-center w-full shrink-0">
               {section.answer}
             </div>
             {index != sections.length - 1 ? <div className="mb-8"/> : <div/>}
@@ -250,6 +400,49 @@ const ProductDetails = () => {
     );
   };
 
+  const OneOptionMobileBlock = ({ option }) => {
+    const dateArray = ExtractOptionDate({ option });
+
+    return (
+      <div className="relative w-full self-stretch flex flex-col items-center justify-center">      
+        <div className="gap-[0.5rem] w-[20.44rem] flex flex-col items-start justify-center">
+          <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0">
+            {name}
+          </div>
+          {dateArray != null && <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
+            <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
+              <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">{dateArray[0]} {monthNumberToAbbreviationMap[dateArray[1]]} {dateArray[2]}</div>
+            </div>
+            <div className="flex flex-row items-center justify-center gap-[0.25rem]">
+              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Ora: `}</div>
+              <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
+                {dateArray[3]}:{dateArray[4]}
+              </div>
+            </div>
+          </div>}
+          <div className="text-[1rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]">
+            {option.details}
+          </div>
+          
+          <div className="mt-2 mb-2 relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
+
+          <div>
+            {option.map_location != "" && option.map_location != null && <div className="w-[20.44rem] flex flex-col items-start justify-center gap-[1.5rem]">
+              <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[20.44rem] h-[1.5rem] shrink-0">
+                LOCAȚIE
+              </div>
+                <MapSection e={option.map_location} />
+              <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[20.44rem] h-[1rem] shrink-0">
+                {option.location}
+              </div>
+            </div>}
+          </div>
+      </div>
+    </div>
+    );
+  };
+
   const MoreOptionsBlock = ({ options }) => {
       var dateArray, duration;
     
@@ -303,6 +496,61 @@ const ProductDetails = () => {
       );
   };
 
+  const MoreOptionsMobileBlock = ({ options }) => {
+    var dateArray, duration;
+    
+    return (
+      <div className="relative w-full self-stretch flex flex-col items-center justify-center">
+        <div className="gap-[0.5rem] w-[20.44rem] flex flex-col items-start justify-center">
+        <div className="mb-5 text-[1.2rem] self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0">
+          Experiența aceasta este disponibilă în mai multe variante
+        </div>
+        <div className = "gap-[1rem] flex flex-col">
+        {options.map((option, index) => (
+          dateArray = ExtractOptionDate({ option }),
+          duration = option.duration != "" ? ConvertDurationToHoursAndMinutes({ durationString: option.duration }) : null,
+          <div key={index} className="relative flex-1 flex flex-col">
+            <div className="relative gap-[1rem] flex flex-col">
+              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]">
+                {option.name} {duration && <span className="text-[1rem]">- {duration}</span>} | {option.price === 0 ? <span className="text-blue-500 text-[1rem]">Gratis</span>: <span className="text-[1rem]">{option.price} RON</span>}
+              </div>}
+
+              <div className="items-start justify-end gap-[1rem] flex flex-col">
+                {dateArray != null && <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
+                  <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+                    <div className="relative tracking-[0.05em] leading-[1.5rem] text-text-fields-grey-hf font-medium ">{`Data:  `}</div>
+                    <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans font-normal flex items-center shrink-0">{dateArray[0]} {monthNumberToAbbreviationMap[dateArray[1]]} {dateArray[2]}</div>
+                  </div>
+                  <div className="flex flex-row items-center justify-center gap-[0.25rem]">
+                    <div className="relative tracking-[0.05em] leading-[1.5rem] text-text-fields-grey-hf font-medium ">{`Ora: `}</div>
+                    <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
+                      {dateArray[3]}:{dateArray[4]}
+                    </div>
+                  </div>
+                </div>}
+                {option.city != "" && <div className="self-stretch relative tracking-[0.1em] leading-[120%] text-text-fields-grey-hf font-medium  flex items-center shrink-0 text-[1rem]">Oraș: <span className="ml-2 text-[1rem] font-open-sans font-normal">{option.city}, {option.county}</span></div>}
+                {option.location != "" && <div className="self-stretch relative tracking-[0.1em] leading-[120%] text-text-fields-grey-hf font-medium  flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{option.location}</span></div>}
+              </div>
+            </div>
+              
+              <div className="relative flex mt-5 text-[1rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem] shring-0">
+                {option.details}
+              </div>
+              
+                <div className="mt-5">
+                  {!common_location && option.map_location != "" && option.map_location != null && <div className="w-[20.44rem] flex flex-col items-start justify-center gap-[1.5rem]">
+                      <MapSection e={option.map_location} />
+                  </div>}
+                </div>
+              {index != options.length - 1 ? <div className="mt-2 mb-2 relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" /> : <div/>}
+            </div>
+        ))}
+        </div>
+      </div>
+  </div>
+    );
+  };
+
   const CommonLocationBlock = () => {
     return (
       <div className="mt-[2rem]">
@@ -341,6 +589,27 @@ const ProductDetails = () => {
       </div>
     );
   }
+  
+  const DetailsMobileBlock = () => {
+    return (
+      <div ref={mobileParentRef} className="relative mt-10 w-full self-stretch flex flex-col items-center justify-center">
+        <div className="mb-5 w-[20.44rem] flex flex-col items-start justify-center gap-[2rem]">
+          <div className="self-stretch relative text-[0.88rem] tracking-[0.05em] leading-[1.31rem] font-medium text-text-fields-grey-hf">
+            {description}
+          </div>
+            
+          <ExtraDetailsMobileBlock sections={sections.sections} />
+          
+          <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
+        </div>
+        
+        {options.length === 1 && <OneOptionMobileBlock option={main_option} />}
+        {options.length > 1 && <MoreOptionsMobileBlock options={options} />}
+        
+        <CommonLocationBlock />
+      </div>
+    );
+  };
 
   const RatingStarsBlock = () => {
     return (
@@ -378,7 +647,7 @@ const ProductDetails = () => {
 
   const HeroSection = () => {
     return (
-      <div className="max-lg:hidden self-stretch flex flex-col items-center justify-start">
+      <div className="self-stretch flex flex-col items-center justify-start">
       <div className="flex flex-col items-center justify-center">
         <div className="self-stretch flex flex-row items-center justify-start gap-[1rem]">
           {/* <img
@@ -388,7 +657,7 @@ const ProductDetails = () => {
           /> */}
           <div className="flex flex-col items-center justify-center gap-[1.5rem]">
             <img
-              className="relative rounded-lg w-[77rem] h-[33rem] object-cover"
+              className="relative lg:rounded-lg max-lg:w-full lg:w-[77rem] max-lg:h-full lg:h-[33rem] object-cover"
               alt=""
               src={final_img_path}
             />
@@ -438,11 +707,50 @@ const ProductDetails = () => {
     );
   };
 
+  const HeaderMobileSection = () => {
+    return (
+      <div className="relative pt-[2rem] pb-[2rem] w-full self-stretch flex flex-col items-center justify-start">
+        <div className="flex-1 w-[20.44rem] flex flex-row items-center justify-center">
+          <div className="flex-1 flex flex-row items-center justify-center">
+            <div className="flex-1 flex flex-col items-start justify-center gap-[0.5rem]">
+              <div className="self-stretch flex flex-row items-center justify-start gap-[0.5rem]">
+                <div className="flex-1 relative tracking-[0.05em] leading-[120%] font-semibold flex text-dark-navy items-center text-[1.2rem]">
+                  {name}
+                </div>
+                <div className="self-stretch flex flex-col items-start justify-start text-right text-[0.75rem]">
+                  <div className="flex-1 relative tracking-[0.05em] leading-[1.31rem] font-medium">
+                    {organiser}
+                  </div>
+                  {(main_option != null || options_common_city) &&
+                  <div className="flex flex-row items-center justify-start gap-[0.5rem]">
+                    <img
+                      className="relative w-[0.88rem] h-[1.13rem]"
+                      alt=""
+                      src={product_page_location_icon}
+                    />
+                    <div className="relative tracking-[0.05em] leading-[1.31rem] font-medium">
+                      {city != null && options_common_city ? city : ""}
+                      {main_option != null ? main_option.city : ""}
+
+                      {county != null && county != city && options_common_city ? ", " + county : ""}
+                      {main_option != null && main_option.city != main_option.county ? ", " + main_option.county : ""}
+                    </div>
+                  </div>}
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const CartSectionMoreOptions = ({ options, selectedOption, handleOptionChange }) => {
     return (
       <div className="flex-1 relative">
       <div ref={cartRef} className={`${isSticky ? 'top-0' : ''}`}>
-        <div className="self-stretch flex flex-row items-start justify-start">
+        <div className="pl-[4.5rem] self-stretch flex flex-row items-start justify-start">
             <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[3.5rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
@@ -535,7 +843,7 @@ const ProductDetails = () => {
     return (
       <div className="flex-1 relative">
       <div ref={cartRef} className={`${isSticky ? 'top-0' : ''}`}>
-        <div className="self-stretch flex flex-row items-start justify-start">
+        <div className="pl-[4.5rem] self-stretch flex flex-row items-start justify-start">
             <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[3.5rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
@@ -552,14 +860,35 @@ const ProductDetails = () => {
                       </div>
                     </div>
                   </div>
-                  {option.location != "" && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{option.location}</span></div>}
+                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{option.location}</span></div>}
                 </div>
               </div>
+
+              <div className="mt-8 self-stretch h-[5.13rem] flex flex-col items-start justify-center gap-[1rem] text-[1rem]">
+                  <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[15rem]">
+                    Număr de participanti
+                  </div>
+                  <div className="self-stretch rounded bg-white box-border h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                    <select
+                      value={strNumberOfParticipants}
+                      onChange={handleParticipantsOptionChange}
+                      className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
+                      style={{ border: 'none' }}
+                    >
+                      {participants_options.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
               <div className="mt-5 self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
                 <div className="self-stretch flex flex-row items-center justify-start gap-[1.5rem]">
                   <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Preț : `}</div>
                   <div className="flex-1 relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center h-[2rem]">
-                    {option.price === 0 ? <span className="text-blue-500">Gratis</span>: option.price + " RON"}
+                  <span className="text-[1.5rem]">{numberOfParticipants * option.price} RON</span>
                   </div>
                 </div>
                 <div
@@ -580,10 +909,219 @@ const ProductDetails = () => {
     );
   };
 
+  const CartMobileMoreOptionsMain = ({ options, selectedOption, handleOptionChange }) => {
+    return (
+      <div className="self-stretch flex flex-row items-start justify-start">
+            <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
+            <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
+                <div className="w-[20.25rem] flex flex-col items-start justify-start">
+                <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
+                  {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{location}</span></div>}
+                </div>
+              </div>
+              <div className="self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
+                  
+              <div className="self-stretch flex flex-col items-start justify-start gap-[0.5rem]">
+                <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-start justify-start shrink-0 text-[1rem] select-label">
+                  Alege dintre variantele următoare:
+                </div>
+                <div className="flex-1 w-full">
+                  <div className="self-stretch rounded bg-white box-border h-[2rem] flex flex-row items-center justify-start py-[0rem] w-full gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                    <select
+                      value={selectedOption}
+                      onChange={handleMobileOptionChange}
+                      className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
+                      style={{ border: 'none', width: '100%' }}
+                    >
+                      {options.map((option) => (
+                        <option key={option.id} value={option.id}>
+                          {option.name} - {option.price === 0 ? 'Gratis' : option.price + ' RON'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+                <div className="w-full flex items-center">
+                <div className="flex-1">
+                  <div className="self-stretch flex flex-row items-start justify-start gap-[0.8rem]">
+                    <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Preț : `}</div>
+                    <div className="relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center">
+                      {selectedOption ? <span className="flex-1 text-[1rem]">{numberOfParticipants * options.find(option => option.id === selectedOption).price} RON</span> : <span className="text-[1.5rem]">0 RON</span>}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[0.9rem]">
+                    <div className="self-stretch rounded bg-white box-border h-[2rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                      <select
+                        value={strNumberOfParticipants}
+                        onChange={handleMobileParticipantsOptionChange}
+                        className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
+                        style={{ border: 'none' }}
+                      >
+                        {participants_options.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <div
+                  className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
+                  onClick={handleAddCart}
+                >
+                  <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
+                    <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
+                      ADAUGĂ IN COS
+                    </b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+    );
+  }
+
+  const CartMobileOneOptionMain = ({ option }) => {
+    const dateString = option.date;
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hour = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+
+    return (
+      <div className="self-stretch flex flex-row items-start justify-start">
+            <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
+            <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
+                <div className="w-[20.25rem] flex flex-col items-start justify-start">
+                  <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
+                    <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+                      <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
+                      <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">{day} {monthNumberToAbbreviationMap[month]} {year}</div>
+                    </div>
+                    <div className="flex flex-row items-center justify-center gap-[0.25rem]">
+                      <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Ora: `}</div>
+                      <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
+                        {hour}:{minutes}
+                      </div>
+                    </div>
+                  </div>
+                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{option.location}</span></div>}
+                </div>
+              </div>
+
+              <div className="mt-5 w-full flex items-center">
+                <div className="flex-1">
+                  <div className="self-stretch flex flex-row items-start justify-start gap-[0.8rem]">
+                    <div className="relative tracking-[0.1em] leading-[120%] font-semibold">{`Preț : `}</div>
+                    <div className="relative tracking-[0.1em] leading-[120%] font-semibold font-open-sans flex items-center">
+                      <span className="flex-1 text-[1rem]">{numberOfParticipants * option.price}RON</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[0.9rem]">
+                    <div className="self-stretch rounded bg-white box-border h-[2rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                      <select
+                        value={strNumberOfParticipants}
+                        onChange={handleMobileParticipantsOptionChange}
+                        className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
+                        style={{ border: 'none' }}
+                      >
+                        {participants_options.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-5 self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
+                
+                <div
+                  className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
+                  onClick={handleAddCart}
+                >
+                  <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
+                    <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
+                      ADAUGĂ IN COS
+                    </b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+    );
+  };
+
+  const CartSectionMoreMobileOptions = ({ options, selectedOption, handleOptionChange }) => {
+    return (
+        <>
+        {/* Fixed position cart */}
+        <div
+          ref={mobileCartRef}
+          className={`${mobileIsSticky ? 'top-0 fixed' : 'hidden'}`}
+          style={{zIndex: mobileIsSticky ? '1500' : 'auto'}}
+        >
+          <CartMobileMoreOptionsMain options={options} selectedOption={selectedOption} handleOptionChange={handleOptionChange} />
+        </div>
+
+        {/* Static position cart */}
+        <div
+          ref={mobileCartRef}
+          className={`${!mobileIsSticky ? 'relative' : 'hidden'}`}
+        >
+          <CartMobileMoreOptionsMain options={options} selectedOption={selectedOption} handleOptionChange={handleOptionChange} />
+        </div>
+        </>
+    );
+  }
+
+  const CartSectionOneMobileOption = ({ option }) => {
+
+    return (
+      <>
+      {/* Fixed position cart */}
+      <div
+        ref={mobileCartRef}
+        className={`${mobileIsSticky ? 'top-0 fixed' : 'hidden'}`}
+        style={{zIndex: mobileIsSticky ? '1500' : 'auto'}}
+      >
+        <CartMobileOneOptionMain option={option} />
+      </div>
+
+      {/* Static position cart */}
+      <div
+        ref={mobileCartRef}
+        className={`${!mobileIsSticky ? 'relative' : 'hidden'}`}
+      >
+        <CartMobileOneOptionMain option={option} />
+      </div>
+      </>
+  );
+  };
+
   return (
-      <div className="mb-5">
+    <div>
+      {visibleCartPanel && <CartPanel onClose={closeCartPanel}></CartPanel>}
+      {/* Desktop view */}
+      <div className="mb-5 max-lg:hidden">
           <HeroSection />
-          <div className="pt-[2rem] pb-[01rem] self-stretch flex flex-col items-center justify-start">
+          <div className="pt-[2rem] pb-[1rem] self-stretch flex flex-col items-center justify-start">
             <div className="w-[77rem] h-[4rem] flex flex-col items-center justify-center">
               <div className="self-stretch flex-1 flex flex-row items-center justify-center">
                 <div className="flex-1 h-[4rem] flex flex-col items-start justify-center gap-[1rem]">
@@ -598,7 +1136,7 @@ const ProductDetails = () => {
           </div>
           <div className="self-stretch flex flex-col items-center justify-start text-[1.5rem]">
             <div className="w-[77rem] flex flex-row items-center justify-center">
-              <div ref={parentRef} className="flex flex-row items-start justify-center py-[0rem] pr-[0rem] pl-[4.5rem] gap-[4rem] flex-grow">
+              <div ref={parentRef} className="flex flex-row items-start justify-center py-[0rem] pr-[0rem] gap-[4rem] flex-grow">
                 <DetailsBlock />
                 
                 {options.length === 1 && <CartSectionOneOption option={main_option} />}
@@ -611,6 +1149,24 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+
+      {/* Mobile view */}
+      <div className="mb-5 lg:hidden">
+          <HeroSection />
+          <HeaderMobileSection />
+          
+          {options.length === 1 && <CartSectionOneMobileOption option={main_option} />}
+            {options.length > 1 && <CartSectionMoreMobileOptions
+                                    options={options}
+                                    selectedOption={selectedOption}
+                                    handleOptionChange={handleOptionChange}
+                                  />}
+
+          <DetailsMobileBlock />
+      </div>
+
+
+    </div>
   );
 
 };

@@ -33,6 +33,18 @@ input[type='radio'] {
   transition: transform 200ms, opacity 200ms;
 }
 
+.login-button-link {
+  text-decoration: none;
+  color: white;
+  background-color: #13194c;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.login-button-link:hover {
+  background-color: #535a99;
+}
+
 .button-link {
   text-decoration: none;
   color: #13194c;
