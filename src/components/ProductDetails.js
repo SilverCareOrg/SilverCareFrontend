@@ -469,7 +469,7 @@ const ProductDetails = () => {
           duration = option.duration != "" ? ConvertDurationToHoursAndMinutes({ durationString: option.duration }) : null,
           <div key={index} className="relative flex-1 flex flex-col">
             <div className="relative gap-[8rem] flex flex-row">
-              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]">
+              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]"  style={{ maxWidth: '20rem', wordBreak: 'break-all' }}> 
                 {option.name} {duration && <span className="text-[1rem]">- {duration}</span>} | {option.price === 0 ? <span className="text-blue-500 text-[1rem]">Gratis</span>: <span className="text-[1rem]">{option.price} RON</span>}
               </div>}
 
@@ -523,7 +523,7 @@ const ProductDetails = () => {
           duration = option.duration != "" ? ConvertDurationToHoursAndMinutes({ durationString: option.duration }) : null,
           <div key={index} className="relative flex-1 flex flex-col">
             <div className="relative gap-[1rem] flex flex-col">
-              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]">
+              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]"  style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>
                 {option.name} {duration && <span className="text-[1rem]">- {duration}</span>} | {option.price === 0 ? <span className="text-blue-500 text-[1rem]">Gratis</span>: <span className="text-[1rem]">{option.price} RON</span>}
               </div>}
 
@@ -764,38 +764,39 @@ const ProductDetails = () => {
       <div ref={cartRef} className={`${isSticky ? 'top-0' : ''}`}>
         <div className="pl-[4.5rem] self-stretch flex flex-row items-start justify-start">
             <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[3.5rem] px-[2rem] box-border">
-            <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
-                <div className="w-[20.25rem] flex flex-col items-start justify-start">
-                <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
-                  {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{location}</span></div>}
+              <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
+                <div className="w-[25.25rem] flex flex-col items-start justify-start">
+                  <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
+                    {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{location}</span></div>}
+                  </div>
                 </div>
-              </div>
-              <div className="self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
+              <div className="relative self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
                   
               <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem] select-label">
                 Alege varianta dorită:
               </div>
-              <div className="flex flex-col items-start justify-start gap-[0.5rem]">
-                  {options.map((option) => (
-                    
-                    <div className="flex flex-row items-center justify-start gap-1rem" key={option.id}>
-                      <div className="relative rounded-50% box-border border-2px border-solid border-text-fields-grey-hf" />
-                      <div className="relative tracking-0.05em leading-1.5rem font-medium flex items-center shrink-0">
-                        <label className="flex flex-row gap-[1rem] text-[1.2rem]">
-                          <input
-                            type="radio"
-                            name="option"
-                            value={option.id}
-                            checked={selectedOption === option.id}
-                            onChange={handleOptionChange}
-                            style={{ backgroundColor: 'red' }}
-                          />
-                          {option.name} - {option.price === 0 ? <span className="text-blue-500">Gratis</span>: option.price + " RON"}
-                        </label>
-                      </div>
+              <div className="relative flex flex-col items-start justify-start gap-[0.5rem]">
+                {options.map((option) => (
+                  <div className="relative flex items-start justify-start" key={option.id}>
+                    <div className="relative rounded-50% box-border border-2px border-solid border-text-fields-grey-hf" />
+                    <div className="relative tracking-0.05em leading-1.5rem font-medium flex items-center">
+                      <label className="flex flex-row items-center gap-[1rem] text-[1.2rem]">
+                        <input
+                          type="radio"
+                          name="option"
+                          value={option.id}
+                          checked={selectedOption === option.id}
+                          onChange={handleOptionChange}
+                          style={{ backgroundColor: 'red' }}
+                        />
+                        <div className="relative text-[1.2rem]" style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>
+                          {option.name} - {option.price === 0 ? <span className="text-blue-500">Gratis</span> : <span>{option.price} RON</span>}
+                        </div>
+                      </label>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
 
                 <div className="self-stretch h-[5.13rem] flex flex-col items-start justify-center gap-[1rem] text-[1rem]">
                   <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[15rem]">
@@ -924,7 +925,7 @@ const ProductDetails = () => {
   const CartMobileMoreOptionsMain = ({ options, selectedOption, handleOptionChange }) => {
     return (
       <div className="self-stretch flex flex-row items-start justify-start">
-            <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
+            <div className="rounded-lg bg-light-purple w-full flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
                 <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
@@ -1013,7 +1014,7 @@ const ProductDetails = () => {
 
     return (
       <div className="self-stretch flex flex-row items-start justify-start">
-            <div className="rounded-lg bg-light-purple w-[24.25rem] flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
+            <div className="rounded-lg bg-light-purple w-full flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
                   <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
@@ -1167,6 +1168,7 @@ const ProductDetails = () => {
           <HeroSection />
           <HeaderMobileSection />
           
+
           {options.length === 1 && <CartSectionOneMobileOption option={main_option} />}
             {options.length > 1 && <CartSectionMoreMobileOptions
                                     options={options}
