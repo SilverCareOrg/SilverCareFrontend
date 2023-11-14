@@ -287,8 +287,8 @@ const ProductDetails = () => {
   const MapSection = (e) => {
     console.log(e);
     const map_e = {
-      lat: e.e[0],
-      lng: e.e[1]
+      lat: e?.e?.[0] || 0,
+      lng: e?.e?.[1] || 0
     };
 
     return (
@@ -589,7 +589,7 @@ const ProductDetails = () => {
             {description}
           </div>
             
-          <ExtraDetailsBlock sections={sections.sections} />
+          <ExtraDetailsBlock sections={sections} />
           
           <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
         </div>
