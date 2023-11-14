@@ -16,7 +16,7 @@ const ProductDetails = () => {
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
   const { city, county, common_location, options_common_city, img_path, name, description, category, organiser, sections, options, location, map_location } = product;
   var final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
-
+  console.log(product);
   const main_option = options.length === 1 ? options[0] : null;
 
   const toggleCartPanel = () => {
@@ -177,8 +177,8 @@ const ProductDetails = () => {
     setVisibleRegistrationService(false);
   };
 
-  const participantsMapper = {'o persoana' : 1,
-                                'doua persoane': 2,
+  const participantsMapper = {'o persoană' : 1,
+                                'două persoane': 2,
                                 'trei persoane': 3,
                                 'patru persoane': 4,
                                 'cinci persoane': 5};
@@ -285,6 +285,7 @@ const ProductDetails = () => {
   });
 
   const MapSection = (e) => {
+    console.log(e);
     const map_e = {
       lat: e.e[0],
       lng: e.e[1]
