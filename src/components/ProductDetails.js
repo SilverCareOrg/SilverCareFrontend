@@ -53,53 +53,64 @@ const ProductDetails = () => {
       // add the product to cart using the localstorage
       // store the name of the product, the number of participants, the id of the product
       // the price and the option
-      var cart = localStorage.getItem("cart");
+      var cart = localStorage.getItem("services");
 
       if (cart === null) {
         cart = [{
-          name: product.name,
-          participants: numberOfParticipants,
+          service_image_path: img_path,
+          service_name: product.name,
+          number_of_participants: numberOfParticipants,
           id: product.service_id,
+          option_name: main_option === null ? options.find(option => option.id === selectedOption).name : main_option.name,
           option_id: main_option === null ? selectedOption : main_option.id,
-          price: main_option === null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+          option_details: {
+            id: main_option === null ? selectedOption : main_option.id,
+          },
+          price: main_option != null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
         }];
-        localStorage.setItem("cart", JSON.stringify(cart));
+        console.log(cart);
+        localStorage.setItem("services", JSON.stringify(cart));
       } else { 
         cart = JSON.parse(cart);
         cart.push({
-          name: product.name,
-          participants: numberOfParticipants,
+          service_image_path: img_path,
+          service_name: product.name,
+          number_of_participants: numberOfParticipants,
           id: product.service_id,
-          price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+          option_name: main_option === null ? options.find(option => option.id === selectedOption).name : main_option.name,
+          option_id: main_option === null ? selectedOption : main_option.id,
+          option_details: {
+            id: main_option === null ? selectedOption : main_option.id,
+          },
+          price: main_option != null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
         });
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("services", JSON.stringify(cart));
       }
 
-      return; 
+    } else {
+       // otherwise, if the token is set, we send the request back to the api to keep track of the cart
+        axios_api.post("/add_to_cart", {
+          service_id: product.id,
+          number_of_participants: numberOfParticipants,
+          option_id: main_option === null ? selectedOption : main_option.id,
+          price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+      }, {sameSite: 'none', withCredentials: true,
+      headers: {
+        // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
+        'Content-Type': 'application/json'
+    }})
+        .then((response) => {
+          // Handle the response
+          if (response.status == 200) {
+          } else {
+            console.log("Failed to send login data to the API");
+          }
+        })
+        .catch((error) => {
+          // Handle errors
+          console.log("Error:", error);
+        });
     }
-
-    // otherwise, if the token is set, we send the request back to the api to keep track of the cart
-    axios_api.post("/add_to_cart", {
-        service_id: product.id,
-        number_of_participants: numberOfParticipants,
-        option_id: main_option === null ? selectedOption : main_option.id,
-        price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
-    }, {sameSite: 'none', withCredentials: true,
-    headers: {
-      // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
-      'Content-Type': 'application/json'
-  }})
-      .then((response) => {
-        // Handle the response
-        if (response.status == 200) {
-        } else {
-          console.log("Failed to send login data to the API");
-        }
-      })
-      .catch((error) => {
-        // Handle errors
-        console.log("Error:", error);
-      });
 
       toggleCartPanel();
   };
