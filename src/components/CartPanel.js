@@ -105,7 +105,7 @@ export default function CartPanel({ onClose }) {
     } else {
       services = [];
     }
-  
+    console.log(services);
     setProducts(services);
   }
   };

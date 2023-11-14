@@ -316,7 +316,7 @@ const Navbar = () => {
                   />
                 </div>
                 <b className="relative tracking-[0.15em] leading-[120%] uppercase">
-                  rezerva acum
+                  rezervă acum
                 </b>
               </div>
               </Link>
@@ -397,7 +397,7 @@ const Navbar = () => {
           
           <Link to="/category">
             <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
-              EXPERIENTE
+              EXPERIENȚE
             </b>
             </Link>
 
