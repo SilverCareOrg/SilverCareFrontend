@@ -610,7 +610,7 @@ const ProductDetails = () => {
             {description}
           </div>
             
-          <ExtraDetailsMobileBlock sections={sections.sections} />
+          <ExtraDetailsMobileBlock sections={sections} />
           
           <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
         </div>
