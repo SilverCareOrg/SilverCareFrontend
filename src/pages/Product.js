@@ -37,6 +37,7 @@ const Products = () => {
   const [search, setSearch] = useState(queryParams.get('search') || '');
   const [category, setCategory] = useState(queryParams.get('category') || '');
   const [locationOption, setLocationOption] = useState(queryParams.get('location') || '');
+  const [firstAccess, setFirstAccess] = useState(false);
 
   const [isStringInURL, setIsStringInUrl] = useState(currentURL.includes('product/search/'));
   const para = useRef(null);
@@ -109,23 +110,29 @@ const Products = () => {
     };
   }, []);
 
-  const get_all_services =  (cat) => {
-    
-    if (category === "") {
-      setSelectedCategory(null);
-      setCategory("-");
-    } else if (category != "-") {
-      setSelectedCategory(category);
-      setCategory("-");
+  useEffect(() => {
+    if (!firstAccess) {
+      if (category === "") {
+        setSelectedCategory(null);
+        setCategory("-");
+      } else if (category !== "" && category !== "-") {
+        setSelectedCategory(category);
+        setCategory("-");
+      }
+  
+      if (locationOption === "") {
+        setSelectedLocation(null);
+        setLocationOption("-");
+      } else if (locationOption !== "" && locationOption !== "-") {
+        setSelectedLocation(locationOption);
+        setLocationOption("-");
+      }
+  
+      setFirstAccess(true);
     }
+  }, []);
 
-    if (locationOption === "") {
-      setSelectedLocation(null);
-      setLocationOption("-");
-    } else if (locationOption != "-") {
-      setSelectedLocation(locationOption);
-      setLocationOption("-");
-    }
+  const get_all_services =  (cat) => {
 
     try {
       setIsLoading(true);
@@ -158,7 +165,9 @@ const Products = () => {
 
   const getData = async () => {
     try {
-      get_all_services(null);
+      if (firstAccess === true) {
+        get_all_services(null);
+      }
     } catch (err) {
       setIsLoading(false);
       setErr(err.message);
