@@ -43,7 +43,7 @@ const Products = () => {
   const para = useRef(null);
   
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(12);
+  const [pageSize, setPageSize] = useState(9);
   const [numberProducts, setNumberProducts] = useState(0);
 
   const selectCategories = [
@@ -96,18 +96,18 @@ const Products = () => {
   ];
 
   useEffect(() => {
-    const handleWindowResize = () => {
-      const isLargeScreen = window.innerWidth >= 1024;
-      setPageSize(isLargeScreen ? 12 : 6);
-    };
+      const handleWindowResize = () => {
+        const isLargeScreen = window.innerWidth >= 1024;
+        setPageSize(isLargeScreen ? 9 : 6);
+      };
 
-    window.addEventListener('resize', handleWindowResize);
+      window.addEventListener('resize', handleWindowResize);
 
-    handleWindowResize();
+      handleWindowResize();
 
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleWindowResize);
+      };
   }, []);
 
   useEffect(() => {
@@ -132,6 +132,24 @@ const Products = () => {
     }
   }, []);
 
+  const getCategory = (category) => {
+
+    if (category === null) {
+      return "";
+    }
+
+    if (category == "") {
+      return "";
+    }
+
+    for (let i = 0; i < selectCategories.length; i++) {
+      if (selectCategories[i].raw === category) {
+        console.log(selectCategories[i].name);
+        return selectCategories[i].name;
+      }
+    }
+  };
+
   const get_all_services =  (cat) => {
 
     try {
@@ -139,7 +157,8 @@ const Products = () => {
 
       axios_api.get("/get_services",
         {params: {
-        category: selectedCategory,
+        // for category iterate through selectCategories and choose the name with the same raw
+        category: getCategory(selectedCategory),
         location: selectedLocation,
         sort: sortByPrice,
         inf_limit: (currentPage - 1) * pageSize,
@@ -149,9 +168,9 @@ const Products = () => {
         if (response.status === 200) {
           const json = response.data;
           setIsLoading(false);
-          setProducts(json);
-          setFilterProducts(json);
-          setNumberProducts(json.length);
+          setProducts(json.services);
+          setFilterProducts(json.services);
+          setNumberProducts(json.total);
         }
       }).catch((error) => {
         console.log("Error:", error);
@@ -165,7 +184,7 @@ const Products = () => {
 
   const getData = async () => {
     try {
-      if (firstAccess === true) {
+      if (firstAccess === true || (category === "" && locationOption === "")) {
         get_all_services(null);
       }
     } catch (err) {
@@ -180,7 +199,7 @@ const Products = () => {
 
   useEffect(() => {
       getData();
-  }, [selectedCategory, selectedLocation]);
+  }, [selectedCategory, selectedLocation, pageSize, currentPage]);
   
 
     const handleSearch = () => {
@@ -222,6 +241,10 @@ const Products = () => {
   
     const handleSortChange = (sortOption) => {
       setSortByPrice(sortOption);
+    };
+
+    const increasePageSize = () => {
+      setPageSize(pageSize + 6);
     };
 
     const lg_rows = [];
@@ -436,15 +459,16 @@ const Products = () => {
   };
 
   const LoadMore = () => {
+
     return (
       <div className="self-stretch flex flex-col items-center justify-start text-center text-[0.88rem] text-dark-navy">
-      <a href="/product" className="button-link">
+      {(pageSize * currentPage < numberProducts) && <button className="button-link" onClick={increasePageSize}>
         <div className="rounded box-border w-[15rem] h-[3rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] border-[1.5px] border-solid border-dark-navy">
             <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
                 Încarcă mai multe
             </b>
         </div>
-      </a>
+      </button>}
     </div>
     );
   };
@@ -475,7 +499,7 @@ const Products = () => {
             <div className="self-stretch flex flex-col items-start justify-start">
               <div className="self-stretch flex flex-row items-start justify-start gap-[2rem]">
                 <LargeMenuBar />
-                <div className="lg:h-[70rem] flex flex-col max-lg:items-center lg:items-start justify-start gap-[2.5rem] text-[1.5rem]">
+                <div className="lg:min-h-[70rem] flex flex-col max-lg:items-center lg:items-start justify-start gap-[2.5rem] text-[1.5rem]">
                   <LargeFilter />
                   
                   <div className="max-lg:hidden flex-1 flex flex-col items-start justify-start gap-[1rem] lg:w-[57.25rem]">
