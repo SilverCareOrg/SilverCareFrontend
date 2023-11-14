@@ -8,12 +8,18 @@ import { useNavigate } from 'react-router-dom';
 import filter_svg from "../styles/icons/filter.svg";
 import axios from "axios";
 import Pagination from "../components/Pagination";
+import ExperienceSearch from "../components/ExperienceSearch";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Products = () => {
+  const [showFilter, setShowFilter] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [sortByPrice, setSortByPrice] = useState(null);
+
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +44,31 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
   const [numberProducts, setNumberProducts] = useState(0);
+
+  const selectCategories = [
+    { name: 'Toate categoriile', raw: ''},
+    { name: 'Spiritualitate', raw: 'Spiritualitate'},
+    { name: 'Excursii', raw: 'Excursii'},
+    { name: 'Sănătate', raw: 'Sanatate'},
+    { name: 'Sport', raw: 'Sport'},
+    { name: 'Divertisment', raw: 'Divertisment'},
+    { name: 'Artă', raw: 'Arta'},
+    { name: 'Cursuri', raw: 'Cursuridelimbistrăine'},
+    { name: 'Hobby', raw: 'Hobby'},
+  ];
+
+  const selectLocations = [
+    { name: 'Toate locațiile', raw: ''},
+    { name: 'București', raw: 'Bucuresti'},
+    { name: 'Cluj', raw: 'Cluj'},
+    { name: 'Timișoara', raw: 'Timisoara'},
+    { name: 'Iasi', raw: 'Iasi'},
+    { name: 'Constanța', raw: 'Constanta'},
+    { name: 'Sibiu', raw: 'Sibiu'},
+    { name: 'Oradea', raw: 'Oradea'},
+    { name: 'Brașov', raw: 'Brasov'},
+    { name: 'Craiova', raw: 'Craiova'},
+  ];
 
   const categories = [
     { name: 'Toate experiențele', link: '/product'},
@@ -79,35 +110,41 @@ const Products = () => {
   }, []);
 
   const get_all_services =  (cat) => {
+    
+    if (category === "") {
+      setSelectedCategory(null);
+      setCategory("-");
+    } else if (category != "-") {
+      setSelectedCategory(category);
+      setCategory("-");
+    }
+
+    if (locationOption === "") {
+      setSelectedLocation(null);
+      setLocationOption("-");
+    } else if (locationOption != "-") {
+      setSelectedLocation(locationOption);
+      setLocationOption("-");
+    }
+
     try {
       setIsLoading(true);
 
-      axios_api.get("/get_all_services", {withCredentials: true}).then((response) => {
+      axios_api.get("/get_services",
+        {params: {
+        category: selectedCategory,
+        location: selectedLocation,
+        sort: sortByPrice,
+        inf_limit: (currentPage - 1) * pageSize,
+        sup_limit: currentPage * pageSize,
+        searched: search
+      }, withCredentials: true}).then((response) => {
         if (response.status === 200) {
           const json = response.data;
           setIsLoading(false);
           setProducts(json);
-
-          if (category) {
-            const filters = json.filter(
-              (product) => product.category === category
-            );
-            setFilterProducts(filters);
-            setNumberProducts(json.length);
-            setCatPath(category);
-          } else {
-            setFilterProducts(json);
-            setNumberProducts(json.length);
-          }
-
-          if (cat) {
-            const filters = products.filter(
-              (product) => product.category === cat
-            );
-            setFilterProducts(filters);
-            setNumberProducts(filterProducts.length);
-          }
-
+          setFilterProducts(json);
+          setNumberProducts(json.length);
         }
       }).catch((error) => {
         console.log("Error:", error);
@@ -121,52 +158,7 @@ const Products = () => {
 
   const getData = async () => {
     try {
-
-      setIsLoading(true);
-
-      if (search === "") {
-        get_all_services(null);
-      } else {
-        axios_api.post("/search_ex", {
-          searched: search
-        }, {withCredentials: true}).then((response) => {
-          if (response.status === 200) {
-            const json = response.data;
-            setIsLoading(false);
-            setProducts(json);
-            setFilterProducts(json);
-            setNumberProducts(json.length);
-          }
-        }).catch((error) => {
-          console.log("Error:", error);
-        });
-      }
-
-      // if (isStringInURL) {
-
-      //   if (search === "") {
-      //     setIsStringInUrl(false);
-      //   } else {
-      //     console.log(search);
-      //     axios_api.post("/search_ex", {
-      //       searched: search
-      //     }, {withCredentials: true}).then((response) => {
-      //       if (response.status === 200) {
-      //         const json = response.data;
-      //         setIsLoading(false);
-      //         setProducts(json);
-      //         setFilterProducts(json);
-      //         setCatPath("Toate experiențele");
-      //       }
-      //     }).catch((error) => {
-      //       console.log("Error:", error);
-      //     });
-      //   }
-        
-      // } else {
-      //   get_all_services(null);
-      // }
-
+      get_all_services(null);
     } catch (err) {
       setIsLoading(false);
       setErr(err.message);
@@ -176,6 +168,11 @@ const Products = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+      getData();
+  }, [selectedCategory, selectedLocation]);
+  
 
     const handleSearch = () => {
       navigate(`/product?search=${searchTerm}`);
@@ -190,8 +187,32 @@ const Products = () => {
       setSearchTerm(e.target.value);
     };
 
+    const handleCategoryMenuChange = (category) => {
+      setSelectedCategory(category.raw);
+    }
+
+    const handleLocationMenuChange = (location) => {
+      setSelectedLocation(location.raw);
+    }
+
     const handlePageChange = (newPage) => {
       setCurrentPage(newPage);
+    };
+
+    const toggleFilter = () => {
+      setShowFilter(!showFilter);
+    };
+  
+    const handleCategoryChange = (category) => {
+      setSelectedCategory(category);
+    };
+  
+    const handleLocationChange = (location) => {
+      setSelectedLocation(location);
+    };
+  
+    const handleSortChange = (sortOption) => {
+      setSortByPrice(sortOption);
     };
 
     const lg_rows = [];
@@ -216,57 +237,19 @@ const Products = () => {
         );
       };
 
-    const ExperienceSearch = () => {
-      return (
-        <div className="bg-light-purple flex flex-col items-center justify-start max-lg:py-[2rem] lg:py-[3.5rem] px-[0rem] box-border text-center max-lg:text-[1.88rem] lg:text-[2.5rem]">
-          <div className="max-lg:w-[20rem] max-lg:h-[15rem] lg:w-[77rem] flex flex-col items-center justify-center">
-            <div className="self-stretch flex flex-col items-center justify-center max-lg:gap-[1.5rem] lg:gap-[2.5rem]">
-              <div className="max-lg:self-stretch flex flex-col items-start justify-start max-lg:gap-[1rem] lg:gap-[1.5rem]">
-                <div className="max-lg:self-stretch relative tracking-[0.12em] leading-[120%] max-lg:text-[1.5rem] lg:text-[2rem] font-semibold lg:w-[57rem] lg:h-[2.5rem]">
-                  Experiențe
-                </div>
-                <div className="relative max-lg:text-[1.13rem] lg:text-[1.5rem] tracking-[0.1em] max-lg:text-[0.9rem] lg:text-[1.2rem] leading-[120%] max-lg:font-medium lg:font-semibold flex items-center justify-center lg:w-[57rem]">
-                  Alege experiența perfectă pentru tine !
-                </div>
-              </div>
-              <div className="self-stretch flex flex-col items-center justify-end lg:px-[13.13rem] text-left max-lg:text-[0.75rem] lg:text-[1rem] text-text-fields-grey-hf">
-                <div className="self-stretch rounded-lg bg-white box-border max-lg:h-[3rem] lg:h-[3.5rem] flex flex-row items-center justify-start py-[0rem] pr-[1.5rem] pl-[1rem] gap-[1rem] border-[1.5px] border-solid border-text-fields-grey-hf">
-                    <div className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]">
-                    <input
-                        type="text"
-                        className="flex-1 relative tracking-0.08em leading-120% h-2rem outline-none" // Remove border here
-                        placeholder="Caută o experiență"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    </div>
-                    <img
-                    className="relative w-[1.5rem] h-[1.5rem] cursor-pointer"
-                    alt="Search"
-                    src={HomeSearchGif}
-                    onClick={handleSearch}
-                    />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
     const LargeMenuBar = () => {
       return (
         <div className="max-lg:hidden bg-gray-100 w-[17.75rem] flex flex-col items-start justify-start p-[1rem] box-border gap-[3rem]">
           <div className="self-stretch flex flex-col items-start justify-start gap-[1.5rem]">
             <b className="self-stretch relative tracking-[0.05em] leading-[1.5rem] flex items-center h-[1.5rem] shrink-0">
-              Toate
+              Categorii
             </b>
             <div className="self-stretch flex flex-col items-start justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf">
-            {categories.map((category, index) => (
-              <a className="cursor-pointer self-stretch relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0"
-              href = {category.link}>
+            {selectCategories.map((category, index) => (
+              <button className="cursor-pointer self-stretch relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0"
+              onClick={() => handleCategoryMenuChange(category)}>
               <span>{category.name}</span>
-            </a>
+            </button>
             ))}
             </div>
           </div>
@@ -275,17 +258,173 @@ const Products = () => {
               Locatii
             </b>
             <div className="self-stretch flex flex-col items-start justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf">
-              {locations.map((location, index) => (
-                <a className="cursor-pointer self-stretch relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0"
-                href = {location.link}>
+              {selectLocations.map((location, index) => (
+                <button className="cursor-pointer self-stretch relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0"
+                onClick={() => handleLocationMenuChange(location)}>
                 <span>{location.name}</span>
-              </a>
+              </button>
               ))}
             </div>
           </div>
         </div>
       );
     };
+
+  const LargeFilter = () => {
+    return (
+      <div>
+      <button className="lg:w-[57.25rem] flex flex-row items-end justify-start gap-[1rem] text-[1rem] text-dark-navy" onClick={toggleFilter}>
+        <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium text-right flex items-center justify-end h-[1.5rem]">
+          Filtru
+        </div>
+        <div className="h-[1.5rem] flex flex-col items-center justify-center">
+          <img
+            className="relative w-[1.5rem] h-[1.31rem]"
+            alt=""
+            src={filter_svg}
+          />
+        </div>
+      </button>
+
+      {/* Filtering options */}
+      {showFilter && (
+          <div className="w-full flex flex-row items-start justify-start gap-[2rem] p-4 bg-white shadow-md rounded-md">
+            {/* Category Dropdown */}
+            <div className="mb-4">
+              <select
+                className="text-[1rem] mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
+                value={selectedCategory}
+                onChange={(e) => handleCategoryChange(e.target.value)}
+              >
+                <option value="">Selectează categoria</option>
+                {selectCategories.map((category, index) => (
+                  <option key={index} value={category.raw}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Location Dropdown */}
+            <div className="mb-4">
+              <select
+                className="text-[1rem] mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
+                value={selectedLocation}
+                onChange={(e) => handleLocationChange(e.target.value)}
+              >
+                <option value="">Selectează locația</option>
+                {selectLocations.map((location, index) => (
+                  <option key={index} value={location.raw}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Sort Dropdown */}
+            <div>
+              <select
+                className="text-[1rem] mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
+                value={sortByPrice}
+                onChange={(e) => handleSortChange(e.target.value)}
+              >
+                <option value="">Sortează</option>
+                <option value="ascending">Preț crescător</option>
+                <option value="descending">Preț descrescător</option>
+              </select>
+            </div>
+
+            {/* Apply Filters Button */}
+            <button
+              className="login-button-link mt-1 ml-auto text-white p-2 rounded font-normal text-[1rem]"
+              onClick={getData}
+            >
+              Aplică filtre
+            </button>
+            </div>
+        )}
+      </div>
+    );
+  };
+
+  const SmallFilter = () => {
+    return (
+      <div className="w-full mb-8 flex flex-col items-start justify-start">
+      <button className="lg:w-[57.25rem] flex flex-row items-end justify-start gap-[1rem] text-[1rem] text-dark-navy" onClick={toggleFilter}>
+        <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium text-right flex items-center justify-end h-[1.5rem]">
+          Filtru
+        </div>
+        <div className="h-[1.5rem] flex flex-col items-center justify-center">
+          <img
+            className="relative w-[1.5rem] h-[1.31rem]"
+            alt=""
+            src={filter_svg}
+          />
+        </div>
+      </button>
+
+      {/* Filtering options */}
+      {showFilter && (
+          <div className="w-full flex flex-col items-start justify-start gap-[2rem] p-4 bg-white shadow-md rounded-md">
+            {/* Category Dropdown */}
+            <div className="mb-4 w-full">
+              <select
+                className="text-[1rem] mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
+                value={selectedCategory}
+                onChange={(e) => handleCategoryChange(e.target.value)}
+              >
+                <option value="">Selectează categoria</option>
+                {selectCategories.map((category, index) => (
+                  <option key={index} value={category.raw}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Location Dropdown */}
+            <div className="mb-4 w-full">
+              <select
+                className="text-[1rem] mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
+                value={selectedLocation}
+                onChange={(e) => handleLocationChange(e.target.value)}
+              >
+                <option value="">Selectează locația</option>
+                {selectLocations.map((location, index) => (
+                  <option key={index} value={location.raw}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="w-full">
+              <select
+                className="text-[1rem] mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
+                value={sortByPrice}
+                onChange={(e) => handleSortChange(e.target.value)}
+              >
+                <option value="">Sortează</option>
+                <option value="ascending">Preț crescător</option>
+                <option value="descending">Preț descrescător</option>
+              </select>
+            </div>
+
+            {/* Apply Filters Button */}
+            <div className="w-full">
+              <button
+                className="login-button-link w-full mt-1 text-white p-2 rounded font-normal text-[1rem]"
+                onClick={getData}
+              >
+                Aplică filtre
+              </button>
+              </div>
+            </div>
+        )}
+      </div>
+    );
+  };
 
   const LoadMore = () => {
     return (
@@ -327,20 +466,9 @@ const Products = () => {
             <div className="self-stretch flex flex-col items-start justify-start">
               <div className="self-stretch flex flex-row items-start justify-start gap-[2rem]">
                 <LargeMenuBar />
-                <div className="lg:h-[70rem] flex flex-col max-lg:items-center lg:items-start justify-start gap-[2.5rem] text-[1.5rem] text-white">
-                  <div className="lg:w-[57.25rem] flex flex-row items-end justify-start gap-[1rem] text-[1rem] text-dark-navy">
-                    
-                    <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium text-right flex items-center justify-end h-[1.5rem]">
-                      Filtru
-                    </div>
-                    <div className="h-[1.5rem] flex flex-col items-center justify-center">
-                      <img
-                        className="relative w-[1.5rem] h-[1.31rem]"
-                        alt=""
-                        src={filter_svg}
-                      />
-                    </div>
-                  </div>
+                <div className="lg:h-[70rem] flex flex-col max-lg:items-center lg:items-start justify-start gap-[2.5rem] text-[1.5rem]">
+                  <LargeFilter />
+                  
                   <div className="max-lg:hidden flex-1 flex flex-col items-start justify-start gap-[1rem] lg:w-[57.25rem]">
                     {lg_rows.map((productGroup, index) => (
                         <ProductRow key={index} products={productGroup} />
@@ -358,19 +486,7 @@ const Products = () => {
       <div className="lg:hidden w-full flex flex-col items-center justify-start pt-[2rem] pb-[4rem] px-[2rem] box-border text-[1rem]">
           <div className="flex flex-col items-center justify-center">
             <div className="self-stretch flex flex-col items-end justify-start">
-              
-              <div className="lg:w-[57.25rem] flex items-end justify-start gap-[1rem] text-[1rem] text-dark-navy pb-[2rem]">
-                <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium text-right flex items-center justify-end h-[1.5rem]">
-                      Filtru
-                </div>
-                <div className="h-[1.5rem] flex flex-col items-center justify-center">
-                  <img
-                    className="relative w-[1.5rem] h-[1.31rem]"
-                    alt=""
-                    src={filter_svg}
-                  />
-                </div>
-              </div>
+               <SmallFilter />
                 <div className="lg:h-[70rem] flex flex-col max-lg:items-center lg:items-start justify-start gap-[2.5rem] text-[1.5rem] text-white">
                   <div className="relative lg:hidden flex-1 flex flex-col items-center justify-start gap-[2rem]">
                     {max_lg_rows.map((productGroup, index) => (
