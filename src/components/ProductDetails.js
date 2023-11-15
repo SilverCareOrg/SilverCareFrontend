@@ -510,7 +510,7 @@ const ProductDetails = () => {
           duration = option.duration != "" ? ConvertDurationToHoursAndMinutes({ durationString: option.duration }) : null,
           <div key={index} className="relative flex-1 flex flex-col">
             <div className="relative gap-[8rem] flex flex-row">
-              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]"  style={{ maxWidth: dateArray !== null ? '20rem' : '40rem', wordBreak: 'break-all' }}> 
+              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]"  style={{ maxWidth: dateArray !== null ? '20rem' : '50rem', wordBreak: 'break-all' }}> 
                 {option.name} {duration && <span className="text-[1rem]">- {duration}</span>} | {option.price === 0 ? <span className="text-blue-500 text-[1rem]">Gratis</span>: <span className="text-[1rem]">{option.price} RON</span>}
               </div>}
 
@@ -808,7 +808,7 @@ const ProductDetails = () => {
               <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[25.25rem] flex flex-col items-start justify-start">
                   <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
-                    {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal" style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>{location}</span></div>}
+                    {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal" style={{ maxWidth: '15rem', wordBreak: 'break-all' }}>{location}</span></div>}
                   </div>
                 </div>
               <div className="relative self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
@@ -885,14 +885,7 @@ const ProductDetails = () => {
   }
 
   const CartSectionOneOption = ({ option }) => {
-    const dateString = option.date;
-    const date = new Date(dateString);
-    
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hour = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const dateArray = ExtractOptionDate({ option });
 
     return (
       <div className="flex-1 relative">
@@ -902,19 +895,19 @@ const ProductDetails = () => {
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
                   <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
-                  <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
-                    <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+                  {dateArray != null && <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
+                  <div className="flex flex-row items-start justify-start gap-[0.25rem]">
                       <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
-                      <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">{day} {monthNumberToAbbreviationMap[month]} {year}</div>
+                      <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">{dateArray[0]} {monthNumberToAbbreviationMap[dateArray[1]]} {dateArray[2]}</div>
                     </div>
                     <div className="flex flex-row items-center justify-center gap-[0.25rem]">
                       <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Ora: `}</div>
-                      <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
-                        {hour}:{minutes}
+                        <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
+                          {dateArray[3]}:{dateArray[4]}
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]" >Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal"  style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>{option.location}</span></div>}
+                    </div>}
+                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]" >Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal"  style={{ maxWidth: '15rem', wordBreak: 'break-all' }}>{option.location}</span></div>}
                 </div>
               </div>
 
