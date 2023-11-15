@@ -144,8 +144,24 @@ const Products = () => {
 
     for (let i = 0; i < selectCategories.length; i++) {
       if (selectCategories[i].raw === category) {
-        console.log(selectCategories[i].name);
         return selectCategories[i].name;
+      }
+    }
+  };
+
+  const getLocation = (location) => {
+
+    if (location === null) {
+      return "";
+    }
+
+    if (location == "") {
+      return "";
+    }
+
+    for (let i = 0; i < selectLocations.length; i++) {
+      if (selectLocations[i].raw === location) {
+        return selectLocations[i].name;
       }
     }
   };
@@ -159,7 +175,7 @@ const Products = () => {
         {params: {
         // for category iterate through selectCategories and choose the name with the same raw
         category: getCategory(selectedCategory),
-        location: selectedLocation,
+        location: getLocation(selectedLocation),
         sort: sortByPrice,
         inf_limit: (currentPage - 1) * pageSize,
         sup_limit: currentPage * pageSize,

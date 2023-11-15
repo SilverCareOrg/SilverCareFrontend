@@ -347,9 +347,20 @@ const ProductDetails = () => {
   };
 
   const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
-    // Extract hours and minutes
-    const hours = parseInt(durationString.match(/(\d+)H/)[1] || 0);
-    const minutes = parseInt(durationString.match(/(\d+)M/)[1] || 0);
+    const parts = durationString.split(' ');
+    let hours = 0;
+    let minutes = 0;
+
+    for (const part of parts) {
+        const value = parseInt(part);
+        if (!isNaN(value)) {
+            if (part.includes('h')) {
+                hours += value;
+            } else if (part.includes('m')) {
+                minutes += value;
+            }
+        }
+    }
   
     // Format the duration
     if (hours === 0) return `${minutes}min`;
@@ -359,15 +370,30 @@ const ProductDetails = () => {
 
   const ExtractOptionDate = ({ option }) => {
     const dateString = option.date;
-    const date = new Date(dateString);
 
+    // Check if the date string is empty
+    if (dateString === "") {
+      return null;
+    }
+  
+    const date = new Date(dateString);
+  
+    // Get the current date
+    const today = new Date();
+    
+    // Check if the date is earlier than today's date
+    if (date < today) {
+      return null;
+    }
+  
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     const hour = ('0' + date.getHours()).slice(-2);
     const minutes = ('0' + date.getMinutes()).slice(-2);
-
-    const dateArray = dateString === "" ? null : [day, month, year, hour, minutes];
+  
+    const dateArray = [day, month, year, hour, minutes];
+  
     return dateArray;
   };
 
@@ -767,7 +793,7 @@ const ProductDetails = () => {
               <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[25.25rem] flex flex-col items-start justify-start">
                   <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
-                    {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{location}</span></div>}
+                    {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]" style={{ maxWidth: '5rem', wordBreak: 'break-all' }}>Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{location}</span></div>}
                   </div>
                 </div>
               <div className="relative self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
@@ -873,7 +899,7 @@ const ProductDetails = () => {
                       </div>
                     </div>
                   </div>
-                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{option.location}</span></div>}
+                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal"  style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>{option.location}</span></div>}
                 </div>
               </div>
 
