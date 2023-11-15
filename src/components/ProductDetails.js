@@ -607,14 +607,14 @@ const ProductDetails = () => {
   const CommonLocationBlock = () => {
     return (
       <div className="mt-[2rem]">
-        {common_location && map_location != "" && (main_option === null || (main_option != null && main_option.map_location == "")) && <div className="w-[44.13rem] flex flex-col items-start justify-center gap-[1.5rem]">
+        {common_location && map_location != "" && (main_option === null || (main_option != null && main_option.map_location == "")) && <div className="max-lg:w-[20.44rem] lg:w-[44.13rem] flex flex-col items-start justify-center gap-[1.5rem]">
           <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
           
-          <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[39.5rem] h-[1.5rem] shrink-0">
+          <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center max-lg:w-[20.44rem] lg:w-[39.5rem] h-[1.5rem] shrink-0">
             LOCAȚIE
           </div>
             <MapSection e={map_location} />
-          <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[43.94rem] h-[1rem] shrink-0">
+          <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center max-lg:w-[20.44rem] lg:w-[43.94rem] h-[1rem] shrink-0">
             {location}
           </div>
         </div>}
@@ -1037,32 +1037,25 @@ const ProductDetails = () => {
   }
 
   const CartMobileOneOptionMain = ({ option }) => {
-    const dateString = option.date;
-    const date = new Date(dateString);
-
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hour = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const dateArray = ExtractOptionDate({ option });
 
     return (
       <div className="self-stretch flex flex-row items-start justify-start">
             <div className="rounded-lg bg-light-purple w-full flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
             <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[20.25rem] flex flex-col items-start justify-start">
-                  <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
-                    <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+                {dateArray != null && <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
+                  <div className="flex flex-row items-start justify-start gap-[0.25rem]">
                       <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
-                      <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">{day} {monthNumberToAbbreviationMap[month]} {year}</div>
+                      <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">{dateArray[0]} {monthNumberToAbbreviationMap[dateArray[1]]} {dateArray[2]}</div>
                     </div>
                     <div className="flex flex-row items-center justify-center gap-[0.25rem]">
                       <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Ora: `}</div>
-                      <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
-                        {hour}:{minutes}
+                        <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
+                          {dateArray[3]}:{dateArray[4]}
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    </div>}
                   {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{option.location}</span></div>}
                 </div>
               </div>
@@ -1121,7 +1114,7 @@ const ProductDetails = () => {
         {/* Fixed position cart */}
         <div
           ref={mobileCartRef}
-          className={`${mobileIsSticky ? 'top-0 fixed' : 'hidden'}`}
+          className={`${mobileIsSticky ? 'top-0 fixed w-full' : 'hidden'}`}
           style={{zIndex: mobileIsSticky ? '1500' : 'auto'}}
         >
           <CartMobileMoreOptionsMain options={options} selectedOption={selectedOption} handleOptionChange={handleOptionChange} />
@@ -1145,7 +1138,7 @@ const ProductDetails = () => {
       {/* Fixed position cart */}
       <div
         ref={mobileCartRef}
-        className={`${mobileIsSticky ? 'top-0 fixed' : 'hidden'}`}
+        className={`${mobileIsSticky ? 'top-0 fixed w-full' : 'hidden'}`}
         style={{zIndex: mobileIsSticky ? '1500' : 'auto'}}
       >
         <CartMobileOneOptionMain option={option} />
