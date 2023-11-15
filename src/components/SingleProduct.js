@@ -103,7 +103,7 @@ const SingleProduct = ({ product }) => {
                     </div>
                 </Link>
 
-                <div style={{ maxWidth: '8rem', wordBreak: 'break-all' }} className="self-stretch absolute bottom-2 flex text-gray-500 pt-[0.2rem] tracking-[0.03em] leading-[110%] font-semibold max-lg:text-[1.1rem] lg:text-[0.8rem]">
+                <div style={{ wordBreak: 'break-all' }} className="lg:w-[8rem] max-lg:w-[13rem] self-stretch absolute bottom-2 flex text-gray-500 pt-[0.2rem] tracking-[0.03em] leading-[110%] font-semibold max-lg:text-[1.1rem] lg:text-[0.8rem]">
                       {product.organiser}
                 </div>
             </div>

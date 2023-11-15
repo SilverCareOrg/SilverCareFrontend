@@ -847,7 +847,7 @@ const ProductDetails = () => {
                     <select
                       value={strNumberOfParticipants}
                       onChange={handleParticipantsOptionChange}
-                      className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
+                      className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
                       style={{ border: 'none' }}
                     >
                       {participants_options.map((option, index) => (
@@ -919,7 +919,7 @@ const ProductDetails = () => {
                     <select
                       value={strNumberOfParticipants}
                       onChange={handleParticipantsOptionChange}
-                      className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
+                      className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
                       style={{ border: 'none' }}
                     >
                       {participants_options.map((option, index) => (
@@ -1006,7 +1006,7 @@ const ProductDetails = () => {
                       <select
                         value={strNumberOfParticipants}
                         onChange={handleMobileParticipantsOptionChange}
-                        className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
+                        className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
                         style={{ border: 'none' }}
                       >
                         {participants_options.map((option, index) => (
@@ -1072,11 +1072,11 @@ const ProductDetails = () => {
 
                 <div className="flex-1">
                   <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[0.9rem]">
-                    <div className="self-stretch rounded bg-white box-border h-[2rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
+                    <div className="self-stretch rounded bg-white box-border h-[2rem] flex flex-row items-center justify-start py-[0rem]  gap-[1rem] text-text-fields-grey-hf border-[1px] border-solid border-dark-navy">
                       <select
                         value={strNumberOfParticipants}
                         onChange={handleMobileParticipantsOptionChange}
-                        className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
+                        className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
                         style={{ border: 'none' }}
                       >
                         {participants_options.map((option, index) => (
