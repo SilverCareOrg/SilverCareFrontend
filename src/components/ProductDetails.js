@@ -11,6 +11,7 @@ import e from "cors";
 import CartPanel from "./CartPanel";
 
 const ProductDetails = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { state: product } = useLocation();
   const [visibleCartPanel, setVisibleCartPanel] = useState(false);
   const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
@@ -45,74 +46,81 @@ const ProductDetails = () => {
   const handleAddCart = async (event) => {
     event.preventDefault();
 
-    // check if local storage contains a token
-    var token = localStorage.getItem("token");
+    // if not logged in, tell the user to login
+    if (!isLoggedIn) {
+      alert("Trebuie să vă autentificați pentru a adăuga produse în coș!");
+      return;
+    } else {
 
-    // if there is no token set, it means that there's a guest user
-    if (token === null) {
-      // add the product to cart using the localstorage
-      // store the name of the product, the number of participants, the id of the product
-      // the price and the option
-      var cart = localStorage.getItem("services");
+      // check if local storage contains a token
+      var token = localStorage.getItem("token");
 
-      if (cart === null) {
-        cart = [{
-          service_image_path: img_path,
-          service_name: product.name,
-          number_of_participants: numberOfParticipants,
-          id: product.service_id,
-          option_name: main_option === null ? options.find(option => option.id === selectedOption).name : main_option.name,
-          option_id: main_option === null ? selectedOption : main_option.id,
-          option_details: {
-            id: main_option === null ? selectedOption : main_option.id,
-          },
-          price: main_option != null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
-        }];
-        console.log(cart);
-        localStorage.setItem("services", JSON.stringify(cart));
-      } else { 
-        cart = JSON.parse(cart);
-        cart.push({
-          service_image_path: img_path,
-          service_name: product.name,
-          number_of_participants: numberOfParticipants,
-          id: product.service_id,
-          option_name: main_option === null ? options.find(option => option.id === selectedOption).name : main_option.name,
-          option_id: main_option === null ? selectedOption : main_option.id,
-          option_details: {
-            id: main_option === null ? selectedOption : main_option.id,
-          },
-          price: main_option != null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
-        });
-        localStorage.setItem("services", JSON.stringify(cart));
+      // if there is no token set, it means that there's a guest user
+      if (token === null) {
+        // add the product to cart using the localstorage
+        // store the name of the product, the number of participants, the id of the product
+        // the price and the option
+        var cart = localStorage.getItem("services");
+
+        if (cart === null) {
+          cart = [{
+            service_image_path: img_path,
+            service_name: product.name,
+            number_of_participants: numberOfParticipants,
+            id: product.service_id,
+            option_name: main_option === null ? options.find(option => option.id === selectedOption).name : main_option.name,
+            option_id: main_option === null ? selectedOption : main_option.id,
+            option_details: {
+              id: main_option === null ? selectedOption : main_option.id,
+            },
+            price: main_option != null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+          }];
+          console.log(cart);
+          localStorage.setItem("services", JSON.stringify(cart));
+        } else { 
+          cart = JSON.parse(cart);
+          cart.push({
+            service_image_path: img_path,
+            service_name: product.name,
+            number_of_participants: numberOfParticipants,
+            id: product.service_id,
+            option_name: main_option === null ? options.find(option => option.id === selectedOption).name : main_option.name,
+            option_id: main_option === null ? selectedOption : main_option.id,
+            option_details: {
+              id: main_option === null ? selectedOption : main_option.id,
+            },
+            price: main_option != null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+          });
+          localStorage.setItem("services", JSON.stringify(cart));
+        }
+
+      } else {
+        // otherwise, if the token is set, we send the request back to the api to keep track of the cart
+          axios_api.post("/add_to_cart", {
+            service_id: product.id,
+            number_of_participants: numberOfParticipants,
+            option_id: main_option === null ? selectedOption : main_option.id,
+            price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
+        }, {sameSite: 'none', withCredentials: true,
+        headers: {
+          // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
+          'Content-Type': 'application/json'
+      }})
+          .then((response) => {
+            // Handle the response
+            if (response.status == 200) {
+            } else {
+              console.log("Failed to send login data to the API");
+            }
+          })
+          .catch((error) => {
+            // Handle errors
+            console.log("Error:", error);
+          });
       }
 
-    } else {
-       // otherwise, if the token is set, we send the request back to the api to keep track of the cart
-        axios_api.post("/add_to_cart", {
-          service_id: product.id,
-          number_of_participants: numberOfParticipants,
-          option_id: main_option === null ? selectedOption : main_option.id,
-          price: main_option !== null ? numberOfParticipants * main_option.price : numberOfParticipants * options.find(option => option.id === selectedOption).price,
-      }, {sameSite: 'none', withCredentials: true,
-      headers: {
-        // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
-        'Content-Type': 'application/json'
-    }})
-        .then((response) => {
-          // Handle the response
-          if (response.status == 200) {
-          } else {
-            console.log("Failed to send login data to the API");
-          }
-        })
-        .catch((error) => {
-          // Handle errors
-          console.log("Error:", error);
-        });
+        toggleCartPanel();
     }
-
-      toggleCartPanel();
   };
 
   const parentRef = useRef(null);
@@ -276,6 +284,13 @@ const ProductDetails = () => {
       }
     }, 1);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token") ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, [isLoggedIn]);
 
   const markerIcon = new L.Icon({
     iconUrl: marker_icon_png,
@@ -495,7 +510,7 @@ const ProductDetails = () => {
           duration = option.duration != "" ? ConvertDurationToHoursAndMinutes({ durationString: option.duration }) : null,
           <div key={index} className="relative flex-1 flex flex-col">
             <div className="relative gap-[8rem] flex flex-row">
-              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]"  style={{ maxWidth: '20rem', wordBreak: 'break-all' }}> 
+              {option.name != "" && <div className="text-[1.2rem] text-text-fields-grey-hf font-medium tracking-[0.05em] leading-[1.5rem]"  style={{ maxWidth: dateArray !== null ? '20rem' : '40rem', wordBreak: 'break-all' }}> 
                 {option.name} {duration && <span className="text-[1rem]">- {duration}</span>} | {option.price === 0 ? <span className="text-blue-500 text-[1rem]">Gratis</span>: <span className="text-[1rem]">{option.price} RON</span>}
               </div>}
 
@@ -793,7 +808,7 @@ const ProductDetails = () => {
               <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
                 <div className="w-[25.25rem] flex flex-col items-start justify-start">
                   <div className="mb-5 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1.5rem]">{name}</div>
-                    {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]" style={{ maxWidth: '5rem', wordBreak: 'break-all' }}>Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal">{location}</span></div>}
+                    {common_location && <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal" style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>{location}</span></div>}
                   </div>
                 </div>
               <div className="relative self-stretch flex flex-col items-start justify-center gap-[1.5rem]">
@@ -899,7 +914,7 @@ const ProductDetails = () => {
                       </div>
                     </div>
                   </div>
-                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]">Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal"  style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>{option.location}</span></div>}
+                  {option.location != "" && <div className="self-stretch relative tracking-[0.05em] leading-[120%] font-semibold flex items-center shrink-0 text-[1rem]" >Locație: <span className="ml-2 text-[1rem] font-open-sans font-normal"  style={{ maxWidth: '20rem', wordBreak: 'break-all' }}>{option.location}</span></div>}
                 </div>
               </div>
 

@@ -44,24 +44,9 @@ const OurTeam = () => {
       img: poza_tibi,
     },
     {
-      name: "Melisa Staicu",
-      designation: "Strategic Partnerships",
-      img: poza_melisa_staicu,
-    },
-    {
       name: "Irina Vădan",
       designation: "UI/UX Designer",
       img: poza_irina_vadan,
-    },
-    {
-      name: "Mădălina Hamciuc",
-      designation: "UI/UX Designer",
-      img: poza_madalina_hamciuc,
-    },
-    {
-      name: "Adrian Sandu",
-      designation: "UI/UX Designer",
-      img: poza_adrian_sandu,
     },
     {
       name: "Iulia Cailean",
