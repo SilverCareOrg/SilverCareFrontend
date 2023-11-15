@@ -173,6 +173,7 @@ function AdminAddService() {
     setOptions(updatedOptions);
   };
 
+
   const handleAddService = async (event) => {
     event.preventDefault();
   
@@ -188,7 +189,7 @@ function AdminAddService() {
   
     // Append other fields
     formDataToSubmit.append('options', JSON.stringify(options));
-  
+
     const sect = [];
     Object.keys(sectionText).forEach((section) => {
       sect.push({ question: section, answer: sectionText[section] });
@@ -222,6 +223,8 @@ function AdminAddService() {
     const file = event.target.files[0];
     setSelectedImage(file);
   };
+
+  
 
   const renderSectionDropdown = () => (
     <div className="mb-4">
@@ -554,10 +557,10 @@ function AdminAddService() {
 
                 <div className="mb-2">
                   <label htmlFor={`optionDuration${index}`} className="block font-semibold">
-                    Duration (HH:MM)
+                    Duration (D HH:MM)
                   </label>
                   <input
-                    type="time"
+                    type="text"
                     id={`optionDuration${index}`}
                     name="duration"
                     value={option.duration}
@@ -565,6 +568,7 @@ function AdminAddService() {
                       handleOptionChange(index, "duration", e.target.value)
                     }
                     className="w-full border rounded-md p-2"
+                    placeholder="e.g., 2d 3h 30m"
                   />
                 </div>
               {!(formData.options_common_city === true && formData.common_location === true) && <div className="mb-4 relative flex flex-row">
