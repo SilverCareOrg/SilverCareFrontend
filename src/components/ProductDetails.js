@@ -1123,7 +1123,8 @@ const ProductDetails = () => {
         {/* Static position cart */}
         <div
           ref={mobileCartRef}
-          className={`${!mobileIsSticky ? 'relative' : 'hidden'}`}
+          className={`${!mobileIsSticky ? 'relative' : ''}`}
+          style={{opacity: mobileIsSticky ? '0' : '100'}}
         >
           <CartMobileMoreOptionsMain options={options} selectedOption={selectedOption} handleOptionChange={handleOptionChange} />
         </div>
@@ -1138,7 +1139,7 @@ const ProductDetails = () => {
       {/* Fixed position cart */}
       <div
         ref={mobileCartRef}
-        className={`${mobileIsSticky ? 'top-0 fixed w-full' : 'hidden'}`}
+        className={`${mobileIsSticky ? 'top-0 fixed w-full ' : 'hidden'}`}
         style={{zIndex: mobileIsSticky ? '1500' : 'auto'}}
       >
         <CartMobileOneOptionMain option={option} />
@@ -1147,7 +1148,8 @@ const ProductDetails = () => {
       {/* Static position cart */}
       <div
         ref={mobileCartRef}
-        className={`${!mobileIsSticky ? 'relative' : 'hidden'}`}
+        className={`${!mobileIsSticky ? 'relative' : ''}`}
+        style={{opacity: mobileIsSticky ? '0' : '100'}}
       >
         <CartMobileOneOptionMain option={option} />
       </div>
