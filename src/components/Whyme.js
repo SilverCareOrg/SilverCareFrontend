@@ -49,7 +49,7 @@ const reasons = [
 
 const Reason = ({ reason }) => {
   return (
-    <div className="flex justify-center items-center bg-light-grey max-lg:w-[10rem] lg:h-[13.5rem] w-1/2 sm:w-1/3 ">
+    <div className="flex justify-center items-center bg-light-grey max-lg:w-[10rem] lg:h-[13.5rem] m-2 sm:m-0 w-1/2 sm:w-1/3 ">
       <div className=" top-[0rem] left-[0rem] lg:w-[24.38rem] h-[13.5rem] flex flex-col items-center justify-start py-[1rem] lg:px-[2rem] box-border gap-[0.5rem]">
         <div className="w-[4.5rem] h-[4.5rem] flex flex-row items-center justify-center py-[0rem] px-[0.75rem] box-border">
           <img className=" w-[4rem] h-[4rem]" alt="" src={reason.icon} />
