@@ -49,8 +49,8 @@ const reasons = [
 
 const Reason = ({ reason }) => {
   return (
-    <div className="flex justify-center items-center bg-light-grey max-lg:w-[10rem] lg:h-[13.5rem] m-2 sm:m-0 w-1/2 sm:w-1/3 ">
-      <div className=" top-[0rem] left-[0rem] lg:w-[24.38rem] h-[13.5rem] flex flex-col items-center justify-start py-[1rem] lg:px-[2rem] box-border gap-[0.5rem]">
+    <div className="flex justify-center items-center bg-light-grey max-lg:w-[10rem] lg:h-[13.5rem] p-4 sm:m-0 w-1/2 sm:w-1/3 ">
+      <div className=" top-[0rem] left-[0rem] lg:w-[24.38rem] h-[10.5rem] flex flex-col items-center justify-start py-[1rem] lg:px-[2rem] box-border gap-[0.5rem]">
         <div className="w-[4.5rem] h-[4.5rem] flex flex-row items-center justify-center py-[0rem] px-[0.75rem] box-border">
           <img className=" w-[4rem] h-[4rem]" alt="" src={reason.icon} />
         </div>
@@ -73,7 +73,7 @@ const Reason = ({ reason }) => {
 const Whyme = () => {
   return (
     <div className="flex justify-center pt-[1rem] pb-[4rem] ">
-      <div className=" rounded-lg bg-light-grey shadow-[0px_4px_8px_rgba(0,_0,_0,_0.25)] py-[4rem] px-[0rem] flex justify-center flex-col items-center ">
+      <div className=" rounded-lg bg-light-grey shadow-[0px_4px_8px_rgba(0,_0,_0,_0.25)] py-[6rem] px-[0rem] flex justify-center flex-col items-center ">
         <div className="text-[1.9rem] lg:text-[2.25rem] tracking-[0.05em] leading-[120%] font-semibold  h-[2.5rem] ">
           De ce SilverCare ?
         </div>
