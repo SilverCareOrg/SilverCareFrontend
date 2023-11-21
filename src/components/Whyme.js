@@ -72,8 +72,8 @@ const Reason = ({ reason }) => {
 
 const Whyme = () => {
   return (
-    <div className="flex justify-center pt-[1rem] pb-[4rem] ">
-      <div className=" rounded-lg bg-light-grey shadow-[0px_4px_8px_rgba(0,_0,_0,_0.25)] py-[6rem] px-[0rem] flex justify-center flex-col items-center ">
+    <div className="flex justify-center pb-[4rem] ">
+      <div className=" rounded-lg bg-light-grey shadow-[0px_4px_8px_rgba(0,_0,_0,_0.25)] py-[6rem] pt-12 px-[0rem] flex justify-center flex-col items-center ">
         <div className="text-[1.9rem] lg:text-[2.25rem] tracking-[0.05em] leading-[120%] font-semibold  h-[2.5rem] ">
           De ce SilverCare ?
         </div>
