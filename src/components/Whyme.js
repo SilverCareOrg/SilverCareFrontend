@@ -50,11 +50,11 @@ const reasons = [
 const Reason = ({ reason }) => {
   return (
     <div className="flex justify-center items-center bg-light-grey max-lg:w-[10rem] lg:h-[13.5rem] p-4 sm:m-0 w-1/2 sm:w-1/3 ">
-      <div className=" top-[0rem] left-[0rem] lg:w-[24.38rem] h-[10.5rem] flex flex-col items-center justify-start py-[1rem] lg:px-[2rem] box-border gap-[0.5rem]">
+      <div className=" top-[0rem] left-[0rem] lg:w-[24.38rem] h-full w-full flex flex-col items-center justify-start box-border gap-[0.5rem]">
         <div className="w-[4.5rem] h-[4.5rem] flex flex-row items-center justify-center py-[0rem] px-[0.75rem] box-border">
           <img className=" w-[4rem] h-[4rem]" alt="" src={reason.icon} />
         </div>
-        <div className="tracking-[0.05em] lg:tracking-[0.1rem] leading-[120%] font-semibold text-center lg:text-[1.5rem] md:text-[1.2rem]">
+        <div className="tracking-[0.05em] lg:tracking-[0.1rem] leading-[120%] font-semibold text-center flex lg:text-[1.5rem] md:text-[1.2rem]">
           {reason.name}
         </div>
         <div className="tracking-[0.05em] leading-[1.5rem] font-medium text-text-fields-grey-hf text-center max-lg:text-[0.9rem]">
