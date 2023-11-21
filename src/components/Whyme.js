@@ -77,7 +77,7 @@ const Whyme = () => {
         <div className="text-[1.9rem] lg:text-[2.25rem] tracking-[0.05em] leading-[120%] font-semibold  h-[2.5rem] ">
           De ce SilverCare ?
         </div>
-        <div className="p-5 flex flex-wrap items-center justify-center md:w-[47.5rem] lg:w-[1024px] xl:w-[77.06rem]">
+        <div className="p-5 flex flex-wrap justify-center md:w-[47.5rem] lg:w-[1024px] xl:w-[77.06rem]">
           {reasons.map((reason, index) => (
             <Reason key={index} reason={reason} />
           ))}
