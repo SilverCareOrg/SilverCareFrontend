@@ -274,7 +274,7 @@ const Navbar = () => {
 
     <div>
       <div className="max-lg:hidden ">
-        <div className="flex items-center text-center text-[0.88rem] justify-between p-4 px-8 max-w-[77rem] m-auto">
+        <div className="flex items-center text-center text-[0.88rem] justify-between p-4 xl:py-4 max-w-[77rem] m-auto">
           <div className="flex flex-row">
             <Link to="/">
               <div className="flex flex-row items-center">
