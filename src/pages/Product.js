@@ -265,6 +265,11 @@ const Products = () => {
     max_lg_rows.push(filterProducts.slice(i, i + 1));
   }
 
+  const max_lg_rows_double = [];
+  for (let i = 0; i < filterProducts.length; i += 2) {
+    max_lg_rows_double.push(filterProducts.slice(i, i + 2));
+  }
+
   const ProductRow = ({ products }) => {
     return (
       <div className="flex flex-row items-start justify-start max-lg:gap-[1rem] lg:gap-[2rem] text-white">
@@ -513,7 +518,7 @@ const Products = () => {
       <ExperienceSearch />
 
       {/* Desktop View */}
-      <div className="max-lg:hidden w-full flex flex-col items-center justify-start pt-[5rem] pb-[4rem] box-border text-[1rem]">
+      <div className="max-xl:hidden w-full flex flex-col items-center justify-start pt-[5rem] pb-[4rem] box-border text-[1rem]">
         <div className="flex flex-col items-center justify-center">
           <div className="self-stretch flex flex-col items-start justify-start">
             <div className="self-stretch flex flex-row items-start justify-start gap-[2rem]">
@@ -540,13 +545,23 @@ const Products = () => {
       </div>
 
       {/* Mobile View */}
-      <div className="lg:hidden w-full flex flex-col items-center justify-start pt-[2rem] pb-[4rem] px-[2rem] box-border text-[1rem]">
+      <div className="xl:hidden w-full flex flex-col items-center justify-start pt-[2rem] pb-[4rem] px-[2rem] box-border text-[1rem]">
         <div className="flex flex-col items-center justify-center">
-          <div className="self-stretch flex flex-col items-end justify-start">
+          <div className="self-stretch flex flex-col justify-start">
             <SmallFilter />
-            <div className="lg:h-[70rem] flex flex-col max-lg:items-center lg:items-start justify-start gap-[2.5rem] text-[1.5rem] text-white">
-              <div className="relative lg:hidden flex-1 flex flex-col items-center justify-start gap-[2rem]">
+            <div className="xl:h-[70rem] flex flex-col max-x:items-center xl:items-start justify-start gap-[2.5rem] text-[1.5rem] text-white">
+              <div className="sm:hidden relative xl:hidden flex-1 flex flex-col items-center justify-start gap-[2rem]">
                 {max_lg_rows.map((productGroup, index) => (
+                  <ProductRow key={index} products={productGroup} />
+                ))}
+              </div>
+              <div className="max-sm:hidden relative lg:hidden flex-1 flex flex-col items-start justify-start gap-[2rem]">
+                {max_lg_rows_double.map((productGroup, index) => (
+                  <ProductRow key={index} products={productGroup} />
+                ))}
+              </div>
+              <div className="max-lg:hidden relative xl:hidden flex-1 flex flex-col items-start justify-start gap-[2rem]">
+                {lg_rows.map((productGroup, index) => (
                   <ProductRow key={index} products={productGroup} />
                 ))}
               </div>
