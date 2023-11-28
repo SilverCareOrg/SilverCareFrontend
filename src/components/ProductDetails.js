@@ -488,7 +488,7 @@ const ProductDetails = () => {
           {name}
         </div>
         {dateArray != null && (
-          <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
+          <div className="self-stretch flex flex-row gap-[1rem] text-[1rem]">
             <div className="flex flex-row items-start justify-start gap-[0.25rem]">
               <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
               <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">
@@ -532,7 +532,7 @@ const ProductDetails = () => {
 
     return (
       <div className="relative w-full self-stretch flex flex-col items-center justify-center">
-        <div className="gap-[0.5rem] w-[20.44rem] flex flex-col items-start justify-center">
+        <div className="gap-[0.5rem] w-[20.44rem] sm:w-[30rem] md:w-[40rem] lg:w-[50rem] flex flex-col items-start justify-center">
           <div className="self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0">
             {name}
           </div>
@@ -561,8 +561,8 @@ const ProductDetails = () => {
 
           <div>
             {option.map_location != "" && option.map_location != null && (
-              <div className="w-[20.44rem] flex flex-col items-start justify-center gap-[1.5rem]">
-                <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[20.44rem] h-[1.5rem] shrink-0">
+              <div className="w-[20.44rem] sm:w-[30rem] md:w-[40rem] lg:w-[50rem] flex flex-col items-start justify-center gap-[1.5rem]">
+                <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[20.44rem] sm:w-[30rem] md:w-[40rem] lg:w-[50rem] h-[1.5rem] shrink-0">
                   LOCAȚIE
                 </div>
                 <MapSection e={option.map_location} />
@@ -848,7 +848,7 @@ const ProductDetails = () => {
         ref={mobileParentRef}
         className="relative mt-10 w-full self-stretch flex flex-col items-center justify-center"
       >
-        <div className="mb-5 w-[20.44rem] flex flex-col items-start justify-center gap-[2rem]">
+        <div className="mb-5 w-[20.44rem] sm:w-[30rem] md:w-[40rem] lg:w-[50rem] flex flex-col items-start justify-center gap-[2rem]">
           <div className="self-stretch relative text-[0.88rem] tracking-[0.05em] leading-[1.31rem] font-medium text-text-fields-grey-hf">
             {description}
           </div>
@@ -935,15 +935,15 @@ const ProductDetails = () => {
 
   const HeaderSection = () => {
     return (
-      <div className="w-[17.5rem] flex flex-col items-end justify-start gap-[1rem] text-[0.88rem] text-text-fields-grey-hf">
-        <div className="w-[17.5rem] flex flex-row items-center justify-start gap-[0.63rem]">
+      <div className="w-[17.5rem] flex flex-col items-end justify-center gap-[1rem] text-[0.88rem] text-text-fields-grey-hf">
+        <div className="w-[17.5rem] flex flex-row items-center justify-between gap-[0.63rem]">
           <b className="relative tracking-[0.15em] leading-[120%] uppercase">{`ORGANIZATOR: `}</b>
-          <div className="flex-1 relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-dark-navy text-right">
+          <div className=" relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-dark-navy text-right">
             {organiser}
           </div>
         </div>
         {(main_option != null || options_common_city) && (
-          <div className="flex flex-row items-center justify-start gap-[1rem] text-[1rem] text-dark-navy">
+          <div className="flex flex-row items-center justify-start gap-[1rem] text-[1rem] text-dark-navy ">
             <img
               className="relative w-[1.13rem] h-[1.5rem]"
               alt=""
@@ -981,7 +981,7 @@ const ProductDetails = () => {
                     {organiser}
                   </div>
                   {(main_option != null || options_common_city) && (
-                    <div className="flex flex-row items-center justify-start gap-[0.5rem]">
+                    <div className="flex flex-row items-center justify-start gap-[0.5rem] ">
                       <img
                         className="relative w-[0.88rem] h-[1.13rem]"
                         alt=""
@@ -1336,10 +1336,10 @@ const ProductDetails = () => {
           <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
             <div className="w-[20.25rem] flex flex-col items-start justify-start">
               {dateArray != null && (
-                <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
-                  <div className="flex flex-row items-start justify-start gap-[0.25rem]">
+                <div className="self-stretch flex flex-row items-center justify-start gap-[1rem] text-[1rem]">
+                  <div className="flex flex-row items-center justify-center gap-[0.25rem]">
                     <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">{`Data:  `}</div>
-                    <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans flex items-center shrink-0">
+                    <div className="  tracking-[0.08em] leading-[120%] font-open-sans ">
                       {dateArray[0]}{" "}
                       {monthNumberToAbbreviationMap[dateArray[1]]}{" "}
                       {dateArray[2]}
@@ -1475,7 +1475,7 @@ const ProductDetails = () => {
     <div>
       {visibleCartPanel && <CartPanel onClose={closeCartPanel}></CartPanel>}
       {/* Desktop view */}
-      <div className="mb-5 max-lg:hidden">
+      <div className="mb-5 max-xl:hidden">
         <HeroSection />
         <div className="pt-[2rem] pb-[1rem] self-stretch flex flex-col items-center justify-start">
           <div className="w-[77rem] h-[4rem] flex flex-col items-center justify-center">
@@ -1514,7 +1514,7 @@ const ProductDetails = () => {
       </div>
 
       {/* Mobile view */}
-      <div className="mb-5 lg:hidden">
+      <div className="mb-5 xl:hidden">
         <HeroSection />
         <HeaderMobileSection />
 
