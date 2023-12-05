@@ -58,7 +58,7 @@ const App = () => {
         <Route path="/checkout-fail" element={<PaymentFail />} />
         <Route path="/adminPage" element={<Admin />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
-        <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
+        <Route path="/paymentCartPanel" element={<PaymentCartPanel />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
       <Footer />

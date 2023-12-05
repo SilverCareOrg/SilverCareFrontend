@@ -3,6 +3,7 @@ import axios_api from "../api/axios_api";
 import { useEffect, useState } from "react";
 import back_icon_arrow from "../styles/icons/back_icon_arrow.svg";
 import ProgressBar from "./ProgressBar";
+import ProductsList from "./ProductList";
 
 const PaymentCartPanel = ({}) => {
   const [price_total, setPriceTotal] = useState(0);
@@ -12,21 +13,6 @@ const PaymentCartPanel = ({}) => {
   const [acceptTermsChecked, setAcceptTermsChecked] = useState(false);
   const [termsAndConditionsChecked, setTermsAndConditionsChecked] =
     useState(false);
-
-  const monthNumberToAbbreviationMap = {
-    1: "ian",
-    2: "feb",
-    3: "mar",
-    4: "apr",
-    5: "mai",
-    6: "iun",
-    7: "iul",
-    8: "aug",
-    9: "sep",
-    10: "oct",
-    11: "nov",
-    12: "dec",
-  };
 
   const calculateTotalPrice = () => {
     let total = 0;
@@ -130,145 +116,9 @@ const PaymentCartPanel = ({}) => {
     }
   };
 
-  const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
-    // Extract hours and minutes
-    const hours = parseInt(durationString.match(/(\d+)H/)[1] || 0);
-    const minutes = parseInt(durationString.match(/(\d+)M/)[1] || 0);
-
-    // Format the duration
-    if (hours === 0) return `${minutes}min`;
-    if (minutes === 0) return `${hours}h`;
-    return `${hours}h ${minutes}min`;
-  };
-
-  const ExtractOptionDate = ({ option }) => {
-    if (option.date === "") return null;
-
-    const dateString = option.date;
-    const date = new Date(dateString);
-
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hour = ("0" + date.getHours()).slice(-2);
-    const minutes = ("0" + date.getMinutes()).slice(-2);
-
-    const dateArray =
-      dateString === "" ? null : [day, month, year, hour, minutes];
-    return dateArray;
-  };
-
-  const ProductsList = () => {
-    var image_path;
-    var dateArray, duration;
-    var option;
-
-    return (
-      <div>
-        {products.map(
-          (product, index) => (
-            (option = product.option_details),
-            (dateArray = ExtractOptionDate({ option })),
-            // (duration =
-            //   option.duration != ""
-            //     ? ConvertDurationToHoursAndMinutes({
-            //         durationString: option.duration,
-            //       })
-            //     : null),
-            (image_path = baseUrl + product.service_image_path),
-            (
-              <div className="">
-                <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] my-3">
-                  <img
-                    className="relative rounded-lg w-[13.17rem] h-[13.13rem] object-cover"
-                    alt=""
-                    src={image_path}
-                  />
-                  <div className="flex-1 flex flex-col items-start justify-start py-[0rem] px-[1rem] gap-[0.1rem] w-full h-[13rem]">
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem] text-dark-navy">
-                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-bold text-[1.4rem] flex items-center h-[2rem]">
-                        {product.service_name}
-                      </div>
-                      <b className="tracking-[0.15em] leading-[120%] text-[1.4rem] uppercase flex font-open-sans text-right items-end jusify-end h-[2rem]">
-                        {product.price}RON
-                      </b>
-                    </div>
-                    <div className="mt-2 self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
-                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
-                        Număr de rezervări: {product.number_of_participants}
-                      </div>
-                    </div>
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
-                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
-                        {dateArray != null && (
-                          <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
-                            <div className="flex flex-row items-start justify-start gap-[0.25rem]">
-                              <div className="relative tracking-[0.05em] leading-[1.5rem] text-text-fields-grey-hf font-medium ">{`Data:  `}</div>
-                              <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans font-normal flex items-center shrink-0">
-                                {dateArray[0]}{" "}
-                                {monthNumberToAbbreviationMap[dateArray[1]]}{" "}
-                                {dateArray[2]}
-                              </div>
-                            </div>
-                            <div className="flex flex-row items-center justify-center gap-[0.25rem]">
-                              <div className="relative tracking-[0.05em] leading-[1.5rem] text-text-fields-grey-hf font-medium ">{`Ora: `}</div>
-                              <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
-                                {dateArray[3]}:{dateArray[4]}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
-                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center ">
-                        {option.city != "" && (
-                          <div className="self-stretch relative tracking-[0.1em] leading-[120%] text-text-fields-grey-hf font-medium  flex items-center shrink-0 text-[1rem]">
-                            Oraș:{" "}
-                            <span className="ml-2 text-[1rem] font-open-sans font-normal">
-                              {option.city}, {option.county}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
-                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
-                        {option.location != "" && (
-                          <div className="self-stretch relative tracking-[0.05em] leading-[120%] text-text-fields-grey-hf font-medium  flex items-center shrink-0 text-[1rem]">
-                            Locație:{" "}
-                            <span className="ml-2 text-[1rem] font-open-sans font-normal">
-                              {option.location}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex-1 flex flex-row items-end justify-end text-right">
-                      <button
-                        className="relative tracking-[0.08em] leading-[120%]"
-                        onClick={() =>
-                          handleRemoveButton(product.service_id, product.price)
-                        }
-                      >
-                        ȘTERGE
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* <div className="mt-3 mb-3 self-stretch relative box-border h-[0.06rem] border-t-[1px] border-solid border-text-fields-grey-hf" />  */}
-              </div>
-            )
-          )
-        )}
-      </div>
-    );
-  };
-
   return (
-    <div>
-      <ProgressBar cartStep={"3"} />
+    <>
+      <ProgressBar cartStep={"1"} />
       <div className="w-[wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
         <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] ">
           <div className=" flex flex-col items-center sm:items-start py-[1.5rem] gap-[2.5rem]">
@@ -288,7 +138,11 @@ const PaymentCartPanel = ({}) => {
               </button>
             </div>
             <div className="flex flex-col gap-[1.5rem] text-text-fields-grey-hf w-[wh]">
-              <ProductsList />
+              <ProductsList
+                handleRemoveButton={handleRemoveButton}
+                products={products}
+                baseUrl={baseUrl}
+              />
 
               <div className=" tracking-[0.08em] leading-[120%] font-bold text-[1.2rem] flex gap-[0.5rem] text-dark-navy">
                 Total de plată: {price_total} RON
@@ -327,11 +181,18 @@ const PaymentCartPanel = ({}) => {
               </div>
             </div>
             <div className="w-[20rem] mt-5 flex flex-col items-start justify-center gap-[1.5rem]">
-              <div
-                className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
-                // onClick todo
-              >
-                <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
+              <div className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white">
+                <div
+                  className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border "
+                  onClick={
+                    () => {
+                      termsAndConditionsChecked && acceptTermsChecked
+                        ? console.log("NEXT PAGE")
+                        : console.log("STAY ON THIS PAGE");
+                    }
+                    //IF ACCEPT TERMS AND ACCEPT PRELUCRARE -> NEXT PAGE
+                  }
+                >
                   <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
                     Continuă
                   </b>
@@ -339,11 +200,9 @@ const PaymentCartPanel = ({}) => {
               </div>
             </div>
           </div>
-
-          {/* ^^^^astaeclassulacarelucrez */}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
