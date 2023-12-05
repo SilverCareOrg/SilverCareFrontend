@@ -1,9 +1,8 @@
-import { Link, NavLink } from "react-router-dom";
 import axios_api from "../api/axios_api";
-import RegistrationService from "./RegistrationService";
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useState } from "react";
 import back_icon_arrow from "../styles/icons/back_icon_arrow.svg";
-import DottedLine from "./DottedLine";
+import ProgressBar from "./ProgressBar";
 
 const PaymentCartPanel = ({}) => {
   const [price_total, setPriceTotal] = useState(0);
@@ -131,43 +130,6 @@ const PaymentCartPanel = ({}) => {
     }
   };
 
-  const ProgressBar = () => {
-    return (
-      <div className="self-stretch bg-light-purple h-[9rem] flex flex-col items-center justify-start text-center">
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="flex flex-row items-center justify-center">
-            <div className="flex flex-col items-center justify-center gap-[0.25rem]">
-              <div className="rounded-[5rem] bg-dark-navy w-[2.75rem] h-[2.75rem] md:w-[3.5rem] md:h-[3.5rem] flex flex-col items-center justify-center">
-                <div className="text-[1.5rem] text-white">1</div>
-              </div>
-              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
-                Coș
-              </div>
-            </div>
-            <DottedLine />
-            <div className="flex flex-col items-center justify-center gap-[0.25rem]">
-              <div className="rounded-[5rem] bg-white w-[2.75rem] h-[2.75rem] md:w-[3.5rem] md:h-[3.5rem] flex flex-col items-center justify-center">
-                <div className="text-[1.5rem]">2</div>
-              </div>
-              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
-                Detalii
-              </div>
-            </div>
-            <DottedLine />
-            <div className="flex flex-col items-center justify-center gap-[0.25rem]">
-              <div className="rounded-[5rem] bg-white w-[2.75rem] h-[2.75rem] md:w-[3.5rem] md:h-[3.5rem] flex flex-col items-center justify-center">
-                <div className="text-[1.5rem]">3</div>
-              </div>
-              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
-                Plată
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
     // Extract hours and minutes
     const hours = parseInt(durationString.match(/(\d+)H/)[1] || 0);
@@ -207,16 +169,16 @@ const PaymentCartPanel = ({}) => {
           (product, index) => (
             (option = product.option_details),
             (dateArray = ExtractOptionDate({ option })),
-            (duration =
-              option.duration != ""
-                ? ConvertDurationToHoursAndMinutes({
-                    durationString: option.duration,
-                  })
-                : null),
+            // (duration =
+            //   option.duration != ""
+            //     ? ConvertDurationToHoursAndMinutes({
+            //         durationString: option.duration,
+            //       })
+            //     : null),
             (image_path = baseUrl + product.service_image_path),
             (
               <div className="">
-                <div className="self-stretch flex flex-row items-start justify-start gap-[1rem]">
+                <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] my-3">
                   <img
                     className="relative rounded-lg w-[13.17rem] h-[13.13rem] object-cover"
                     alt=""
@@ -294,7 +256,8 @@ const PaymentCartPanel = ({}) => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 mb-3 self-stretch relative box-border h-[0.06rem] border-t-[1px] border-solid border-text-fields-grey-hf" />
+
+                {/* <div className="mt-3 mb-3 self-stretch relative box-border h-[0.06rem] border-t-[1px] border-solid border-text-fields-grey-hf" />  */}
               </div>
             )
           )
@@ -305,8 +268,8 @@ const PaymentCartPanel = ({}) => {
 
   return (
     <div>
+      <ProgressBar cartStep={"3"} />
       <div className="w-[wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
-        <ProgressBar />
         <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] ">
           <div className=" flex flex-col items-center sm:items-start py-[1.5rem] gap-[2.5rem]">
             <div className="flex">
