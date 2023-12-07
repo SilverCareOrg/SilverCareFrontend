@@ -116,7 +116,6 @@ const PaymentCartPanel = ({}) => {
       getData();
     }
   };
-
   const [cartPage, setCartPage] = useState("1");
   const continueRequirements = termsAndConditionsChecked && acceptTermsChecked;
   return (
@@ -212,7 +211,7 @@ const PaymentCartPanel = ({}) => {
       {/* //second cart page */}
       <div className={cartPage === "2" ? "" : "hidden"}>
         <ProgressBar cartStep={"2"} />
-        <div className="w-[wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
+        <div className="w-[100wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
           <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] ">
             <div className=" flex flex-col items-center sm:items-start py-[1.5rem] gap-[2.5rem]">
               <div className="flex">
@@ -231,42 +230,25 @@ const PaymentCartPanel = ({}) => {
                 </button>
               </div>
               <div className="flex flex-col gap-[1.5rem] text-text-fields-grey-hf w-[wh]">
-                <div className=" tracking-[0.08em] leading-[120%] font-bold text-[1.2rem] flex gap-[0.5rem] text-dark-navy">
-                  Total de plată: {price_total} RON
+                <div className="flex justify-between w-full">
+                  <div className=" tracking-[0.08em] leading-[120%] font-bold text-[1.2rem] flex gap-[0.5rem] text-dark-navy">
+                    Total
+                  </div>
+                  <div className="tracking-[0.08em] leading-[120%] font-bold text-[1.2rem] flex gap-[0.5rem] text-dark-navy">
+                    {price_total} RON
+                  </div>
                 </div>
 
-                <div className="flex text-dark-navy">
-                  <div className="flex items-center justify-center">
-                    <input
-                      type="checkbox"
-                      id="acceptTermsCheckbox"
-                      className="mr-2 cursor-pointer h-5 w-5"
-                      checked={acceptTermsChecked}
-                      onChange={() =>
-                        setAcceptTermsChecked(!acceptTermsChecked)
-                      }
-                    />
-                    <span className=" tracking-[0.08em] leading-[120%] text-xs sm:text-[16px] flex items-center  cursor-pointer">
-                      Accept prelucrarea datelor cu caracter personal
-                    </span>
+                <div>
+                  <div className=" tracking-[0.08em] leading-[120%] font-bold text-[1.2rem] flex gap-[0.5rem] text-dark-navy">
+                    Detailii personale
                   </div>
-                </div>
-                <div className="flex text-dark-navy">
-                  <div className="flex items-center justify-center">
-                    <input
-                      type="checkbox"
-                      id="termsAndConditionsCheckbox"
-                      className="mr-2 cursor-pointer h-5 w-5"
-                      checked={termsAndConditionsChecked}
-                      onChange={() =>
-                        setTermsAndConditionsChecked(!termsAndConditionsChecked)
-                      }
-                    />
-                    <span className=" tracking-[0.08em] leading-[120%] text-xs sm:text-[16px] flex items-center cursor-pointer">
-                      Sunt de acord cu &nbsp;
-                      <span className="underline">Termenii și Conditiile</span>
-                    </span>
-                  </div>
+                  <input
+                    placeholder="e-mail"
+                    type="email"
+                    name="email"
+                    className="outline-none border-none my-4"
+                  />
                 </div>
               </div>
               <div className="w-[20rem] mt-5 flex flex-col items-start justify-center gap-[1.5rem]">
