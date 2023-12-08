@@ -4,8 +4,8 @@ import RegistrationService from "./RegistrationService";
 import { useEffect, useRef, useState } from "react";
 
 const SingleProduct = ({ product }) => {
-  const { img_path, name } = product;
-  const url = "/" + name;
+  const { img_path, id } = product;
+  const url = "/" + id;
   const [visibleRegistrationService, setVisibleRegistrationService] =
     useState(false);
   const baseUrl = window.location.origin;

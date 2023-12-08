@@ -17,6 +17,7 @@ import e from "cors";
 import CartPanel from "./CartPanel";
 
 const ProductDetails = () => {
+  const [service, setService] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { state: product } = useLocation();
   const [visibleCartPanel, setVisibleCartPanel] = useState(false);
@@ -38,8 +39,35 @@ const ProductDetails = () => {
     map_location,
   } = product;
   var final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
-  console.log(product);
   const main_option = options.length === 1 ? options[0] : null;
+
+  useEffect(() => {
+    get_service_by_id(product.id);
+  }, []);
+  const get_service_by_id = (id) => {
+    try {
+      axios_api
+        .get("/get_service_by_id", {
+          params: {
+            id: id,
+          },
+          withCredentials: true,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            const json = response.data;
+
+            setService(json);
+            console.log(service);
+          }
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    } catch (err) {
+      console.log("Error:", err);
+    }
+  };
 
   const toggleCartPanel = () => {
     setVisibleCartPanel((prevState) => !prevState);
@@ -222,14 +250,14 @@ const ProductDetails = () => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleMobileScroll);
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleMobileScroll);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleMobileScroll);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleMobileScroll);
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   const toggleRegistrationService = () => {
     setVisibleRegistrationService((prevState) => !prevState);
@@ -352,14 +380,14 @@ const ProductDetails = () => {
     }, 1);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-      ? setIsLoggedIn(true)
-      : setIsLoggedIn(false);
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token")
+  //     ? setIsLoggedIn(true)
+  //     : setIsLoggedIn(false);
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, [isLoggedIn]);
 
   const markerIcon = new L.Icon({
     iconUrl: marker_icon_png,
@@ -396,7 +424,7 @@ const ProductDetails = () => {
     return (
       <div>
         {sections.map((section, index) => (
-          <div className="flex flex-col items-start justify-start">
+          <div key={index} className="flex flex-col items-start justify-start">
             <div className="mb-8 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0">
               {section.question}
             </div>
@@ -414,7 +442,7 @@ const ProductDetails = () => {
     return (
       <div>
         {sections.map((section, index) => (
-          <div className="flex flex-col items-start justify-start">
+          <div key={index} className="flex flex-col items-start justify-start">
             <div className="mb-4 self-stretch relative tracking-[0.1em] leading-[120%] text-[1.3rem] font-semibold flex items-center shrink-0">
               {section.question}
             </div>
@@ -479,7 +507,7 @@ const ProductDetails = () => {
     return dateArray;
   };
 
-  const OneOptionBlock = ({ option }) => {
+  const OneOptionBlock = ({ option, index }) => {
     const dateArray = ExtractOptionDate({ option });
 
     return (
@@ -517,7 +545,10 @@ const ProductDetails = () => {
                 LOCAȚIE
               </div>
               <MapSection e={option.map_location} />
-              <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[43.94rem] h-[1rem] shrink-0">
+              <div
+                key={index}
+                className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[43.94rem] h-[1rem] shrink-0"
+              >
                 {option.location}
               </div>
             </div>

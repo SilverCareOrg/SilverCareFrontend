@@ -204,10 +204,6 @@ const Products = () => {
 
   useEffect(() => {
     getData();
-  }, []);
-
-  useEffect(() => {
-    getData();
   }, [selectedCategory, selectedLocation, pageSize, currentPage]);
 
   const handleSearch = () => {
@@ -292,6 +288,7 @@ const Products = () => {
           <div className="self-stretch flex flex-col items-start justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf">
             {selectCategories.map((category, index) => (
               <button
+                key={index}
                 className="cursor-pointer self-stretch relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0"
                 onClick={() => handleCategoryMenuChange(category)}
               >
@@ -307,6 +304,7 @@ const Products = () => {
           <div className="self-stretch flex flex-col items-start justify-start py-[0rem] px-[1rem] gap-[1rem] text-text-fields-grey-hf">
             {selectLocations.map((location, index) => (
               <button
+                key={index}
                 className="cursor-pointer self-stretch relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0"
                 onClick={() => handleLocationMenuChange(location)}
               >
