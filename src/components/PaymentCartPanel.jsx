@@ -266,9 +266,9 @@ const PaymentCartPanel = ({}) => {
 
   return (
     <div>
-      <ProgressBar progressBarIndex={3} />
+      <ProgressBar progressBarIndex={1} />
       <div className="w-[wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
-        <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] ">
+        <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] mr-0 ">
           <div className=" flex flex-col items-start py-[1.5rem] gap-[2.5rem]">
             <div className="flex">
               <button
