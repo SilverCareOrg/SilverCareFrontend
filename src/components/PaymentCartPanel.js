@@ -376,8 +376,6 @@ const PaymentCartPanel = ({}) => {
               </div>
             </div>
           </div>
-
-          {/* ^^^^astaeclassulacarelucrez */}
         </div>
       </div>
     </div>

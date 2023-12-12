@@ -422,7 +422,7 @@ const ProductDetails = () => {
     };
 
     return (
-      <div className="w-full h-80 border rounded-md">
+      <div className="w-full h-80 border rounded-md z-0">
         <MapContainer
           center={map_e}
           zoom={18}
@@ -1270,7 +1270,7 @@ const ProductDetails = () => {
     handleOptionChange,
   }) => {
     return (
-      <div className="self-stretch flex flex-row items-start justify-start">
+      <div className="self-stretch flex flex-row items-start justify-start -z-10">
         <div className="sticky top-0 rounded-lg bg-light-purple w-full flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
           <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
             <div className="w-[20.25rem] flex flex-col items-start justify-start">
