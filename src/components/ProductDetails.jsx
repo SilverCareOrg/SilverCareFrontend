@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import "../styles/styles.css";
 import axios_api from "../api/axios_api";
 import { useEffect, useRef, useState } from "react";
@@ -17,29 +17,74 @@ import e from "cors";
 import CartPanel from "./CartPanel";
 
 const ProductDetails = () => {
+  const { id } = useParams();
+  const [service, setService] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { state: product } = useLocation();
   const [visibleCartPanel, setVisibleCartPanel] = useState(false);
   const [visibleRegistrationService, setVisibleRegistrationService] =
     useState(false);
+  // const {
+  //   city,
+  //   county,
+  //   common_location,
+  //   options_common_city,
+  //   img_path,
+  //   name,
+  //   description,
+  //   category,
+  //   organiser,
+  //   sections,
+  //   options,
+  //   location,
+  //   map_location,
+  // } = product;
   const {
     city,
     county,
     common_location,
-    options_common_city,
     img_path,
     name,
+    sections,
+    options_common_city,
+    location,
+    options,
+    map_location,
     description,
     category,
     organiser,
-    sections,
-    options,
-    location,
-    map_location,
-  } = product;
+  } = service;
+
+  useEffect(() => {
+    get_service_by_id(id);
+  }, []);
+
   var final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
-  console.log(product);
-  const main_option = options.length === 1 ? options[0] : null;
+  const main_option = options?.length === 1 ? options[0] : null;
+
+  const get_service_by_id = (id) => {
+    try {
+      axios_api
+        .get("/get_service_by_id", {
+          params: {
+            id: id,
+          },
+          withCredentials: true,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            const data = response.data;
+
+            setService(data.service[0][0]);
+          }
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const toggleCartPanel = () => {
     setVisibleCartPanel((prevState) => !prevState);
@@ -48,6 +93,8 @@ const ProductDetails = () => {
   const closeCartPanel = () => {
     setVisibleCartPanel(false);
   };
+
+  console.log(service.description);
 
   const monthNumberToAbbreviationMap = {
     1: "ian",
@@ -86,9 +133,9 @@ const ProductDetails = () => {
           cart = [
             {
               service_image_path: img_path,
-              service_name: product.name,
+              service_name: service.name,
               number_of_participants: numberOfParticipants,
-              id: product.service_id,
+              id: service.service_id,
               option_name:
                 main_option === null
                   ? options.find((option) => option.id === selectedOption).name
@@ -111,9 +158,9 @@ const ProductDetails = () => {
           cart = JSON.parse(cart);
           cart.push({
             service_image_path: img_path,
-            service_name: product.name,
+            service_name: service.name,
             number_of_participants: numberOfParticipants,
-            id: product.service_id,
+            id: service.service_id,
             option_name:
               main_option === null
                 ? options.find((option) => option.id === selectedOption).name
@@ -136,7 +183,7 @@ const ProductDetails = () => {
           .post(
             "/add_to_cart",
             {
-              service_id: product.id,
+              service_id: service.id,
               number_of_participants: numberOfParticipants,
               option_id: main_option === null ? selectedOption : main_option.id,
               price:
@@ -369,7 +416,6 @@ const ProductDetails = () => {
   });
 
   const MapSection = (e) => {
-    console.log(e);
     const map_e = {
       lat: e?.e?.[0] || 0,
       lng: e?.e?.[1] || 0,
@@ -395,15 +441,15 @@ const ProductDetails = () => {
   const ExtraDetailsBlock = ({ sections }) => {
     return (
       <div>
-        {sections.map((section, index) => (
-          <div className="flex flex-col items-start justify-start">
+        {sections?.map((section, index) => (
+          <div key={index} className="flex flex-col items-start justify-start">
             <div className="mb-8 self-stretch relative tracking-[0.1em] leading-[120%] font-semibold flex items-center shrink-0">
               {section.question}
             </div>
             <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium text-text-fields-grey-hf flex items-center w-[43.94rem] shrink-0">
               {section.answer}
             </div>
-            {index != sections.length - 1 ? <div className="mb-8" /> : <div />}
+            {index != sections?.length - 1 ? <div className="mb-8" /> : <div />}
           </div>
         ))}
       </div>
@@ -413,15 +459,15 @@ const ProductDetails = () => {
   const ExtraDetailsMobileBlock = ({ sections }) => {
     return (
       <div>
-        {sections.map((section, index) => (
-          <div className="flex flex-col items-start justify-start">
+        {sections?.map((section, index) => (
+          <div key={index} className="flex flex-col items-start justify-start">
             <div className="mb-4 self-stretch relative tracking-[0.1em] leading-[120%] text-[1.3rem] font-semibold flex items-center shrink-0">
               {section.question}
             </div>
             <div className="relative text-[0.88rem] tracking-[0.05em] leading-[1.31rem] font-medium text-text-fields-grey-hf flex items-center w-full shrink-0">
               {section.answer}
             </div>
-            {index != sections.length - 1 ? <div className="mb-8" /> : <div />}
+            {index != sections?.length - 1 ? <div className="mb-8" /> : <div />}
           </div>
         ))}
       </div>
@@ -479,7 +525,7 @@ const ProductDetails = () => {
     return dateArray;
   };
 
-  const OneOptionBlock = ({ option }) => {
+  const OneOptionBlock = ({ option, index }) => {
     const dateArray = ExtractOptionDate({ option });
 
     return (
@@ -511,13 +557,16 @@ const ProductDetails = () => {
         <div className="mt-2 mb-2 relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
 
         <div>
-          {option.map_location != "" && option.map_location != null && (
+          {option?.map_location != "" && option?.map_location != null && (
             <div className="w-[44.13rem] flex flex-col items-start justify-center gap-[1.5rem]">
               <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[39.5rem] h-[1.5rem] shrink-0">
                 LOCAȚIE
               </div>
-              <MapSection e={option.map_location} />
-              <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[43.94rem] h-[1rem] shrink-0">
+              <MapSection e={option?.map_location} />
+              <div
+                key={index}
+                className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[43.94rem] h-[1rem] shrink-0"
+              >
                 {option.location}
               </div>
             </div>
@@ -560,12 +609,12 @@ const ProductDetails = () => {
           <div className="mt-2 mb-2 relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
 
           <div>
-            {option.map_location != "" && option.map_location != null && (
+            {option?.map_location != "" && option?.map_location != null && (
               <div className="w-[20.44rem] sm:w-[30rem] md:w-[40rem] lg:w-[50rem] flex flex-col items-start justify-center gap-[1.5rem]">
                 <div className="relative tracking-[0.1em] leading-[120%] font-semibold flex items-center w-[20.44rem] sm:w-[30rem] md:w-[40rem] lg:w-[50rem] h-[1.5rem] shrink-0">
                   LOCAȚIE
                 </div>
-                <MapSection e={option.map_location} />
+                <MapSection e={option?.map_location} />
                 <div className="relative text-[1rem] tracking-[0.05em] leading-[1.5rem] font-medium flex items-center w-[20.44rem] h-[1rem] shrink-0">
                   {option.location}
                 </div>
@@ -586,7 +635,7 @@ const ProductDetails = () => {
           Experiența aceasta este disponibilă în mai multe variante
         </div>
         <div className="pl-6 gap-[1rem] flex flex-col">
-          {options.map(
+          {options?.map(
             (option, index) => (
               (dateArray = ExtractOptionDate({ option })),
               (duration =
@@ -667,14 +716,14 @@ const ProductDetails = () => {
 
                   <div className="mt-5">
                     {!common_location &&
-                      option.map_location != "" &&
-                      option.map_location != null && (
+                      option?.map_location != "" &&
+                      option?.map_location != null && (
                         <div className="w-[44.13rem] flex flex-col items-start justify-center gap-[1.5rem]">
-                          <MapSection e={option.map_location} />
+                          <MapSection e={option?.map_location} />
                         </div>
                       )}
                   </div>
-                  {index != options.length - 1 ? (
+                  {index != options?.length - 1 ? (
                     <div className="mt-2 mb-2 relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
                   ) : (
                     <div />
@@ -698,7 +747,7 @@ const ProductDetails = () => {
             Experiența aceasta este disponibilă în mai multe variante
           </div>
           <div className="gap-[1rem] flex flex-col">
-            {options.map(
+            {options?.map(
               (option, index) => (
                 (dateArray = ExtractOptionDate({ option })),
                 (duration =
@@ -776,14 +825,14 @@ const ProductDetails = () => {
 
                     <div className="mt-5">
                       {!common_location &&
-                        option.map_location != "" &&
-                        option.map_location != null && (
+                        option?.map_location != "" &&
+                        option?.map_location != null && (
                           <div className="w-[20.44rem] flex flex-col items-start justify-center gap-[1.5rem]">
-                            <MapSection e={option.map_location} />
+                            <MapSection e={option?.map_location} />
                           </div>
                         )}
                     </div>
-                    {index != options.length - 1 ? (
+                    {index != options?.length - 1 ? (
                       <div className="mt-2 mb-2 relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
                     ) : (
                       <div />
@@ -804,7 +853,7 @@ const ProductDetails = () => {
         {common_location &&
           map_location != "" &&
           (main_option === null ||
-            (main_option != null && main_option.map_location == "")) && (
+            (main_option != null && main_option?.map_location == "")) && (
             <div className="max-lg:w-[20.44rem] lg:w-[44.13rem] flex flex-col items-start justify-center gap-[1.5rem]">
               <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
 
@@ -834,8 +883,8 @@ const ProductDetails = () => {
           <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
         </div>
 
-        {options.length === 1 && <OneOptionBlock option={main_option} />}
-        {options.length > 1 && <MoreOptionsBlock options={options} />}
+        {options?.length === 1 && <OneOptionBlock option={main_option} />}
+        {options?.length > 1 && <MoreOptionsBlock options={options} />}
 
         <CommonLocationBlock />
       </div>
@@ -858,8 +907,8 @@ const ProductDetails = () => {
           <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
         </div>
 
-        {options.length === 1 && <OneOptionMobileBlock option={main_option} />}
-        {options.length > 1 && <MoreOptionsMobileBlock options={options} />}
+        {options?.length === 1 && <OneOptionMobileBlock option={main_option} />}
+        {options?.length > 1 && <MoreOptionsMobileBlock options={options} />}
 
         <CommonLocationBlock />
       </div>
@@ -1043,7 +1092,7 @@ const ProductDetails = () => {
                   Alege varianta dorită:
                 </div>
                 <div className="relative flex flex-col items-start justify-start gap-[0.5rem]">
-                  {options.map((option) => (
+                  {options?.map((option) => (
                     <div
                       className="relative flex items-start justify-start"
                       key={option.id}
@@ -1090,7 +1139,7 @@ const ProductDetails = () => {
                       className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
                       style={{ border: "none" }}
                     >
-                      {participants_options.map((option, index) => (
+                      {participants_options?.map((option, index) => (
                         <option key={index} value={option}>
                           {option}
                         </option>
@@ -1189,7 +1238,7 @@ const ProductDetails = () => {
                     className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[2rem]"
                     style={{ border: "none" }}
                   >
-                    {participants_options.map((option, index) => (
+                    {participants_options?.map((option, index) => (
                       <option key={index} value={option}>
                         {option}
                       </option>
@@ -1261,7 +1310,7 @@ const ProductDetails = () => {
                     className="flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
                     style={{ border: "none", width: "100%" }}
                   >
-                    {options.map((option) => (
+                    {options?.map((option) => (
                       <option key={option.id} value={option.id}>
                         {option.name} -{" "}
                         {option.price === 0 ? "Gratis" : option.price + " RON"}
@@ -1300,7 +1349,7 @@ const ProductDetails = () => {
                       className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
                       style={{ border: "none" }}
                     >
-                      {participants_options.map((option, index) => (
+                      {participants_options?.map((option, index) => (
                         <option key={index} value={option}>
                           {option}
                         </option>
@@ -1385,7 +1434,7 @@ const ProductDetails = () => {
                     className="rounded px-3 w-full bg-white flex-1 relative tracking-[0.08em] leading-[120%] flex items-center h-[1.8rem]"
                     style={{ border: "none" }}
                   >
-                    {participants_options.map((option, index) => (
+                    {participants_options?.map((option, index) => (
                       <option key={index} value={option}>
                         {option}
                       </option>
@@ -1498,10 +1547,10 @@ const ProductDetails = () => {
             >
               <DetailsBlock />
 
-              {options.length === 1 && (
+              {options?.length === 1 && (
                 <CartSectionOneOption option={main_option} />
               )}
-              {options.length > 1 && (
+              {options?.length > 1 && (
                 <CartSectionMoreOptions
                   options={options}
                   selectedOption={selectedOption}
@@ -1518,10 +1567,10 @@ const ProductDetails = () => {
         <HeroSection />
         <HeaderMobileSection />
 
-        {options.length === 1 && (
+        {options?.length === 1 && (
           <CartSectionOneMobileOption option={main_option} />
         )}
-        {options.length > 1 && (
+        {options?.length > 1 && (
           <CartSectionMoreMobileOptions
             options={options}
             selectedOption={selectedOption}
