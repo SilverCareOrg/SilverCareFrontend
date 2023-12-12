@@ -474,27 +474,27 @@ const ProductDetails = () => {
     );
   };
 
-  const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
-    const parts = durationString.split(" ");
-    let hours = 0;
-    let minutes = 0;
+  // const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
+  //   const parts = durationString.split(" ");
+  //   let hours = 0;
+  //   let minutes = 0;
 
-    for (const part of parts) {
-      const value = parseInt(part);
-      if (!isNaN(value)) {
-        if (part.includes("h")) {
-          hours += value;
-        } else if (part.includes("m")) {
-          minutes += value;
-        }
-      }
-    }
+  //   for (const part of parts) {
+  //     const value = parseInt(part);
+  //     if (!isNaN(value)) {
+  //       if (part.includes("h")) {
+  //         hours += value;
+  //       } else if (part.includes("m")) {
+  //         minutes += value;
+  //       }
+  //     }
+  //   }
 
-    // Format the duration
-    if (hours === 0) return `${minutes}min`;
-    if (minutes === 0) return `${hours}h`;
-    return `${hours}h ${minutes}min`;
-  };
+  //   // Format the duration
+  //   if (hours === 0) return `${minutes}min`;
+  //   if (minutes === 0) return `${hours}h`;
+  //   return `${hours}h ${minutes}min`;
+  // };
 
   const ExtractOptionDate = ({ option }) => {
     const dateString = option.date;
@@ -638,12 +638,7 @@ const ProductDetails = () => {
           {options?.map(
             (option, index) => (
               (dateArray = ExtractOptionDate({ option })),
-              (duration =
-                option.duration != ""
-                  ? ConvertDurationToHoursAndMinutes({
-                      durationString: option.duration,
-                    })
-                  : null),
+              (duration = option.duration != "" ? null : null),
               (
                 <div key={index} className="relative flex-1 flex flex-col">
                   <div className="relative gap-[8rem] flex flex-row">
@@ -750,12 +745,7 @@ const ProductDetails = () => {
             {options?.map(
               (option, index) => (
                 (dateArray = ExtractOptionDate({ option })),
-                (duration =
-                  option.duration != ""
-                    ? ConvertDurationToHoursAndMinutes({
-                        durationString: option.duration,
-                      })
-                    : null),
+                (duration = option.duration != "" ? null : null),
                 (
                   <div key={index} className="relative flex-1 flex flex-col">
                     <div className="relative gap-[1rem] flex flex-col">

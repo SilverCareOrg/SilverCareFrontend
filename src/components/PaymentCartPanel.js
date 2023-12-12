@@ -168,16 +168,16 @@ const PaymentCartPanel = ({}) => {
     );
   };
 
-  const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
-    // Extract hours and minutes
-    const hours = parseInt(durationString.match(/(\d+)H/)[1] || 0);
-    const minutes = parseInt(durationString.match(/(\d+)M/)[1] || 0);
+  // const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
+  //   // Extract hours and minutes
+  //   const hours = parseInt(durationString.match(/(\d+)H/)[1] || 0);
+  //   const minutes = parseInt(durationString.match(/(\d+)M/)[1] || 0);
 
-    // Format the duration
-    if (hours === 0) return `${minutes}min`;
-    if (minutes === 0) return `${hours}h`;
-    return `${hours}h ${minutes}min`;
-  };
+  //   // Format the duration
+  //   if (hours === 0) return `${minutes}min`;
+  //   if (minutes === 0) return `${hours}h`;
+  //   return `${hours}h ${minutes}min`;
+  // };
 
   const ExtractOptionDate = ({ option }) => {
     if (option.date === "") return null;
@@ -207,12 +207,12 @@ const PaymentCartPanel = ({}) => {
           (product, index) => (
             (option = product.option_details),
             (dateArray = ExtractOptionDate({ option })),
-            (duration =
-              option.duration != ""
-                ? ConvertDurationToHoursAndMinutes({
-                    durationString: option.duration,
-                  })
-                : null),
+            // (duration =
+            //   option.duration != ""
+            //     ? ConvertDurationToHoursAndMinutes({
+            //         durationString: option.duration,
+            //       })
+            //     : null),
             (image_path = baseUrl + product.service_image_path),
             (
               <div className="">
