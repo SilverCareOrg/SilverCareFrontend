@@ -422,7 +422,7 @@ const ProductDetails = () => {
     };
 
     return (
-      <div className="w-full h-80 border rounded-md">
+      <div className="w-full h-80 border rounded-md z-0">
         <MapContainer
           center={map_e}
           zoom={18}
@@ -474,27 +474,27 @@ const ProductDetails = () => {
     );
   };
 
-  const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
-    const parts = durationString.split(" ");
-    let hours = 0;
-    let minutes = 0;
+  // const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
+  //   const parts = durationString.split(" ");
+  //   let hours = 0;
+  //   let minutes = 0;
 
-    for (const part of parts) {
-      const value = parseInt(part);
-      if (!isNaN(value)) {
-        if (part.includes("h")) {
-          hours += value;
-        } else if (part.includes("m")) {
-          minutes += value;
-        }
-      }
-    }
+  //   for (const part of parts) {
+  //     const value = parseInt(part);
+  //     if (!isNaN(value)) {
+  //       if (part.includes("h")) {
+  //         hours += value;
+  //       } else if (part.includes("m")) {
+  //         minutes += value;
+  //       }
+  //     }
+  //   }
 
-    // Format the duration
-    if (hours === 0) return `${minutes}min`;
-    if (minutes === 0) return `${hours}h`;
-    return `${hours}h ${minutes}min`;
-  };
+  //   // Format the duration
+  //   if (hours === 0) return `${minutes}min`;
+  //   if (minutes === 0) return `${hours}h`;
+  //   return `${hours}h ${minutes}min`;
+  // };
 
   const ExtractOptionDate = ({ option }) => {
     const dateString = option.date;
@@ -638,12 +638,7 @@ const ProductDetails = () => {
           {options?.map(
             (option, index) => (
               (dateArray = ExtractOptionDate({ option })),
-              (duration =
-                option.duration != ""
-                  ? ConvertDurationToHoursAndMinutes({
-                      durationString: option.duration,
-                    })
-                  : null),
+              (duration = option.duration != "" ? null : null),
               (
                 <div key={index} className="relative flex-1 flex flex-col">
                   <div className="relative gap-[8rem] flex flex-row">
@@ -750,12 +745,7 @@ const ProductDetails = () => {
             {options?.map(
               (option, index) => (
                 (dateArray = ExtractOptionDate({ option })),
-                (duration =
-                  option.duration != ""
-                    ? ConvertDurationToHoursAndMinutes({
-                        durationString: option.duration,
-                      })
-                    : null),
+                (duration = option.duration != "" ? null : null),
                 (
                   <div key={index} className="relative flex-1 flex flex-col">
                     <div className="relative gap-[1rem] flex flex-col">
@@ -1280,7 +1270,7 @@ const ProductDetails = () => {
     handleOptionChange,
   }) => {
     return (
-      <div className="self-stretch flex flex-row items-start justify-start">
+      <div className="self-stretch flex flex-row items-start justify-start -z-10">
         <div className="sticky top-0 rounded-lg bg-light-purple w-full flex flex-col items-start justify-between py-[2rem] px-[2rem] box-border">
           <div className="self-stretch flex flex-col items-start justify-center gap-[3rem]">
             <div className="w-[20.25rem] flex flex-col items-start justify-start">
