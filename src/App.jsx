@@ -54,7 +54,9 @@ const App = () => {
           }
         />
         <Route path="/cartPanel" element={<CartPanel />} />
+        {/* change this element */}
         <Route path="/checkout-success" element={<PaymentSuccess />} />
+        {/* and this one too */}
         <Route path="/checkout-fail" element={<PaymentFail />} />
         <Route path="/adminPage" element={<Admin />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
