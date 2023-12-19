@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import ConfirmationBar from "../components/ConfirmationBar";
 
-const PaymentSucess = () => {
+const PaymentFail = () => {
   return (
     <>
-      <ConfirmationBar orderNumber={"abcABC"} isSuccesful={true} />
+      <ConfirmationBar orderNumber={"abcABC"} isSuccesful={false} />
     </>
   );
 };
 
-export default PaymentSucess;
+export default PaymentFail;
