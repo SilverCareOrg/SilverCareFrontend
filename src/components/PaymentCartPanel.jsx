@@ -3,7 +3,8 @@ import axios_api from "../api/axios_api";
 import RegistrationService from "./RegistrationService";
 import { useEffect, useRef, useState } from "react";
 import back_icon_arrow from "../styles/icons/back_icon_arrow.svg";
-import DottedLine from "./DottedLine";
+
+import ProgressBar from "./ProgressBar";
 
 const PaymentCartPanel = ({}) => {
   const [price_total, setPriceTotal] = useState(0);
@@ -131,43 +132,6 @@ const PaymentCartPanel = ({}) => {
     }
   };
 
-  const ProgressBar = () => {
-    return (
-      <div className="self-stretch bg-light-purple h-[9rem] flex flex-col items-center justify-start text-center">
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="flex flex-row items-center justify-center">
-            <div className="flex flex-col items-center justify-center gap-[0.25rem]">
-              <div className="rounded-[5rem] bg-dark-navy w-[2.75rem] h-[2.75rem] md:w-[3.5rem] md:h-[3.5rem] flex flex-col items-center justify-center">
-                <div className="text-[1.5rem] text-white">1</div>
-              </div>
-              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
-                Coș
-              </div>
-            </div>
-            <DottedLine />
-            <div className="flex flex-col items-center justify-center gap-[0.25rem]">
-              <div className="rounded-[5rem] bg-white w-[2.75rem] h-[2.75rem] md:w-[3.5rem] md:h-[3.5rem] flex flex-col items-center justify-center">
-                <div className="text-[1.5rem]">2</div>
-              </div>
-              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
-                Detalii
-              </div>
-            </div>
-            <DottedLine />
-            <div className="flex flex-col items-center justify-center gap-[0.25rem]">
-              <div className="rounded-[5rem] bg-white w-[2.75rem] h-[2.75rem] md:w-[3.5rem] md:h-[3.5rem] flex flex-col items-center justify-center">
-                <div className="text-[1.5rem]">3</div>
-              </div>
-              <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium">
-                Plată
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   // const ConvertDurationToHoursAndMinutes = ({ durationString }) => {
   //   // Extract hours and minutes
   //   const hours = parseInt(durationString.match(/(\d+)H/)[1] || 0);
@@ -215,43 +179,43 @@ const PaymentCartPanel = ({}) => {
             //     : null),
             (image_path = baseUrl + product.service_image_path),
             (
-              <div className="">
-                <div className="self-stretch flex flex-row items-start justify-start gap-[1rem]">
+              <div className="flex flex-col">
+                <div className="self-stretch flex flex-col items-start justify-start gap-[1rem]">
                   <img
-                    className="relative rounded-lg w-[13.17rem] h-[13.13rem] object-cover"
+                    className=" rounded-lg w-full h-[15rem] object-cover"
                     alt=""
                     src={image_path}
                   />
-                  <div className="flex-1 flex flex-col items-start justify-start py-[0rem] px-[1rem] gap-[0.1rem] w-full h-[13rem]">
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem] text-dark-navy">
+
+                  <div className="flex-1 flex flex-col py-[0rem] gap-[0.1rem] w-full h-[13rem]">
+                    <div className="self-stretch flex gap-[0.63rem] text-dark-navy">
                       <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-bold text-[1.4rem] flex items-center h-[2rem]">
                         {product.service_name}
                       </div>
-                      <b className="tracking-[0.15em] leading-[120%] text-[1.4rem] uppercase flex font-open-sans text-right items-end jusify-end h-[2rem]">
+                      <b className="tracking-[0.15em] leading-[120%] text-[1.4rem] uppercase flex font-open-sans h-[2rem]">
                         {product.price}RON
                       </b>
                     </div>
-                    <div className="mt-2 self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
+
+                    <div className=" self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
                       <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
                         Număr de rezervări: {product.number_of_participants}
                       </div>
                     </div>
-                    <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
+                    <div className=" self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
+                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
+                        Data: {dateArray[0]}{" "}
+                        {monthNumberToAbbreviationMap[dateArray[1]]}{" "}
+                        {dateArray[2]}
+                      </div>
+                    </div>
+                    <div className=" self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
                       <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
                         {dateArray != null && (
                           <div className="self-stretch flex flex-row items-start justify-start gap-[1rem] text-[1rem]">
-                            <div className="flex flex-row items-start justify-start gap-[0.25rem]">
-                              <div className="relative tracking-[0.05em] leading-[1.5rem] text-text-fields-grey-hf font-medium ">{`Data:  `}</div>
-                              <div className="self-stretch relative text-[0.88rem] tracking-[0.08em] leading-[120%] font-open-sans font-normal flex items-center shrink-0">
-                                {dateArray[0]}{" "}
-                                {monthNumberToAbbreviationMap[dateArray[1]]}{" "}
-                                {dateArray[2]}
-                              </div>
-                            </div>
                             <div className="flex flex-row items-center justify-center gap-[0.25rem]">
-                              <div className="relative tracking-[0.05em] leading-[1.5rem] text-text-fields-grey-hf font-medium ">{`Ora: `}</div>
                               <div className="relative tracking-[0.08em] leading-[120%] font-open-sans">
-                                {dateArray[3]}:{dateArray[4]}
+                                Ora: {dateArray[3]}:{dateArray[4]}
                               </div>
                             </div>
                           </div>
@@ -259,7 +223,7 @@ const PaymentCartPanel = ({}) => {
                       </div>
                     </div>
                     <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
-                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center ">
+                      <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
                         {option.city != "" && (
                           <div className="self-stretch relative tracking-[0.1em] leading-[120%] text-text-fields-grey-hf font-medium  flex items-center shrink-0 text-[1rem]">
                             Oraș:{" "}
@@ -272,17 +236,14 @@ const PaymentCartPanel = ({}) => {
                     </div>
                     <div className="self-stretch flex flex-row items-start justify-start gap-[0.63rem]">
                       <div className="flex-1 relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center">
-                        {option.location != "" && (
-                          <div className="self-stretch relative tracking-[0.05em] leading-[120%] text-text-fields-grey-hf font-medium  flex items-center shrink-0 text-[1rem]">
-                            Locație:{" "}
-                            <span className="ml-2 text-[1rem] font-open-sans font-normal">
-                              {option.location}
-                            </span>
-                          </div>
-                        )}
+                        {option.location ? "Locație:" : ""}
+                        <span className="ml-2 text-[1rem] font-open-sans font-normal">
+                          {option.location}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex-1 flex flex-row items-end justify-end text-right">
+
+                    <div className="w-full flex-1 flex justify-end">
                       <button
                         className="relative tracking-[0.08em] leading-[120%]"
                         onClick={() =>
@@ -294,7 +255,7 @@ const PaymentCartPanel = ({}) => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 mb-3 self-stretch relative box-border h-[0.06rem] border-t-[1px] border-solid border-text-fields-grey-hf" />
+                <div className="mt-7 mb-7 self-stretch relative box-border h-[0.06rem] border-t-[1px] border-solid border-text-fields-grey-hf" />
               </div>
             )
           )
@@ -305,10 +266,10 @@ const PaymentCartPanel = ({}) => {
 
   return (
     <div>
+      <ProgressBar progressBarIndex={1} />
       <div className="w-[wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
-        <ProgressBar />
-        <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] ">
-          <div className=" flex flex-col items-center sm:items-start py-[1.5rem] gap-[2.5rem]">
+        <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] mr-0 ">
+          <div className=" flex flex-col items-start py-[1.5rem] gap-[2.5rem]">
             <div className="flex">
               <button
                 className="self-stretch flex flex-row  gap-[1rem]"
