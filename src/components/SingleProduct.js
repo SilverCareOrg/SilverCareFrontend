@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 const SingleProduct = ({ product }) => {
   const { img_path, id } = product;
-  const url = "/" + id;
+  const url = "/product/details/" + id;
   const [visibleRegistrationService, setVisibleRegistrationService] =
     useState(false);
   const baseUrl = window.location.origin;
