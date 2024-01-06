@@ -3,6 +3,7 @@ import axios_api from "../api/axios_api";
 import RegistrationService from "./RegistrationService";
 import { useEffect, useRef, useState } from "react";
 import back_icon_arrow from "../styles/icons/back_icon_arrow.svg";
+import { loadStripe } from "@stripe/stripe-js/pure";
 
 import ProgressBar from "./ProgressBar";
 
@@ -175,6 +176,55 @@ const PaymentCartPanel = ({}) => {
 
     // bring the user to the top of the page
     window.scrollTo(0, 0);
+  };
+
+  const handleStripePayment = () => {
+    var services = localStorage.getItem("services");
+
+    if (services) {
+      services = JSON.parse(services);
+    } else {
+      services = [];
+    }
+
+    // TODO Stefan I.: Add forms for these fields
+    var data = { services: services,
+      isGuest: !isLoggedIn,
+      participants_names: ["John Doe", "Smith Doe"],
+      phone_number: "0722222222",
+    };
+
+    axios_api
+      .post("/create_checkout_session", data, { withCredentials: true })
+      .then(async (response) => {
+
+        if (response.status === 200) {
+          const checkoutSessionId = response.data["id"];
+          const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+          const stripe = await stripePromise;
+
+          if (!isLoggedIn) {
+            localStorage.setItem("guestCheckoutSessionId", checkoutSessionId);
+          }
+
+          try {
+            const { error } = await stripe.redirectToCheckout({
+              sessionId: checkoutSessionId,
+            });
+
+            if (error) {
+              console.error(error.message);
+            }
+          } catch (error) {
+            // Handle any unexpected errors
+            console.error(error);
+          }
+        }
+      })
+      .catch((error) => {
+        // Handle API request error
+        console.log(error);
+      });
   };
 
   const ProductsList = () => {
@@ -394,7 +444,7 @@ const PaymentCartPanel = ({}) => {
             <div className="w-[20rem] mt-5 flex flex-col items-start justify-center gap-[1.5rem]">
               <div
                 className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
-                // onClick todo
+                onClick = {() => handleStripePayment()}
               >
                 <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
                   <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
