@@ -6,6 +6,11 @@ import back_icon_arrow from "../styles/icons/back_icon_arrow.svg";
 
 import ProgressBar from "./ProgressBar";
 
+// Defines
+const FIRST_CART_PANEL = 1;
+const SECOND_CART_PANEL = 2;
+const THIRD_CART_PANEL = 3;
+
 const PaymentCartPanel = ({}) => {
   const [price_total, setPriceTotal] = useState(0);
   const baseUrl = window.location.origin + "/images/";
@@ -14,6 +19,11 @@ const PaymentCartPanel = ({}) => {
   const [acceptTermsChecked, setAcceptTermsChecked] = useState(false);
   const [termsAndConditionsChecked, setTermsAndConditionsChecked] =
     useState(false);
+
+  /*
+    Stage of the payment process 
+  */
+  const [cartPanelStage, setCartPanelStage] = useState(FIRST_CART_PANEL);
 
   const monthNumberToAbbreviationMap = {
     1: "ian",
@@ -160,6 +170,13 @@ const PaymentCartPanel = ({}) => {
     return dateArray;
   };
 
+  const handleCartPanelStageChange = (stage) => {
+    setCartPanelStage(stage);
+
+    // bring the user to the top of the page
+    window.scrollTo(0, 0);
+  };
+
   const ProductsList = () => {
     var image_path;
     var dateArray, duration;
@@ -266,6 +283,10 @@ const PaymentCartPanel = ({}) => {
 
   return (
     <div>
+  
+      {/* First stage of the payment process, where the client visualise the cart only. */}
+      {cartPanelStage === FIRST_CART_PANEL && (
+      <div>
       <ProgressBar progressBarIndex={1} />
       <div className="w-[wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
         <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] mr-0 ">
@@ -281,12 +302,58 @@ const PaymentCartPanel = ({}) => {
                   src={back_icon_arrow}
                 />
                 <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0">
-                  Continua cumparaturile
+                  Continuă cumpărăturile
+                </div>
+              </button>
+            </div>
+            <div className="flex flex-col gap-[1.5rem] text-text-fields-grey-hf w-[100%]">
+              <ProductsList />
+
+              <div className=" tracking-[0.08em] leading-[120%] font-bold text-[1.2rem] flex gap-[0.5rem] text-dark-navy">
+                Total de plată: {price_total} RON
+              </div>
+
+            </div>
+            <div className="w-[20rem] mt-5 flex flex-col items-start justify-center gap-[1.5rem]">
+              <div
+                className="self-stretch flex flex-col items-start justify-start cursor-pointer text-center text-[0.88rem] text-white"
+                onClick={() => handleCartPanelStageChange(SECOND_CART_PANEL)}
+              >
+                <div className="self-stretch rounded bg-accent h-[2.25rem] flex flex-row items-center justify-start py-[0rem] px-[1rem] box-border">
+                  <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
+                    Continuă
+                  </b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>)}
+
+      {/* Second stage of the payment process, where the client has to introduce their phone number, name and email address, eventually the address where they live or whatever. */}
+      {cartPanelStage === SECOND_CART_PANEL && (
+      <div>
+      <ProgressBar progressBarIndex={2} />
+      <div className="w-[wh] flex flex-col bg-white overflow-hidden text-left text-[1rem] text-dark-navy font-text-body">
+        <div className="w-[wh] max-w-[1050px] flex justify-center items-center xl:mr-[36rem] lg:mr-[22rem] md:mr-[9rem] sm:ml-[0rem] mr-0 ">
+          <div className=" flex flex-col items-start py-[1.5rem] gap-[2.5rem]">
+            <div className="flex">
+              <button
+                className="self-stretch flex flex-row  gap-[1rem]"
+                onClick={() => setCartPanelStage(FIRST_CART_PANEL)}
+              >
+                <img
+                  className="relative rounded-sm w-[0.83rem] h-[1.63rem]"
+                  alt=""
+                  src={back_icon_arrow}
+                />
+                <div className="relative tracking-[0.05em] leading-[1.5rem] font-medium flex items-center h-[1.5rem] shrink-0">
+                  Înapoi la coș
                 </div>
               </button>
             </div>
             <div className="flex flex-col gap-[1.5rem] text-text-fields-grey-hf w-[wh]">
-              <ProductsList />
 
               <div className=" tracking-[0.08em] leading-[120%] font-bold text-[1.2rem] flex gap-[0.5rem] text-dark-navy">
                 Total de plată: {price_total} RON
@@ -319,7 +386,7 @@ const PaymentCartPanel = ({}) => {
                   />
                   <span className=" tracking-[0.08em] leading-[120%] text-xs sm:text-[16px] flex items-center cursor-pointer">
                     Sunt de acord cu &nbsp;
-                    <span className="underline">Termenii și Conditiile</span>
+                    <span className="underline">Termenii și Condițiile</span>
                   </span>
                 </div>
               </div>
@@ -339,6 +406,7 @@ const PaymentCartPanel = ({}) => {
           </div>
         </div>
       </div>
+      </div>)}
     </div>
   );
 };
