@@ -12,7 +12,7 @@ function ConfirmationBar({ orderNumber, isSuccesful }) {
           src={isSuccesful ? checkmark : xmark}
         />
       </div>
-      <div className="flex md:flex-col md:gap-[0.75rem] w-2/3 md:w-auto">
+      <div className="flex md:flex-col md:gap-[0.75rem] w-2/3 md:w-auto mr-2">
         <div className=" tracking-[0.05em] leading-[1.5rem] font-medium ">
           {isSuccesful
             ? "Comanda nr " +
