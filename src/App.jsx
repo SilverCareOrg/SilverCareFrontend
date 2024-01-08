@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminAddService from "./pages/AdminAddService";
+import AdminUpdateService from "./pages/AdminUpdateService";
 import Product from "./pages/Product";
 import Notfound from "./pages/404";
 import Cart from "./pages/Cart";
@@ -60,6 +61,7 @@ const App = () => {
         <Route path="/checkout-fail" element={<PaymentFail />} />
         <Route path="/adminPage" element={<Admin />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
+        <Route path="/adminUpdateService" element={<AdminUpdateService />} />
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
