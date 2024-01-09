@@ -152,6 +152,7 @@ function AdminUpdateService() {
     console.log(e);
   };
 
+  //Doar pentru debugging purposes :)
   function delay(ms) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
@@ -174,7 +175,6 @@ function AdminUpdateService() {
         currentService?.sections[i].question,
         currentService?.sections[i].answer,
       );
-      await delay(5000);
     }
     console.log(currentService);
     setFormData((prevData) => ({

@@ -19,6 +19,12 @@ function Admin() {
     navigate("/adminUpdateService");
   };
 
+  const handleUpdateJson = async (event) => {
+    event.preventDefault();
+
+    navigate("/adminUpdateJson");
+  };
+
   const handleAddService = async (event) => {
     //Prevent page reload
     event.preventDefault();
@@ -75,7 +81,10 @@ function Admin() {
           <button>Add new service.</button>
         </div>
         <div className="login-button-container" onClick={handleUpdateService}>
-          <button>Update service.</button>
+          <button>Update service --megabuggy!</button>
+        </div>
+        <div className="login-button-container" onClick={handleUpdateJson}>
+          <button>Update service json.</button>
         </div>
         <div className="login-button-container" onClick={handleDeleteService}>
           <button>Delete existing service.</button>

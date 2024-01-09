@@ -15,6 +15,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
+import AdminUpdateJson from "./pages/AdminUpdateJson";
 import RegistrationService from "./components/RegistrationService";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFail from "./pages/PaymentFail";
@@ -62,6 +63,7 @@ const App = () => {
         <Route path="/adminPage" element={<Admin />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateService" element={<AdminUpdateService />} />
+        <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
