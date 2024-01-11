@@ -91,24 +91,28 @@ function AdminUpdateServiceProduct() {
             }
             console.log(currentService.options)
             
-            setFormData(() => ({
-            name: currentService?.name,
-              
-              organiser: currentService?.organiser,
-              category: currentService?.category,
-              description: currentService?.description,
-              iban: currentService?.iban,
-              city: currentService?.city,
-              common_location: currentService?.common_location,
-              county: currentService?.county,
-              options_common_city: currentService?.options_common_city,
-              img_path: currentService?.img_path,
-              image: currentService?.image,
-              map_location: currentService?.map_location,
-              options: options,
-              has_more_options: currentService?.has_more_options,
-              location: currentService?.location,
-            }));
+            if(options.length === currentService.options.length)
+            {
+              setFormData(() => ({
+                name: currentService?.name,
+                  
+                  organiser: currentService?.organiser,
+                  category: currentService?.category,
+                  description: currentService?.description,
+                  iban: currentService?.iban,
+                  city: currentService?.city,
+                  common_location: currentService?.common_location,
+                  county: currentService?.county,
+                  options_common_city: currentService?.options_common_city,
+                  img_path: currentService?.img_path,
+                  image: currentService?.image,
+                  map_location: currentService?.map_location,
+                  options: options,
+                  has_more_options: currentService?.has_more_options,
+                  location: currentService?.location,
+                }));
+            }
+            
             
           }
           
