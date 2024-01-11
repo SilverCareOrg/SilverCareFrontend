@@ -84,36 +84,33 @@ function AdminUpdateServiceProduct() {
           if (response.status === 200) {
             const json = response.data;
             const currentService = json.service[0][0];
-            let x = [];
+
             for (let i = 0; i< currentService.options.length; i++)
             {
               handleAddServiceOption(currentService.options[i]);
             }
-            console.log(currentService.options)
-            
-            if(options.length === currentService.options.length)
+
+            for (let i = 0; i< currentService.sections.length; i++)
             {
-              setFormData(() => ({
-                name: currentService?.name,
-                  
-                  organiser: currentService?.organiser,
-                  category: currentService?.category,
-                  description: currentService?.description,
-                  iban: currentService?.iban,
-                  city: currentService?.city,
-                  common_location: currentService?.common_location,
-                  county: currentService?.county,
-                  options_common_city: currentService?.options_common_city,
-                  img_path: currentService?.img_path,
-                  image: currentService?.image,
-                  map_location: currentService?.map_location,
-                  options: options,
-                  has_more_options: currentService?.has_more_options,
-                  location: currentService?.location,
-                }));
+              handleSectionsInit(currentService.sections[i]);
             }
-            
-            
+
+            setFormData(() => ({
+              name: currentService?.name,
+              organiser: currentService?.organiser,
+              category: currentService?.category,
+              description: currentService?.description,
+              iban: currentService?.iban,
+              city: currentService?.city,
+              common_location: currentService?.common_location,
+              county: currentService?.county,
+              options_common_city: currentService?.options_common_city,
+              img_path: currentService?.img_path,
+              image: currentService?.image,
+              map_location: currentService?.map_location,
+              has_more_options: currentService?.has_more_options,
+              location: currentService?.location,
+            }));
           }
           
         })
@@ -126,6 +123,15 @@ function AdminUpdateServiceProduct() {
   useEffect(() => {
     get_all_services();
   }, []);
+
+  const handleSectionsInit = (section) => {
+    var existingSections = sectionText;
+    console.log(existingSections);
+    console.log(section);
+    existingSections[section.question] = section.answer;
+
+    setSectionText(existingSections);
+  };
 
   const handleSectionSelect = (section) => {
     setSelectedSection(section);
@@ -244,8 +250,9 @@ function AdminUpdateServiceProduct() {
       city: option?.city,
       county: option?.county,
     };
-    setOptions([...options, newOption]);
-    console.log(options);
+    var existingOptions = options;
+    existingOptions.push(newOption);
+    setOptions(existingOptions);
   };
 
   const handleOptionMarkerClick = (e, index) => {
