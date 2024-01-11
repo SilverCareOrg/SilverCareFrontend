@@ -81,7 +81,7 @@ function Admin() {
           <button>Add new service.</button>
         </div>
         <div className="login-button-container" onClick={handleUpdateService}>
-          <button>Update service --megabuggy!</button>
+          <button>Update service table</button>
         </div>
         <div className="login-button-container" onClick={handleUpdateJson}>
           <button>Update service json.</button>

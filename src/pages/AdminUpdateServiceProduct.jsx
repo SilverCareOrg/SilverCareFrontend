@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import axios_api from "../api/axios_api";
 import useAuthentication from "../api/permissions";
 import "../styles/styles.css";
@@ -13,7 +14,7 @@ import {
 import L from "leaflet";
 import marker_icon_png from "../images/marker_icon.png";
 
-function AdminUpdateService() {
+function AdminUpdateServiceProduct() {
   const initialQuestions = [
     "Ce include?",
     "Ce presupune?",
@@ -46,6 +47,8 @@ function AdminUpdateService() {
     category: "",
     iban: "",
   });
+
+  const id = useParams();
   const [updatingServiceId, setUpdatingServiceId] = useState(null);
   const [options, setOptions] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -61,10 +64,17 @@ function AdminUpdateService() {
   const [products, setProducts] = useState([]);
   const [currentService, setCurrentService] = useState(null);
 
+  function delay(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
   const get_all_services = () => {
+    const url = `/get_service_by_id?id=${id.id}`;
     try {
       axios_api
-        .get("/get_services", {
+        .get(url, {
           params: {
             // for category iterate through selectCategories and choose the name with the same raw
           },
@@ -73,8 +83,35 @@ function AdminUpdateService() {
         .then((response) => {
           if (response.status === 200) {
             const json = response.data;
-            setProducts(json.services);
+            const currentService = json.service[0][0];
+            let x = [];
+            for (let i = 0; i< currentService.options.length; i++)
+            {
+              handleAddServiceOption(currentService.options[i]);
+            }
+            console.log(currentService.options)
+            
+            setFormData(() => ({
+            name: currentService?.name,
+              
+              organiser: currentService?.organiser,
+              category: currentService?.category,
+              description: currentService?.description,
+              iban: currentService?.iban,
+              city: currentService?.city,
+              common_location: currentService?.common_location,
+              county: currentService?.county,
+              options_common_city: currentService?.options_common_city,
+              img_path: currentService?.img_path,
+              image: currentService?.image,
+              map_location: currentService?.map_location,
+              options: options,
+              has_more_options: currentService?.has_more_options,
+              location: currentService?.location,
+            }));
+            
           }
+          
         })
         .catch((error) => {
           console.log("Error:", error);
@@ -151,13 +188,6 @@ function AdminUpdateService() {
     });
     console.log(e);
   };
-
-  //Doar pentru debugging purposes :)
-  function delay(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
 
   async function handleDisplayService(id) {
     //updatingServiceId = id; pass this to the put call
@@ -943,4 +973,4 @@ function AdminUpdateService() {
   );
 }
 
-export default AdminUpdateService;
+export default AdminUpdateServiceProduct;

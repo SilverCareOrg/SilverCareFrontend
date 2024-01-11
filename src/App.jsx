@@ -13,6 +13,7 @@ import Cart from "./pages/Cart";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import AdminUpdateServiceProduct from "./pages/AdminUpdateServiceProduct";
 import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
 import AdminUpdateJson from "./pages/AdminUpdateJson";
@@ -61,9 +62,13 @@ const App = () => {
         {/* and this one too */}
         <Route path="/checkout-fail" element={<PaymentFail />} />
         <Route path="/adminPage" element={<Admin />} />
-        <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateService" element={<AdminUpdateService />} />
+        <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
+        <Route
+          path="/adminUpdateServiceProduct/:id"
+          element={<AdminUpdateServiceProduct />}
+        />
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
