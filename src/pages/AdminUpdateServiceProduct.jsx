@@ -85,13 +85,11 @@ function AdminUpdateServiceProduct() {
             const json = response.data;
             const currentService = json.service[0][0];
 
-            for (let i = 0; i< currentService.options.length; i++)
-            {
+            for (let i = 0; i < currentService.options.length; i++) {
               handleAddServiceOption(currentService.options[i]);
             }
 
-            for (let i = 0; i< currentService.sections.length; i++)
-            {
+            for (let i = 0; i < currentService.sections.length; i++) {
               handleSectionsInit(currentService.sections[i]);
             }
 
@@ -112,7 +110,6 @@ function AdminUpdateServiceProduct() {
               location: currentService?.location,
             }));
           }
-          
         })
         .catch((error) => {
           console.log("Error:", error);
@@ -321,7 +318,6 @@ function AdminUpdateServiceProduct() {
       sect.push({ question: section, answer: sectionText[section] });
     });
     formDataToSubmit.append("sections", JSON.stringify({ sections: sect }));
-    console.log(formDataToSubmit);
     console.log(formData);
     // axios_api
     //   .post("/create_service/", formDataToSubmit, {
@@ -407,25 +403,6 @@ function AdminUpdateServiceProduct() {
         Update an existing Service
       </h1>
       <form onSubmit={handleAddService}>
-        <div className="mb-4">
-          <label htmlFor="id" className="block font-semibold">
-            Select Service Name
-          </label>
-          <select
-            id="service_name"
-            name="service_name"
-            placeholder="Select a service name"
-            className="w-full border rounded-md p-2"
-            onClick={(e) => handleDisplayService(e.target.value)}
-          >
-            {products.map((product, index) => (
-              <option key={index} value={product.id}>
-                {product.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
         <div className="mb-4">
           <label htmlFor="name" className="block font-semibold">
             Service Name
@@ -972,11 +949,8 @@ function AdminUpdateServiceProduct() {
           />
         </div>
 
-        <button
-          type="submit"
-          className="btn-submit bg-blue-400 text-white p-2 rounded-md hover:bg-blue-500 hover:shadow-md transition-all"
-        >
-          Create New Service
+        <button className="btn-submit bg-blue-400 text-white p-2 rounded-md hover:bg-blue-500 hover:shadow-md transition-all">
+          Update Service
         </button>
       </form>
       {/* {isSubmitted && <div className="text-green-600 mt-4">Service has been successfully added!</div>} */}

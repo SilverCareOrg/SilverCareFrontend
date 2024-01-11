@@ -36,18 +36,19 @@ function AdminUpdateService() {
 
   return (
     <>
-      <button onClick={() => console.log(products)}>APASA</button>
       <div className="h-[50vh] py-20">
         {products.map((product) => (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center p-2 items-center">
             id: {product.id} name: {product.name} organization:{" "}
             {product.organiser} category: {product.category}
-            <button onClick={() => goToProductUpdatePage(product.id)}>
-              update
+            <button
+              className="ml-8"
+              onClick={() => goToProductUpdatePage(product.id)}
+            >
+              UPDATE SERVICE
             </button>
           </div>
         ))}
-        )
       </div>
     </>
   );
