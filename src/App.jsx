@@ -6,14 +6,17 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminAddService from "./pages/AdminAddService";
+import AdminUpdateService from "./pages/AdminUpdateService";
 import Product from "./pages/Product";
 import Notfound from "./pages/404";
 import Cart from "./pages/Cart";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import AdminUpdateServiceProduct from "./pages/AdminUpdateServiceProduct";
 import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
+import AdminUpdateJson from "./pages/AdminUpdateJson";
 import RegistrationService from "./components/RegistrationService";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFail from "./pages/PaymentFail";
@@ -59,7 +62,13 @@ const App = () => {
         {/* and this one too */}
         <Route path="/checkout-fail" element={<PaymentFail />} />
         <Route path="/adminPage" element={<Admin />} />
+        <Route path="/adminUpdateService" element={<AdminUpdateService />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
+        <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
+        <Route
+          path="/adminUpdateServiceProduct/:id"
+          element={<AdminUpdateServiceProduct />}
+        />
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
         <Route path="*" element={<Notfound />} />
       </Routes>

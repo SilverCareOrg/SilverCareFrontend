@@ -13,6 +13,18 @@ function Admin() {
   const navigate = useNavigate();
   const userRole = useAuthentication();
 
+  const handleUpdateService = async (event) => {
+    event.preventDefault();
+
+    navigate("/adminUpdateService");
+  };
+
+  const handleUpdateJson = async (event) => {
+    event.preventDefault();
+
+    navigate("/adminUpdateJson");
+  };
+
   const handleAddService = async (event) => {
     //Prevent page reload
     event.preventDefault();
@@ -40,7 +52,7 @@ function Admin() {
             // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
             "Content-Type": "application/json",
           },
-        }
+        },
       )
       .then((response) => {
         // Handle the response
@@ -67,6 +79,12 @@ function Admin() {
         </div>
         <div className="login-button-container" onClick={handleAddService}>
           <button>Add new service.</button>
+        </div>
+        <div className="login-button-container" onClick={handleUpdateService}>
+          <button>Update service table</button>
+        </div>
+        <div className="login-button-container" onClick={handleUpdateJson}>
+          <button>Update service json.</button>
         </div>
         <div className="login-button-container" onClick={handleDeleteService}>
           <button>Delete existing service.</button>
