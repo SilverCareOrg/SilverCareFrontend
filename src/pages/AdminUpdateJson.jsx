@@ -38,7 +38,7 @@ function AdminUpdateJson() {
     handleJsonChange(id);
   }
 
-  function handleJsonChange(id) {
+  function handleJsonChange() {
     setProductJson(JSON.stringify(products[selectedProductIndex], null, 2));
   }
 
