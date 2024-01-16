@@ -64,12 +64,6 @@ function AdminUpdateServiceProduct() {
   const [products, setProducts] = useState([]);
   const [currentService, setCurrentService] = useState(null);
 
-  function delay(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
-
   const get_all_services = () => {
     const url = `/get_service_by_id?id=${id.id}`;
     try {

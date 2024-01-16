@@ -4,7 +4,7 @@ import xmark from "../styles/icons/x_icon.svg";
 
 function ConfirmationBar({ orderNumber, isSuccesful }) {
   return (
-    <div className=" bg-light-purple h-[9rem] flex items-center justify-center gap-8 mr-0">
+    <div className=" bg-light-purple h-[80vh] flex items-center justify-center gap-8 mr-0">
       <div className="ml-4 w-[3.5rem] h-[3.5rem]  md:w-[6.5rem] md:h-[6.5rem] md:p-4 p-2 bg-white overflow-hidden rounded-full flex items-center justify-center mr-4">
         <img
           alt=""
