@@ -34,7 +34,7 @@ function AdminUpdateService() {
 
   return (
     <>
-      <div className="h-[50vh] w-[25wh] py-20">
+      <div className="w-[25wh] pb-32 pt-16">
         {products.map((product) => (
           <div
             key={product.id}
