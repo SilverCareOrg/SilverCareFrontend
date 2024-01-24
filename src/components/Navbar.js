@@ -381,7 +381,7 @@ const Navbar = () => {
         </div>
         <div className="bg-white  h-[3.5rem] overflow-hidden shrink-0 flex flex-row items-center justify-center py-[0rem] px-[1.5rem] box-border">
           <div className="w-[77rem] flex flex-row items-center justify-center">
-            <div className="flex-1 flex flex-row items-start justify-start py-[0rem] ml-0 xl:ml-7 px-[12rem] gap-[2rem]">
+            <div className="flex-1 flex flex-row items-start justify-start py-[0rem] ml-0 xl:ml-8 px-[12rem] gap-[2rem]">
               <Link to="/category">
                 <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
                   EXPERIENȚE
