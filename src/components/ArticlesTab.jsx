@@ -2,10 +2,6 @@ import findmore_spiritualitate from "../images/findmore_spiritualitate.png";
 import findmore_excursii from "../images/findmore_excursii.png";
 import findmore_sanatate from "../images/findmore_sanatate.png";
 import findmore_sport from "../images/findmore_sport.png";
-import findmore_evenimente from "../images/findmore_evenimente.png";
-import findmore_arta from "../images/findmore_arta.png";
-import findmore_cursuri from "../images/findmore_cursuri.png";
-import findmore_hobby from "../images/findmore_hobby.png";
 
 const articles = [
   {
@@ -74,7 +70,7 @@ const FindArticles = () => {
             ))}
           </div>
           <div className="flex justify-center xl:justify-end ">
-            <a href="/product" className="button-link">
+            <a href="/articles" className="button-link">
               <div className="rounded w-[15rem] h-[3rem] flex flex-row items-center justify-center py-[0rem] px-[1rem] border-[1.5px] border-solid border-dark-navy">
                 <b className="flex-1 relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center h-[2.25rem]">
                   VEZI MAI MULT
