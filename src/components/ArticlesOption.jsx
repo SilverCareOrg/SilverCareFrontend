@@ -3,7 +3,7 @@ import SearchBox from "./SearchBox";
 
 const ArticlesOption = () => {
   return (
-    <div className="absolute top-[435px] right-[7.5vw] hidden xl:block max-w-[300px]">
+    <div className="absolute top-[435px] right-[5vw] min-[1350px]:block hidden max-w-[300px]">
       <p className="text-3xl">Cauta articolul potrivit</p>
       <div className="py-8">
         <SearchBox text="Cauta un articol" path="articles" />
