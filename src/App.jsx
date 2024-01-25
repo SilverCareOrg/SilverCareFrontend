@@ -18,6 +18,7 @@ import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
 import AdminUpdateJson from "./pages/AdminUpdateJson";
 import RegistrationService from "./components/RegistrationService";
+import Articles from "./pages/Articles";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFail from "./pages/PaymentFail";
 import Categories from "./pages/Categories";
@@ -48,6 +49,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/cartPanel" element={<CartPanel />} />
+        <Route path="/articles" element={<Articles />} />
         <Route
           path="/checkoutDetails"
           element={
