@@ -22,7 +22,7 @@ const articles = [
   { name: "Sport", link: "/product?category=Sport", image: findmore_sport },
 ];
 
-const Article = ({ article }) => {
+export const Article = ({ article }) => {
   return (
     <div>
       <div

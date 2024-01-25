@@ -1,3 +1,4 @@
+import ArticlesOption from "../components/ArticlesOption";
 import DisplayArticle from "../components/DisplayArticle";
 
 const Articles = () => {
@@ -19,11 +20,15 @@ const Articles = () => {
           </div>
         </div>
       </div>
-      {/* TODO: DisplayArticle Component */}
-      <DisplayArticle />
-      <DisplayArticle />
-      <DisplayArticle />
-      <DisplayArticle />
+      <div className="flex flex-col">
+        <div>
+          <DisplayArticle />
+          <DisplayArticle />
+          <DisplayArticle />
+          <DisplayArticle />
+        </div>
+        <ArticlesOption />
+      </div>
     </div>
   );
 };
