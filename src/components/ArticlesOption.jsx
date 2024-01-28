@@ -1,15 +1,19 @@
 import React from "react";
 import SearchBox from "./SearchBox";
 
-const ArticlesOption = () => {
+//435 prima
+const ArticlesOption = ({ topPx }) => {
   return (
-    <div className="absolute top-[435px] right-[5vw] min-[1350px]:block hidden max-w-[300px]">
-      <p className="text-3xl">Cauta articolul potrivit</p>
+    <div
+      style={{ top: `${topPx}px` }}
+      className={`absolute max-[1450px]:left-[calc(1150px+(100vw-1450px))] min-[1450px]:left-[calc(1150px+(100vw-1450px-(100vw-1450px)/2))] min-[1350px]:block hidden max-w-[250px]`}
+    >
+      <p className="text-2xl">Cauta articolul potrivit</p>
       <div className="py-8">
-        <SearchBox text="Cauta un articol" path="articles" />
+        <SearchBox searchWidth={235} text="Cauta un articol" path="articles" />
       </div>
 
-      <p className="text-3xl pb-4">Categorii</p>
+      <p className="text-2xl pb-4">Categorii</p>
       <div className="flex flex-col gap-2">
         <a href="/articles" className="text-lg">
           Sanatate
@@ -30,7 +34,7 @@ const ArticlesOption = () => {
           Lorem50
         </a>
       </div>
-      <p className="text-3xl pt-8 pb-4">Articole populare</p>
+      <p className="text-2xl pt-8 pb-4">Articole populare</p>
       <div className="flex flex-col gap-2">
         <p className="text-lg">Este un edge case</p>
         <p className="text-lg">unde sunt prea multe cuvinte</p>
@@ -44,7 +48,7 @@ const ArticlesOption = () => {
           NUMELE AUTORULUI
         </p>
       </div>
-      <p className="text-3xl pt-8 pb-4">Arhive</p>
+      <p className="text-2xl pt-8 pb-4">Arhive</p>
       <div className="flex flex-col gap-2">
         <a href="/articles" className="text-lg">
           Ianuarie

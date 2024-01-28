@@ -6,20 +6,20 @@ import findmore_sport from "../images/findmore_sport.png";
 const articles = [
   {
     name: "Spiritualitate",
-    link: "/product?category=Spiritualitate",
+    link: "/article-page/id=1",
     image: findmore_spiritualitate,
   },
   {
     name: "Excursii",
-    link: "/product?category=Excursii",
+    link: "/article-page/id=2",
     image: findmore_excursii,
   },
   {
     name: "Sănătate",
-    link: "/product?category=Sanatate",
+    link: "/article-page/id=3",
     image: findmore_sanatate,
   },
-  { name: "Sport", link: "/product?category=Sport", image: findmore_sport },
+  { name: "Sport", link: "/article-page/id=4", image: findmore_sport },
 ];
 
 export const Article = ({ article }) => {

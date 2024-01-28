@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminAddService from "./pages/AdminAddService";
+import ArticlePage from "./pages/ArticlePage";
 import AdminUpdateService from "./pages/AdminUpdateService";
 import Product from "./pages/Product";
 import Notfound from "./pages/404";
@@ -17,7 +18,7 @@ import AdminUpdateServiceProduct from "./pages/AdminUpdateServiceProduct";
 import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
 import AdminUpdateJson from "./pages/AdminUpdateJson";
-import RegistrationService from "./components/RegistrationService";
+// import RegistrationService from "./components/RegistrationService";
 import Articles from "./pages/Articles";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFail from "./pages/PaymentFail";
@@ -67,6 +68,7 @@ const App = () => {
         <Route path="/adminUpdateService" element={<AdminUpdateService />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
+        <Route path="/article-page/:id" element={<ArticlePage />} />
         <Route
           path="/adminUpdateServiceProduct/:id"
           element={<AdminUpdateServiceProduct />}

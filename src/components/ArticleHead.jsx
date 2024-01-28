@@ -1,11 +1,9 @@
 import findmore_sport from "../images/findmore_sport.png";
-import { useNavigate } from "react-router-dom";
-const DisplayArticle = ({ id }) => {
-  const navigate = useNavigate();
+const ArticleHead = () => {
   return (
-    <div className=" flex items-center justify-center md:my-14 py-6">
-      <div className="w-full flex items-center lg:max-w-[1450px] justify-center lg:justify-start md:px-14 lg:px-28 ">
-        <div className="flex flex-col justify-center items-center">
+    <div className=" flex items-center justify-center md:my-14">
+      <div className="w-full flex items-center max-w-[1450px] justify-center lg:justify-start lg:px-14 ">
+        <div className="flex flex-col justify-center items-center lg:items-start">
           <img
             // style={{
             //   transition: "transform 0.2s", // Add a smooth transition effect
@@ -16,22 +14,18 @@ const DisplayArticle = ({ id }) => {
             // onMouseLeave={(e) => {
             //   e.currentTarget.style.transform = "scale(1)"; // Reset the scale on mouse leave
             // }}
-            onClick={() => navigate(`/article-page/id:${id}`)}
-            className="cursor-pointer object-cover lg:w-[850px] lg:h-[364px] sm:w-[550px] sm:h-[235px]  w-[335px] h-[143px]"
+            className=" object-cover lg:w-[1450px] lg:h-[617px] md:w-[1000px] md:h-[428px] sm:w-[850px] sm:h-[365px] w-[650px] h-[278px]"
             src={findmore_sport} // Replace with your image URL
             alt="imagine sport"
           />
-          <div className="flex flex-col lg:w-[850px] sm:w-[550px] w-[335px]">
+          <div className="flex px-4 md:px-0 flex-col lg:w-[950px] md:w-[750px] sm:w-[625px] sm:max-w-[1500px] max-w-[500px]">
             <div className="flex items-center gap-12 pt-1">
               <p>autor</p>
               <p>data</p>
               <p>timp de citire?</p>
             </div>
             <div className="pt-1">
-              <p
-                onClick={() => navigate(`/article-page/id:${id}`)}
-                className="text-2xl lg:text-3xl cursor-pointer"
-              >
+              <p className="text-2xl mt-2 md:mt-8 lg:text-3xl">
                 Imbunatatirea sănătății seniorilor. Un ghid cuprinzător pentru
                 bunăstarea în anii de aur.
               </p>
@@ -50,5 +44,4 @@ const DisplayArticle = ({ id }) => {
     </div>
   );
 };
-
-export default DisplayArticle;
+export default ArticleHead;

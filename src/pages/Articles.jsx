@@ -20,15 +20,17 @@ const Articles = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="">
         <div>
-          <DisplayArticle />
-          <DisplayArticle />
-          <DisplayArticle />
-          <DisplayArticle />
+          {/* article.map(article) => <DisplayArticle id=article.id image=article.image 
+          title=article.title date=article.date description= article.description/>  */}
+          <DisplayArticle id={1} />
+          <DisplayArticle id={2} />
+          <DisplayArticle id={3} />
+          <DisplayArticle id={4} />
         </div>
-        <ArticlesOption />
       </div>
+      <ArticlesOption topPx={435} />
     </div>
   );
 };
