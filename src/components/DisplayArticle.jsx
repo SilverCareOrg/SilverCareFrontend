@@ -16,7 +16,7 @@ const DisplayArticle = ({ id }) => {
             // onMouseLeave={(e) => {
             //   e.currentTarget.style.transform = "scale(1)"; // Reset the scale on mouse leave
             // }}
-            onClick={() => navigate(`/article-page/id:${id}`)}
+            onClick={() => navigate(`/article-page/${id}`)}
             className="cursor-pointer object-cover lg:w-[850px] lg:h-[364px] sm:w-[550px] sm:h-[235px]  w-[335px] h-[143px]"
             src={findmore_sport} // Replace with your image URL
             alt="imagine sport"
@@ -29,7 +29,7 @@ const DisplayArticle = ({ id }) => {
             </div>
             <div className="pt-1">
               <p
-                onClick={() => navigate(`/article-page/id:${id}`)}
+                onClick={() => navigate(`/article-page/${id}`)}
                 className="text-2xl lg:text-3xl cursor-pointer"
               >
                 Imbunatatirea sănătății seniorilor. Un ghid cuprinzător pentru
