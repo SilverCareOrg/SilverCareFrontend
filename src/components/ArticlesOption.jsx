@@ -1,12 +1,12 @@
 import React from "react";
 import SearchBox from "./SearchBox";
 
-//435 prima
 const ArticlesOption = ({ topPx }) => {
   return (
     <div
       style={{ top: `${topPx}px` }}
-      className={`absolute max-[1450px]:left-[calc(1150px+(100vw-1450px))] min-[1450px]:left-[calc(1150px+(100vw-1450px-(100vw-1450px)/2))] min-[1350px]:block hidden max-w-[250px]`}
+      className={`absolute max-[1350px]:left-[calc(1050px+(100vw-1350px-20px))] min-[1350px]:left-[calc(1050px+(100vw-1350px-(100vw-1350px+30px)/2))] 
+min-[1300px]:block hidden max-w-[250px] `}
     >
       <p className="text-2xl">Cauta articolul potrivit</p>
       <div className="py-8">
