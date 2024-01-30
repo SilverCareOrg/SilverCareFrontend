@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminAddService from "./pages/AdminAddService";
 import ArticlePage from "./pages/ArticlePage";
+import AdminCreateArticle from "./pages/AdminCreateArticle";
 import AdminUpdateService from "./pages/AdminUpdateService";
 import Product from "./pages/Product";
 import Notfound from "./pages/404";
@@ -68,6 +69,7 @@ const App = () => {
         <Route path="/adminUpdateService" element={<AdminUpdateService />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
+        <Route path="/adminCreateArticle" element={<AdminCreateArticle />} />
         <Route path="/article-page/:id" element={<ArticlePage />} />
         <Route
           path="/adminUpdateServiceProduct/:id"

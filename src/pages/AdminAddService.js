@@ -165,7 +165,7 @@ function AdminAddService() {
       // Adjust the date to the desired timezone (Bucharest)
       const bucharestTimezoneOffset = -120; // Bucharest timezone offset in minutes (UTC+2)
       selectedDate.setMinutes(
-        selectedDate.getMinutes() - bucharestTimezoneOffset
+        selectedDate.getMinutes() - bucharestTimezoneOffset,
       );
 
       // Format the date with the timezone offset
@@ -209,29 +209,32 @@ function AdminAddService() {
     });
     formDataToSubmit.append("sections", JSON.stringify({ sections: sect }));
 
-    axios_api
-      .post("/create_service/", formDataToSubmit, {
-        withCredentials: true,
-        headers: {
-          //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type":
-            "multipart/form-data;  boundary=----WebKitFormBoundaryEXAMPLE",
-        },
-      })
-      .then((response) => {
-        // Handle the response
-        if (response.status == 200) {
-          setIsSubmitted(true);
-          //   navigate("/admin")
-        } else {
-          console.log("Failed to create service.");
-        }
-      })
-      .catch((error) => {
-        // Handle errors
-        console.log("Error:", error);
-      });
+    for (var pair of formDataToSubmit.entries()) {
+      console.log(pair[0] + " - " + pair[1]);
+    }
+    // axios_api
+    //   .post("/create_service/", formDataToSubmit, {
+    //     withCredentials: true,
+    //     headers: {
+    //       //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //       "Content-Type":
+    //         "multipart/form-data;  boundary=----WebKitFormBoundaryEXAMPLE",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     // Handle the response
+    //     if (response.status == 200) {
+    //       setIsSubmitted(true);
+    //       //   navigate("/admin")
+    //     } else {
+    //       console.log("Failed to create service.");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     // Handle errors
+    //     console.log("Error:", error);
+    //   });
   };
 
   const handleImageUpload = (event) => {
@@ -663,7 +666,7 @@ function AdminAddService() {
                           handleOptionChange(
                             index,
                             "option_has_location",
-                            !option.option_has_location
+                            !option.option_has_location,
                           )
                         }
                         className="w-5 h-4 ml-2 mr-2"

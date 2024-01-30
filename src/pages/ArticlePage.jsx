@@ -6,7 +6,7 @@ const ArticlePage = () => {
     <div className="pb-12">
       <div>
         <ArticleHead />
-        <ArticlesOption topPx={925} />
+        <ArticlesOption topPx={1165} />
       </div>
       <div>
         <ArticleParagraph />

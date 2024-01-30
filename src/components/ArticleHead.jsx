@@ -31,6 +31,23 @@ const ArticleHead = () => {
                 bunăstarea în anii de aur. bunăstarea în anii de aur.
               </p>
             </div>
+            <p className="text-md md:text-lg lg:text-xl my-2 px-4 md:px-0 md:my-4">
+              Imbunatatirea sănătății seniorilor. Un ghid cuprinzător pentru
+              bunăstarea în anii de aur Pe măsură ce indivizii trec cu grație în
+              anii lor de aur, prioritizarea sănătății devine esențială pentru
+              menținerea unui stil de viață vibrant și împlinit. Îmbătrânirea
+              este un proces natural care aduce schimbări în bunăstarea fizică.
+              Imbunatatirea sănătății seniorilor. Un ghid cuprinzător pentru
+              bunăstarea în anii de aur Pe măsură ce indivizii trec cu grație în
+              anii lor de aur, prioritizarea sănătății devine esențială pentru
+              menținerea unui stil de viață vibrant și împlinit. Îmbătrânirea
+              este un proces natural care aduce schimbări în bunăstarea fizică.
+              Imbunatatirea sănătății seniorilor. Un ghid cuprinzător pentru
+              bunăstarea în anii de aur Pe măsură ce indivizii trec cu grație în
+              anii lor de aur, prioritizarea sănătății devine esențială pentru
+              menținerea unui stil de viață vibrant și împlinit. Îmbătrânirea
+              este un proces natural care aduce schimbări în bunăstarea fizică.
+            </p>
           </div>
         </div>
       </div>
