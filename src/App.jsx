@@ -35,7 +35,8 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const App = () => {
   return (
     <section className="flex flex-col min-h-screen overflow-x-hidden overflow-hidden">
-      <Navbar />
+      {/* TODO: uncomment this */}
+      {/* <Navbar /> */}
       <ScrollOnTopOnRefresh />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -78,7 +79,8 @@ const App = () => {
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
-      <Footer />
+      {/* TODO: uncomment this */}
+      {/* <Footer /> */}
     </section>
   );
 };
