@@ -3,8 +3,6 @@ import axios_api from "../api/axios_api";
 import { useEffect, useState } from "react";
 
 function AdminUpdateService() {
-  const product = { id: 1, name: "stefan", organization: "org123" };
-
   const [products, setProducts] = useState([]);
   const get_all_services = () => {
     try {
@@ -36,18 +34,29 @@ function AdminUpdateService() {
 
   return (
     <>
-      <button onClick={() => console.log(products)}>APASA</button>
-      <div className="h-[50vh] py-20">
+      <div className="w-[25wh] pb-32 pt-16">
         {products.map((product) => (
-          <div className="flex justify-center items-center">
-            id: {product.id} name: {product.name} organization:{" "}
-            {product.organiser} category: {product.category}
-            <button onClick={() => goToProductUpdatePage(product.id)}>
-              update
+          <div
+            key={product.id}
+            className="flex justify-between items-center m-auto max-w-[800px] p-4"
+          >
+            <div className="flex flex-col items-start">
+              <div className="text-blue-600 text-2xl">
+                ID: {product.id} Product name: {product.name}
+              </div>
+              <div>
+                <p>Organiser: {product.organiser}</p>
+                <p>Category: {product.category}</p>
+              </div>
+            </div>
+            <button
+              onClick={() => goToProductUpdatePage(product.id)}
+              className="btn-submit ml-12 bg-blue-400 text-white p-2 rounded-md hover:bg-blue-500 hover:shadow-md transition-all"
+            >
+              Update Service with ID:{product.id}
             </button>
           </div>
         ))}
-        )
       </div>
     </>
   );

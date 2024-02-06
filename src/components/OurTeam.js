@@ -10,6 +10,7 @@ import poza_melisa_staicu from "../images/poza_melisa_staicu.jpg";
 import poza_adrian_sandu from "../images/poza_adrian_sandu.jpg";
 import poza_sorin from "../images/poza_sorin.jpg";
 import poza_iulia from "../images/poza_iulia.jpg";
+import poza_stefan_ion from "../images/poza_stefan_ion.jpeg";
 
 const OurTeam = () => {
   const teamMembers = [
@@ -57,26 +58,40 @@ const OurTeam = () => {
       name: "Sorin Birchi",
       designation: "UI/UX Designer",
       img: poza_sorin,
-    }
+    },
+    {
+      name: "Ion Adrian-Ștefan",
+      designation: "Front-End Developer",
+      img: poza_stefan_ion,
+    },
   ];
 
   return (
     <section className="bg-white py-20 ">
-
       {/* Desktop view */}
       <div className="max-lg:hidden w-[60%] mx-auto">
         <div className="flex flex-col gap-3 justify-center items-center w-[50%] mx-auto text-center">
-          <h2 className="text-5xl text-gray-700 font-semibold ">Echipa Noastră</h2>
+          <h2 className="text-5xl text-gray-700 font-semibold ">
+            Echipa Noastră
+          </h2>
           <p className="text-gray-700 text-lg">
-            Suntem o echipă tânără, pasionată de tehnologie și dornică de a schimba lumea în bine.
+            Suntem o echipă tânără, pasionată de tehnologie și dornică de a
+            schimba lumea în bine.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-10 py-20">
           {teamMembers.map((member, index) => {
             return (
-              <div key={index} className="flex flex-col gap-5 justify-center items-center bg-gray-100 py-10 px-0">
-                <div className="max-w-64 max-h-80">
-                  <img src={member.img} alt={member.name} className="object-contain max-w-full max-h-full rounded-full"/>
+              <div
+                key={index}
+                className="flex flex-col gap-5 justify-center items-center bg-gray-100 py-10 px-0"
+              >
+                <div className="max-w-64 max-h-64 p-4">
+                  <img
+                    src={member.img}
+                    alt={member.name}
+                    className="object-contain max-w-full max-h-full rounded-full"
+                  />
                 </div>
                 <div className="text-center flex flex-col gap-2">
                   <h1 className="text-3xl font-semibold text-gray-700">
@@ -95,17 +110,27 @@ const OurTeam = () => {
       {/* Mobile view */}
       <div className="lg:hidden  mx-auto">
         <div className="flex flex-col gap-3 justify-center items-center mx-auto text-center px-5">
-          <h2 className="text-center flex text-4xl text-gray-700 font-semibold ">Echipa Noastră</h2>
+          <h2 className="text-center flex text-4xl text-gray-700 font-semibold ">
+            Echipa Noastră
+          </h2>
           <p className="text-gray-700 text-lg">
-            Suntem o echipă tânără, pasionată de tehnologie și dornică de a schimba lumea în bine.
+            Suntem o echipă tânără, pasionată de tehnologie și dornică de a
+            schimba lumea în bine.
           </p>
         </div>
         <div className="grid grid-rows-2 gap-10 py-20 pl-5 pr-5">
           {teamMembers.map((member, index) => {
             return (
-              <div key={index} className="flex flex-col gap-5 justify-center items-center bg-gray-100 py-10 px-0">
+              <div
+                key={index}
+                className="flex flex-col gap-5 justify-center items-center bg-gray-100 py-10 px-0"
+              >
                 <div className="max-w-64 max-h-80">
-                  <img src={member.img} alt={member.name} className="object-contain max-w-full max-h-full rounded-full"/>
+                  <img
+                    src={member.img}
+                    alt={member.name}
+                    className="object-contain max-w-full max-h-full rounded-full"
+                  />
                 </div>
                 <div className="text-center flex flex-col gap-2">
                   <h1 className="text-3xl font-semibold text-gray-700">
@@ -120,7 +145,6 @@ const OurTeam = () => {
           })}
         </div>
       </div>
-  
     </section>
   );
 };

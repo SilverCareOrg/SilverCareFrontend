@@ -6,6 +6,8 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminAddService from "./pages/AdminAddService";
+import ArticlePage from "./pages/ArticlePage";
+import AdminCreateArticle from "./pages/AdminCreateArticle";
 import AdminUpdateService from "./pages/AdminUpdateService";
 import Product from "./pages/Product";
 import Notfound from "./pages/404";
@@ -17,7 +19,8 @@ import AdminUpdateServiceProduct from "./pages/AdminUpdateServiceProduct";
 import ProductDetails from "./components/ProductDetails";
 import CartPanel from "./components/CartPanel";
 import AdminUpdateJson from "./pages/AdminUpdateJson";
-import RegistrationService from "./components/RegistrationService";
+// import RegistrationService from "./components/RegistrationService";
+import Articles from "./pages/Articles";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFail from "./pages/PaymentFail";
 import Categories from "./pages/Categories";
@@ -32,7 +35,8 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const App = () => {
   return (
     <section className="flex flex-col min-h-screen overflow-x-hidden overflow-hidden">
-      <Navbar />
+      {/* TODO: uncomment this */}
+      {/* <Navbar /> */}
       <ScrollOnTopOnRefresh />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -48,6 +52,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/cartPanel" element={<CartPanel />} />
+        <Route path="/articles" element={<Articles />} />
         <Route
           path="/checkoutDetails"
           element={
@@ -65,6 +70,8 @@ const App = () => {
         <Route path="/adminUpdateService" element={<AdminUpdateService />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
+        <Route path="/adminCreateArticle" element={<AdminCreateArticle />} />
+        <Route path="/article-page/:id" element={<ArticlePage />} />
         <Route
           path="/adminUpdateServiceProduct/:id"
           element={<AdminUpdateServiceProduct />}
@@ -72,7 +79,8 @@ const App = () => {
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
-      <Footer />
+      {/* TODO: uncomment this */}
+      {/* <Footer /> */}
     </section>
   );
 };

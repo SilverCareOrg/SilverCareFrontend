@@ -165,7 +165,7 @@ function AdminAddService() {
       // Adjust the date to the desired timezone (Bucharest)
       const bucharestTimezoneOffset = -120; // Bucharest timezone offset in minutes (UTC+2)
       selectedDate.setMinutes(
-        selectedDate.getMinutes() - bucharestTimezoneOffset
+        selectedDate.getMinutes() - bucharestTimezoneOffset,
       );
 
       // Format the date with the timezone offset
@@ -208,6 +208,10 @@ function AdminAddService() {
       sect.push({ question: section, answer: sectionText[section] });
     });
     formDataToSubmit.append("sections", JSON.stringify({ sections: sect }));
+
+    for (var pair of formDataToSubmit.entries()) {
+      console.log(pair[0] + " - " + pair[1]);
+    }
 
     axios_api
       .post("/create_service/", formDataToSubmit, {
@@ -663,7 +667,7 @@ function AdminAddService() {
                           handleOptionChange(
                             index,
                             "option_has_location",
-                            !option.option_has_location
+                            !option.option_has_location,
                           )
                         }
                         className="w-5 h-4 ml-2 mr-2"

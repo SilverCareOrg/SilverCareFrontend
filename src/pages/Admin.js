@@ -13,6 +13,12 @@ function Admin() {
   const navigate = useNavigate();
   const userRole = useAuthentication();
 
+  const handleCreateArticle = async (event) => {
+    event.preventDefault();
+
+    navigate("/adminCreateArticle");
+  };
+
   const handleUpdateService = async (event) => {
     event.preventDefault();
 
@@ -79,6 +85,9 @@ function Admin() {
         </div>
         <div className="login-button-container" onClick={handleAddService}>
           <button>Add new service.</button>
+        </div>
+        <div className="login-button-container" onClick={handleCreateArticle}>
+          <button>Add new article</button>
         </div>
         <div className="login-button-container" onClick={handleUpdateService}>
           <button>Update service table</button>
