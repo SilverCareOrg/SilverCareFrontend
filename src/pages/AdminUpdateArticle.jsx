@@ -56,26 +56,25 @@ function AdminUpdateArticle() {
         })
         .then((response) => {
           if (response.status === 200) {
-            const json = response.data;
-            console.log(json);
-            // const currentArticle = json.article[0][0];
-            // for (let i = 0; i < currentArticle?.paragraphText.length; i++) {
-            //   setParagraphText([
-            //     ...paragraphText,
-            //     currentArticle?.paragraphText[i],
-            //   ]);
-            //   setParagraphImage([
-            //     ...paragraphImage,
-            //     currentArticle?.paragraphImage[i],
-            //   ]);
-            // }
+            const currentArticle = response.data;
+            console.log(currentArticle);
+            for (let i = 0; i < currentArticle?.texts.length; i++) {
+              setParagraphText([
+                ...paragraphText,
+                currentArticle?.texts[i].text,
+              ]);
+              setParagraphImage([
+                ...paragraphImage,
+                currentArticle?.texts[i].image,
+              ]);
+            }
 
-            // setFormData(() => ({
-            //   title: currentArticle?.title,
-            //   author: currentArticle?.author,
-            //   description: currentArticle?.description,
-            //   reading_time: currentArticle?.reading_time,
-            // }));
+            setFormData(() => ({
+              title: currentArticle?.title,
+              author: currentArticle?.author,
+              description: currentArticle?.description,
+              reading_time: currentArticle?.reading_time,
+            }));
           }
         })
         .catch((error) => {
@@ -240,16 +239,16 @@ function AdminUpdateArticle() {
           <select
             id="category"
             name="category"
-            value={formData?.category}
+            value={formData.category}
             onChange={handleInputChange}
             className="w-full border rounded-md p-2"
           >
             <option value="" disabled>
               Select a Category
             </option>
-            {categories?.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
+            {categories.map((category) => (
+              <option key={category[0]} value={category[0]}>
+                {category[1]}
               </option>
             ))}
           </select>
