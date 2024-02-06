@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios_api from "../api/axios_api";
-import useAuthentication from "../api/permissions";
+import { useParams } from "react-router-dom";
 import "../styles/styles.css";
-import { useNavigate } from "react-router-dom";
 
-function AdminCreateArticle() {
+function AdminUpdateArticle() {
   const categories = [
     "Spiritualitate",
     "Excursii",
@@ -19,15 +18,60 @@ function AdminCreateArticle() {
   const [paragraphText, setParagraphText] = useState([]);
   const [paragraphImage, setParagraphImage] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const id = useParams();
   const [formData, setFormData] = useState({
-    title: "",
-    author: "",
-    description: "",
-    timpCitire: "",
+    title: "stefan",
+    author: "stefan",
+    description: "stefan",
+    timpCitire: "3min",
 
     // ... Other fields from the Service model
   });
+
+  const get_article = () => {
+    const url = `/get_article_by_id?id=${id.id}`;
+    console.log(id.id);
+    try {
+      axios_api
+        .get(url, {
+          params: {
+            // for category iterate through selectCategories and choose the name with the same raw
+          },
+          withCredentials: true,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            const json = response.data;
+            console.log(json);
+            const currentArticle = json.article[0][0];
+            for (let i = 0; i < currentArticle?.paragraphText.length; i++) {
+              setParagraphText([
+                ...paragraphText,
+                currentArticle?.paragraphText[i],
+              ]);
+              setParagraphImage([
+                ...paragraphImage,
+                currentArticle?.paragraphImage[i],
+              ]);
+            }
+
+            setFormData(() => ({
+              title: currentArticle?.title,
+              author: currentArticle?.author,
+              description: currentArticle?.description,
+              timpCitire: currentArticle?.timpCitire,
+            }));
+          }
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    get_article();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -57,7 +101,7 @@ function AdminCreateArticle() {
     setParagraphImage(updatedImage);
   };
 
-  const handleAddArticle = async (event) => {
+  const handleUpdateArticle = async (event) => {
     event.preventDefault();
 
     const formDataToSubmit = new FormData();
@@ -86,8 +130,9 @@ function AdminCreateArticle() {
     // console.log(paragraphImage);
     // console.log(paragraphText);
 
+    const url = `/update_article?id=${id.id}`;
     axios_api
-      .post("/create_article/", formDataToSubmit, {
+      .post(url, formDataToSubmit, {
         withCredentials: true,
         headers: {
           //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
@@ -122,8 +167,10 @@ function AdminCreateArticle() {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg border border-opacity-400 rounded-md">
-      <h1 className="text-2xl font-semibold mb-4">Add a New Service</h1>
-      <form onSubmit={handleAddArticle}>
+      <h1 className="text-2xl font-semibold mb-4">
+        Update an existing article
+      </h1>
+      <form onSubmit={handleUpdateArticle}>
         <div className="mb-4">
           <label htmlFor="title" className="block font-semibold">
             Article Title
@@ -132,7 +179,7 @@ function AdminCreateArticle() {
             type="text"
             id="title"
             name="title"
-            value={formData.title}
+            value={formData?.title}
             onChange={handleInputChange}
             required
             className="w-full border rounded-md p-2"
@@ -147,7 +194,7 @@ function AdminCreateArticle() {
             type="text"
             id="author"
             name="author"
-            value={formData.author}
+            value={formData?.author}
             onChange={handleInputChange}
             required
             className="w-full border rounded-md p-2"
@@ -159,11 +206,11 @@ function AdminCreateArticle() {
             Timp de citire
           </label>
           <input
-            type="text"
             placeholder='use this format "x min" ex: 10 min'
+            type="text"
             id="timpCitire"
             name="timpCitire"
-            value={formData.timpCitire}
+            value={formData?.timpCitire}
             onChange={handleInputChange}
             required
             className="w-full border rounded-md p-2"
@@ -177,14 +224,14 @@ function AdminCreateArticle() {
           <select
             id="category"
             name="category"
-            value={formData.category}
+            value={formData?.category}
             onChange={handleInputChange}
             className="w-full border rounded-md p-2"
           >
             <option value="" disabled>
               Select a Category
             </option>
-            {categories.map((category, index) => (
+            {categories?.map((category, index) => (
               <option key={index} value={category}>
                 {category}
               </option>
@@ -212,7 +259,7 @@ function AdminCreateArticle() {
           <textarea
             id="description"
             name="description"
-            value={formData.description}
+            value={formData?.description}
             onChange={handleInputChange}
             required
             rows="4"
@@ -280,7 +327,7 @@ function AdminCreateArticle() {
                   <textarea
                     id={`paragraphText${index}`}
                     name="paragraphDetails"
-                    value={option.text}
+                    value={option}
                     onChange={(e) =>
                       handleOptionChange(index, "text", e.target.value)
                     }
@@ -304,4 +351,4 @@ function AdminCreateArticle() {
   );
 }
 
-export default AdminCreateArticle;
+export default AdminUpdateArticle;
