@@ -313,29 +313,29 @@ function AdminUpdateServiceProduct() {
     });
     formDataToSubmit.append("sections", JSON.stringify({ sections: sect }));
     console.log(formData);
-    // axios_api
-    //   .post("/create_service/", formDataToSubmit, {
-    //     withCredentials: true,
-    //     headers: {
-    //       //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
-    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //       "Content-Type":
-    //         "multipart/form-data;  boundary=----WebKitFormBoundaryEXAMPLE",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     // Handle the response
-    //     if (response.status == 200) {
-    //       setIsSubmitted(true);
-    //       //   navigate("/admin")
-    //     } else {
-    //       console.log("Failed to create service.");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     // Handle errors
-    //     console.log("Error:", error);
-    //   });
+    axios_api
+      .post("/modify_service", formDataToSubmit, {
+        withCredentials: true,
+        headers: {
+          //'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type":
+            "multipart/form-data;  boundary=----WebKitFormBoundaryEXAMPLE",
+        },
+      })
+      .then((response) => {
+        // Handle the response
+        if (response.status === 200) {
+          setIsSubmitted(true);
+          //   navigate("/admin")
+        } else {
+          console.log("Failed to modify service.");
+        }
+      })
+      .catch((error) => {
+        // Handle errors
+        console.log("Error:", error);
+      });
   };
 
   const handleImageUpload = (event) => {

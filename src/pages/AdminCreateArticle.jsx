@@ -5,17 +5,8 @@ import "../styles/styles.css";
 import { useNavigate } from "react-router-dom";
 
 function AdminCreateArticle() {
-  const categories = [
-    "Spiritualitate",
-    "Excursii",
-    "Sănătate",
-    "Sport",
-    "Divertisment",
-    "Artă",
-    "Cursuri de limbi străine",
-    "Hobby",
-  ];
-
+  const [categories, setCategories] = useState([]);
+  const [categoryIndex, setCategoryIndex] = useState();
   const [paragraphText, setParagraphText] = useState([]);
   const [paragraphImage, setParagraphImage] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -24,8 +15,7 @@ function AdminCreateArticle() {
     title: "",
     author: "",
     description: "",
-    timpCitire: "",
-
+    reading_time: "",
     // ... Other fields from the Service model
   });
 
@@ -57,17 +47,57 @@ function AdminCreateArticle() {
     setParagraphImage(updatedImage);
   };
 
+  const handleArticleCategory = async () => {
+    axios_api
+      .get("/get_articles_types", {
+        withCredentials: true,
+        headers: {
+          //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type":
+            "multipart/form-data;  boundary=----WebKitFormBoundaryEXAMPLE",
+        },
+      })
+      .then((response) => {
+        // Handle the response
+        if (response.status === 200) {
+          const json = response.data;
+          for (let i = 0; i < json.length; i++) {
+            let category = json[i];
+            setCategories((prevCategories) => {
+              return [...prevCategories, category];
+            });
+          }
+        } else {
+          console.log("Failed to create service.");
+        }
+      })
+      .catch((error) => {
+        // Handle errors
+        console.log("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    if (categories.length === 0) {
+      handleArticleCategory();
+    }
+  }, []);
+
   const handleAddArticle = async (event) => {
     event.preventDefault();
 
     const formDataToSubmit = new FormData();
 
+    formDataToSubmit.append("category", categoryIndex);
     formDataToSubmit.append("image", selectedImage);
     if (paragraphText.length !== 0) {
       formDataToSubmit.append("paragraphText", JSON.stringify(paragraphText));
     }
     if (paragraphImage.length !== 0) {
-      formDataToSubmit.append("paragraphImage", paragraphImage);
+      for (var x = 0; x < paragraphImage.length; x++) {
+        formDataToSubmit.append("paragraphImage", paragraphImage[x]);
+      }
     }
     // Submit both the text and image in a "paragraphs" variable
     // formDataToSubmit.append("paragraphs", [
@@ -80,14 +110,13 @@ function AdminCreateArticle() {
     });
 
     //logging out 'formdatatosubmit'
+
     for (var pair of formDataToSubmit.entries()) {
       console.log(pair[0] + " - " + pair[1]);
     }
-    // console.log(paragraphImage);
-    // console.log(paragraphText);
 
     axios_api
-      .post("/create_article/", formDataToSubmit, {
+      .post("/create_article", formDataToSubmit, {
         withCredentials: true,
         headers: {
           //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
@@ -122,7 +151,7 @@ function AdminCreateArticle() {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg border border-opacity-400 rounded-md">
-      <h1 className="text-2xl font-semibold mb-4">Add a New Service</h1>
+      <h1 className="text-2xl font-semibold mb-4">Add a New Article</h1>
       <form onSubmit={handleAddArticle}>
         <div className="mb-4">
           <label htmlFor="title" className="block font-semibold">
@@ -155,15 +184,15 @@ function AdminCreateArticle() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="timpCitire" className="block font-semibold">
+          <label htmlFor="reading_time" className="block font-semibold">
             Timp de citire
           </label>
           <input
             type="text"
             placeholder='use this format "x min" ex: 10 min'
-            id="timpCitire"
-            name="timpCitire"
-            value={formData.timpCitire}
+            id="reading_time"
+            name="reading_time"
+            value={formData.reading_time}
             onChange={handleInputChange}
             required
             className="w-full border rounded-md p-2"
@@ -184,9 +213,9 @@ function AdminCreateArticle() {
             <option value="" disabled>
               Select a Category
             </option>
-            {categories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
+            {categories.map((category) => (
+              <option key={category[0]} value={category[0]}>
+                {category[1]}
               </option>
             ))}
           </select>

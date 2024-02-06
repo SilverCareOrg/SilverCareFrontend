@@ -14,7 +14,8 @@ function AdminUpdateArticleTable() {
         .then((response) => {
           if (response.status === 200) {
             const json = response.data;
-            setArticles(json.services);
+            console.log(json);
+            setArticles(json);
           }
         })
         .catch((error) => {

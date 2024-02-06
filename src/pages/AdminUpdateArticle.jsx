@@ -4,33 +4,48 @@ import { useParams } from "react-router-dom";
 import "../styles/styles.css";
 
 function AdminUpdateArticle() {
-  const categories = [
-    "Spiritualitate",
-    "Excursii",
-    "Sănătate",
-    "Sport",
-    "Divertisment",
-    "Artă",
-    "Cursuri de limbi străine",
-    "Hobby",
-  ];
-
+  const [categories, setCategories] = useState([]);
   const [paragraphText, setParagraphText] = useState([]);
   const [paragraphImage, setParagraphImage] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const id = useParams();
   const [formData, setFormData] = useState({
-    title: "stefan",
-    author: "stefan",
-    description: "stefan",
-    timpCitire: "3min",
+    title: "",
+    author: "",
+    description: "",
+    reading_time: "",
 
     // ... Other fields from the Service model
   });
 
+  const handleArticleCategory = async () => {
+    axios_api
+      .get("/get_articles_types", {
+        withCredentials: true,
+        headers: {
+          //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type":
+            "multipart/form-data;  boundary=----WebKitFormBoundaryEXAMPLE",
+        },
+      })
+      .then((response) => {
+        // Handle the response
+        if (response.status === 200) {
+          const json = response.data;
+          console.log(json);
+        } else {
+          console.log("Failed to create service.");
+        }
+      })
+      .catch((error) => {
+        // Handle errors
+        console.log("Error:", error);
+      });
+  };
+
   const get_article = () => {
-    const url = `/get_article_by_id?id=${id.id}`;
-    console.log(id.id);
+    const url = `/get_article?id=${id.id}`;
     try {
       axios_api
         .get(url, {
@@ -43,24 +58,24 @@ function AdminUpdateArticle() {
           if (response.status === 200) {
             const json = response.data;
             console.log(json);
-            const currentArticle = json.article[0][0];
-            for (let i = 0; i < currentArticle?.paragraphText.length; i++) {
-              setParagraphText([
-                ...paragraphText,
-                currentArticle?.paragraphText[i],
-              ]);
-              setParagraphImage([
-                ...paragraphImage,
-                currentArticle?.paragraphImage[i],
-              ]);
-            }
+            // const currentArticle = json.article[0][0];
+            // for (let i = 0; i < currentArticle?.paragraphText.length; i++) {
+            //   setParagraphText([
+            //     ...paragraphText,
+            //     currentArticle?.paragraphText[i],
+            //   ]);
+            //   setParagraphImage([
+            //     ...paragraphImage,
+            //     currentArticle?.paragraphImage[i],
+            //   ]);
+            // }
 
-            setFormData(() => ({
-              title: currentArticle?.title,
-              author: currentArticle?.author,
-              description: currentArticle?.description,
-              timpCitire: currentArticle?.timpCitire,
-            }));
+            // setFormData(() => ({
+            //   title: currentArticle?.title,
+            //   author: currentArticle?.author,
+            //   description: currentArticle?.description,
+            //   reading_time: currentArticle?.reading_time,
+            // }));
           }
         })
         .catch((error) => {
@@ -71,6 +86,7 @@ function AdminUpdateArticle() {
 
   useEffect(() => {
     get_article();
+    handleArticleCategory();
   }, []);
 
   const handleInputChange = (e) => {
@@ -202,15 +218,15 @@ function AdminUpdateArticle() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="timpCitire" className="block font-semibold">
+          <label htmlFor="reading_time" className="block font-semibold">
             Timp de citire
           </label>
           <input
             placeholder='use this format "x min" ex: 10 min'
             type="text"
-            id="timpCitire"
-            name="timpCitire"
-            value={formData?.timpCitire}
+            id="reading_time"
+            name="reading_time"
+            value={formData?.reading_time}
             onChange={handleInputChange}
             required
             className="w-full border rounded-md p-2"
