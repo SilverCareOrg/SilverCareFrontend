@@ -1,4 +1,3 @@
-import findmore_sport from "../images/findmore_sport.png";
 const ArticleParagraph = ({ paragraphData }) => {
   return (
     <div className=" flex items-center justify-center my-2">
