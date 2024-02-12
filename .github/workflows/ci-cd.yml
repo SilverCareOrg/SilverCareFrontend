@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           port: 22
           source: build/ # Adjust this path to your build output
-          target: /home/ubuntu/sc_frontend/
+          target: /home/ubuntu/frontend/
 
       - name: Clean up
         run: rm -rf build/
