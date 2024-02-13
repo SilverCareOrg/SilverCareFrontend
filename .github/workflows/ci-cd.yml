@@ -37,6 +37,7 @@ jobs:
           host: ${{ secrets.SERVER_ADDR }}
           username: stefan
           key: ${{ secrets.SERVER_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: 22
           source: build/ # Adjust this path to your build output
           target: /home/stefan/frontend/
