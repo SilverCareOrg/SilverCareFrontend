@@ -14,6 +14,7 @@ function AdminUpdateArticle() {
     author: "",
     description: "",
     reading_time: "",
+    category: "",
 
     // ... Other fields from the Service model
   });
@@ -33,7 +34,12 @@ function AdminUpdateArticle() {
         // Handle the response
         if (response.status === 200) {
           const json = response.data;
-          console.log(json);
+          for (let i = 0; i < json.length; i++) {
+            let category = json[i];
+            setCategories((prevCategories) => {
+              return [...prevCategories, category];
+            });
+          }
         } else {
           console.log("Failed to create service.");
         }
@@ -42,6 +48,7 @@ function AdminUpdateArticle() {
         // Handle errors
         console.log("Error:", error);
       });
+    
   };
 
   const get_article = () => {
@@ -74,6 +81,7 @@ function AdminUpdateArticle() {
               author: currentArticle?.author,
               description: currentArticle?.description,
               reading_time: currentArticle?.reading_time,
+              category: currentArticle?.category,
             }));
           }
         })
@@ -239,7 +247,8 @@ function AdminUpdateArticle() {
           <select
             id="category"
             name="category"
-            value={formData.category}
+            // categories[formData?.category][1]
+            value={formData?.category}
             onChange={handleInputChange}
             className="w-full border rounded-md p-2"
           >

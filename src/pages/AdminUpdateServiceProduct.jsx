@@ -737,6 +737,26 @@ function AdminUpdateServiceProduct() {
 
                 <div className="mb-2">
                   <label
+                    htmlFor={`optionParticipants${index}`}
+                    className="block font-semibold"
+                  >
+                    Number of participants
+                  </label>
+                  <input
+                    type="number"
+                    id={`optionParticipants${index}`}
+                    name="participants"
+                    value={option?.participants}
+                    placeholder="e.g., 42 || leave blank for ultimited participants"
+                    onChange={(e) =>
+                      handleOptionChange(index, "participants", e.target.value)
+                    }
+                    className="w-full border rounded-md p-2"
+                  />
+                </div>
+
+                <div className="mb-2">
+                  <label
                     htmlFor={`optionDuration${index}`}
                     className="block font-semibold"
                   >

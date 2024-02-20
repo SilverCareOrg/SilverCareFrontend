@@ -189,7 +189,7 @@ function AdminCreateArticle() {
           </label>
           <input
             type="text"
-            placeholder='use this format "x min" ex: 10 min'
+            placeholder='e.g, 10'
             id="reading_time"
             name="reading_time"
             value={formData.reading_time}
