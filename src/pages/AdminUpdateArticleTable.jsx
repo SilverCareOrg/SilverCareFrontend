@@ -4,30 +4,46 @@ import { useEffect, useState } from "react";
 
 function AdminUpdateArticleTable() {
   const [articles, setArticles] = useState([]);
-  const get_all_articles = () => {
+  const [articleLimit, setArticleLimit] = useState(10);
+  const get_all_articles = (articleLimit) => {
     try {
       axios_api
         .get("/get_articles", {
-          params: {},
+          params: { inf_limit: articleLimit - 10, sup_limit: articleLimit },
           withCredentials: true,
         })
         .then((response) => {
           if (response.status === 200) {
             const json = response.data;
-            console.log(json);
-            setArticles(json);
+            setArticles([...articles.concat(json)]);
           }
         })
         .catch((error) => {
           console.log("Error:", error);
         });
-    } catch (err) {}
+    } catch (err) { }
   };
 
+  function handleArticleChange() {
+    setArticleLimit(articleLimit + 10)
+  }
+
   useEffect(() => {
-    get_all_articles();
-    console.log(articles);
-  }, []);
+    get_all_articles(articleLimit);
+  }, [articleLimit]);
+
+
+  useEffect(() => {
+    const onScroll = () => {
+      // if articles.length = articles.total
+      if (articles.length % 10 === 0) {
+        if (window.innerHeight + window.scrollY >= window.document.body.offsetHeight - 150) {
+          handleArticleChange();
+        }
+      }
+    }
+    window.addEventListener('scroll', onScroll)
+  }, [])
 
   function goToProductUpdatePage(id) {
     window.location.href = `/adminUpdateArticle/${id}`;

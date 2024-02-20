@@ -56,13 +56,13 @@ min-[1300px]:block hidden max-w-[250px] `}
       <p className="text-2xl pb-4">Categorii</p>
       <div className="flex flex-col gap-2">
         {categories.map((category) => (
-          <a href={`/articles?${category[0]}`} className="text-lg">
+          <a key={category} href={`/articles?${category[0]}`} className="text-lg">
             {category[1]}
           </a>
         ))}
       </div>
       <p className="text-2xl pt-8 pb-4">Articole populare</p>
-      <div className="flex flex-col gap-2">
+      <div key='articole-populare' className="flex flex-col gap-2">
         <p className="text-lg">articol1</p>
         <p className="text-lg">articol2</p>
         <p className="text-lg">articol3</p>
@@ -72,7 +72,7 @@ min-[1300px]:block hidden max-w-[250px] `}
         <p className="text-lg">articol7</p>
       </div>
       <p className="text-2xl pt-8 pb-4">Arhive</p>
-      <div className="flex flex-col gap-2">
+      <div key='arhive' className="flex flex-col gap-2">
         <a href="/articles" className="text-lg">
           Ianuarie
         </a>
