@@ -38,7 +38,7 @@ const App = () => {
   return (
     <section className="flex flex-col min-h-screen overflow-x-hidden overflow-hidden">
       {/* TODO: uncomment this */}
-      {/* <Navbar /> */}
+       <Navbar /> 
       <ScrollOnTopOnRefresh />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -88,7 +88,7 @@ const App = () => {
         <Route path="*" element={<Notfound />} />
       </Routes>
       {/* TODO: uncomment this */}
-      {/* <Footer /> */}
+      <Footer />
     </section>
   );
 };

@@ -27,7 +27,7 @@ const ArticlePage = () => {
         .catch((error) => {
           console.log("Error:", error);
         });
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -38,7 +38,6 @@ const ArticlePage = () => {
     <div className="pb-12">
       <div>
         <ArticleHead article={currentArticle} />
-        <ArticlesOption topPx={1165} />
       </div>
       <div>
         {currentArticle?.texts.map((data, index) => (

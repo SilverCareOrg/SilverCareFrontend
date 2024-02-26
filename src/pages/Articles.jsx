@@ -39,13 +39,13 @@ const Articles = () => {
     const onScroll = () => {
       // if articles.length = articles.total
       if (articles.length % 10 === 0) {
-        if (window.innerHeight + window.scrollY >= window.document.body.offsetHeight - 300) {
+        if (window.innerHeight + window.scrollY >= window.document.body.offsetHeight - 1350) {
           handleArticleChange();
         }
       }
     }
     window.addEventListener('scroll', onScroll)
-  }, [])
+  }, [articles.length])
 
 
   return (
