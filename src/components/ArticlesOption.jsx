@@ -71,45 +71,45 @@ min-[1300px]:block hidden max-w-[250px] `}
         <p className="text-lg">articol6</p>
         <p className="text-lg">articol7</p>
       </div>
-      <p className="text-2xl pt-8 pb-4">Arhive</p>
-      <div key='arhive' className="flex flex-col gap-2">
-        <a href="/articles" className="text-lg">
-          Ianuarie
-        </a>
-        <a href="/articles" className="text-lg">
-          Februarie
-        </a>
-        <a href="/articles" className="text-lg">
-          Martie
-        </a>
-        <a href="/articles" className="text-lg">
-          Aprilie
-        </a>
-        <a href="/articles" className="text-lg">
-          Mai
-        </a>
-        <a href="/articles" className="text-lg">
-          Iunie
-        </a>
-        <a href="/articles" className="text-lg">
-          Iulie
-        </a>
-        <a href="/articles" className="text-lg">
-          August
-        </a>
-        <a href="/articles" className="text-lg">
-          Septembrie
-        </a>
-        <a href="/articles" className="text-lg">
-          Octombrie
-        </a>
-        <a href="/articles" className="text-lg">
-          Noiembrie
-        </a>
-        <a href="/articles" className="text-lg">
-          Decembie
-        </a>
-      </div>
+      {/* <p className="text-2xl pt-8 pb-4">Arhive</p> */}
+      {/* <div key='arhive' className="flex flex-col gap-2"> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Ianuarie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Februarie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Martie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Aprilie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Mai */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Iunie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Iulie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     August */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Septembrie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Octombrie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Noiembrie */}
+      {/*   </a> */}
+      {/*   <a href="/articles" className="text-lg"> */}
+      {/*     Decembie */}
+      {/*   </a> */}
+      {/* </div> */}
     </div>
   );
 };

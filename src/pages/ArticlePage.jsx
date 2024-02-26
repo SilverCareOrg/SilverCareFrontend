@@ -6,8 +6,8 @@ import ArticleParagraph from "../components/ArticleParagraph";
 import ArticlesOption from "../components/ArticlesOption";
 const ArticlePage = () => {
   const id = useParams();
-
   const [currentArticle, setCurrentArticle] = useState();
+  const [descriptionLength, setDescriptionLength] = useState(0);
   const get_article = () => {
     const url = `/get_article?id=${id.id}`;
     try {
@@ -21,7 +21,8 @@ const ArticlePage = () => {
         .then((response) => {
           if (response.status === 200) {
             setCurrentArticle(response.data);
-            console.log(currentArticle);
+            console.log(response.data.description.length);
+            setDescriptionLength(response.data.description.length);
           }
         })
         .catch((error) => {
@@ -38,6 +39,7 @@ const ArticlePage = () => {
     <div className="pb-12">
       <div>
         <ArticleHead article={currentArticle} />
+        <ArticlesOption topPx={835 + descriptionLength*0.29} />
       </div>
       <div>
         {currentArticle?.texts.map((data, index) => (
