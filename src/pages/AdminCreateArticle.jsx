@@ -10,6 +10,7 @@ function AdminCreateArticle() {
   const [paragraphText, setParagraphText] = useState([]);
   const [paragraphImage, setParagraphImage] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imageIndexes, setImageIndexes] = useState([]);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -41,10 +42,36 @@ function AdminCreateArticle() {
   const handleRemoveOption = (index) => {
     const updatedText = [...paragraphText];
     const updatedImage = [...paragraphImage];
+    if (imageIndexes.includes(imageIndexes[index])) {
+      // Create a new array with the item replaced
+      let value = 0;
+      for (let i = 0; i < imageIndexes.length; i++) {
+        if (imageIndexes[i] === index) {
+          value = i;
+          const newIndex = imageIndexes.filter((index) => index !== value);
+          for (let j = i; j < newIndex.length; j++) {
+            newIndex[j] = newIndex[j] - 1;
+          }
+          setImageIndexes(newIndex);
+          break;
+        }
+      }
+      const newImages = [
+        ...paragraphImage.slice(0, value),
+        ...paragraphImage.slice(value + 1)
+      ];
+
+      // Update the state with the new array
+      setParagraphImage(newImages);
+    }
     updatedText.splice(index, 1);
     updatedImage.splice(index, 1);
     setParagraphText(updatedText);
-    setParagraphImage(updatedImage);
+  };
+
+  const handleCategoryChange = (index) => {
+    console.log(index);
+    setCategoryIndex(index);
   };
 
   const handleArticleCategory = async () => {
@@ -89,6 +116,7 @@ function AdminCreateArticle() {
 
     const formDataToSubmit = new FormData();
 
+    formDataToSubmit.append("imageIndexes", imageIndexes);
     formDataToSubmit.append("category", categoryIndex);
     formDataToSubmit.append("image", selectedImage);
     if (paragraphText.length !== 0) {
@@ -144,8 +172,23 @@ function AdminCreateArticle() {
     setSelectedImage(file);
   };
 
-  const handleParagraphImageUpload = (event) => {
+  const handleParagraphImageUpload = (event, index) => {
+    console.log(index);
+    console.log(imageIndexes);
     const file = event.target.files[0];
+    if (imageIndexes.includes(imageIndexes[index])) {
+      // Create a new array with the item replaced
+      const newImages = [
+        ...paragraphImage.slice(0, index),
+        file,
+        ...paragraphImage.slice(index + 1)
+      ];
+
+      // Update the state with the new array
+      setParagraphImage(newImages);
+      return;
+    }
+    setImageIndexes([...imageIndexes, index]);
     setParagraphImage([...paragraphImage, file]);
   };
 
@@ -206,15 +249,15 @@ function AdminCreateArticle() {
           <select
             id="category"
             name="category"
-            value={formData.category}
-            onChange={handleInputChange}
+            value={categoryIndex}
+            onChange={(e) => handleCategoryChange(e.target.value)}
             className="w-full border rounded-md p-2"
           >
             <option value="" disabled>
               Select a Category
             </option>
             {categories.map((category) => (
-              <option key={category[0]} value={category[0]}>
+              <option key={category[0]} value={category[0]} >
                 {category[1]}
               </option>
             ))}
@@ -295,7 +338,7 @@ function AdminCreateArticle() {
                     id={`paragraphImage${index}`}
                     type="file"
                     accept="image/*"
-                    onChange={handleParagraphImageUpload}
+                    onChange={(e) => handleParagraphImageUpload(e, index)}
                     className="w-full border rounded-md p-2"
                   />
                 </div>
@@ -326,7 +369,7 @@ function AdminCreateArticle() {
           type="submit"
           className="btn-submit mt-20 bg-blue-400 text-white p-2 rounded-md hover:bg-blue-500 hover:shadow-md transition-all"
         >
-          Create New Service
+          Create New Article
         </button>
       </form>
     </div>
