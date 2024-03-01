@@ -19,6 +19,12 @@ function Admin() {
     navigate("/adminCreateArticle");
   };
 
+  const handleUpdateArticle = async (event) => {
+    event.preventDefault();
+
+    navigate("/adminUpdateArticleTable");
+  };
+
   const handleUpdateService = async (event) => {
     event.preventDefault();
 
@@ -86,17 +92,20 @@ function Admin() {
         <div className="login-button-container" onClick={handleAddService}>
           <button>Add new service.</button>
         </div>
-        <div className="login-button-container" onClick={handleCreateArticle}>
-          <button>Add new article</button>
-        </div>
         <div className="login-button-container" onClick={handleUpdateService}>
           <button>Update service table</button>
         </div>
-        <div className="login-button-container" onClick={handleUpdateJson}>
-          <button>Update service json.</button>
+        <div className="login-button-container" onClick={handleCreateArticle}>
+          <button>Add new article</button>
+        </div>
+        <div className="login-button-container" onClick={handleUpdateArticle}>
+          <button>Update article table</button>
         </div>
         <div className="login-button-container" onClick={handleDeleteService}>
           <button>Delete existing service.</button>
+        </div>
+        <div className="login-button-container" onClick={handleUpdateJson}>
+          <button>Update service json.</button>
         </div>
       </div>
     );

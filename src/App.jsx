@@ -29,6 +29,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js/pure";
 import ScrollOnTopOnRefresh from "./components/ScrollOnTopOnRefresh";
 import PaymentCartPanel from "./components/PaymentCartPanel";
+import AdminUpdateArticleTable from "./pages/AdminUpdateArticleTable.jsx";
+import AdminUpdateArticle from "./pages/AdminUpdateArticle.jsx";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
@@ -36,7 +38,7 @@ const App = () => {
   return (
     <section className="flex flex-col min-h-screen overflow-x-hidden overflow-hidden">
       {/* TODO: uncomment this */}
-      {/* <Navbar /> */}
+       <Navbar /> 
       <ScrollOnTopOnRefresh />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -62,15 +64,21 @@ const App = () => {
           }
         />
         <Route path="/cartPanel" element={<CartPanel />} />
-        {/* change this element */}
         <Route path="/checkout-success/:cmd" element={<PaymentSuccess />} />
-        {/* and this one too */}
         <Route path="/checkout-fail" element={<PaymentFail />} />
         <Route path="/adminPage" element={<Admin />} />
         <Route path="/adminUpdateService" element={<AdminUpdateService />} />
         <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
         <Route path="/adminCreateArticle" element={<AdminCreateArticle />} />
+        <Route
+          path="/adminUpdateArticleTable"
+          element={<AdminUpdateArticleTable />}
+        />
+        <Route
+          path="/adminUpdateArticle/:id"
+          element={<AdminUpdateArticle />}
+        />
         <Route path="/article-page/:id" element={<ArticlePage />} />
         <Route
           path="/adminUpdateServiceProduct/:id"
@@ -80,7 +88,7 @@ const App = () => {
         <Route path="*" element={<Notfound />} />
       </Routes>
       {/* TODO: uncomment this */}
-      {/* <Footer /> */}
+      <Footer />
     </section>
   );
 };

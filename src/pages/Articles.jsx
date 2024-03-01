@@ -1,33 +1,61 @@
+import { useState, useEffect } from "react";
+import axios_api from "../api/axios_api";
+import { ArticleBar } from "../components/ArticleBar";
 import ArticlesOption from "../components/ArticlesOption";
 import DisplayArticle from "../components/DisplayArticle";
 
 const Articles = () => {
+  const [articles, setArticles] = useState([]);
+  const [articleLimit, setArticleLimit] = useState(10);
+  const get_all_articles = (articleLimit) => {
+    try {
+      axios_api
+        .get("/get_articles", {
+          params: { inf_limit: articleLimit - 10, sup_limit: articleLimit },
+          withCredentials: true,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            const json = response.data;
+            setArticles([...articles.concat(json)]);
+          }
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    } catch (err) { }
+  };
+
+  function handleArticleChange() {
+    setArticleLimit(articleLimit + 10)
+  }
+
+  useEffect(() => {
+    get_all_articles(articleLimit);
+  }, [articleLimit]);
+
+
+  useEffect(() => {
+    const onScroll = () => {
+      // if articles.length = articles.total
+      if (articles.length % 10 === 0) {
+        if (window.innerHeight + window.scrollY >= window.document.body.offsetHeight - 1350) {
+          handleArticleChange();
+        }
+      }
+    }
+    window.addEventListener('scroll', onScroll)
+  }, [articles.length])
+
+
   return (
     <div>
-      <div className=" bg-light-purple h-12 md:h-56 flex items-center justify-center">
-        <div className="w-full flex items-center max-w-[1450px] justify-center flex-col lg:flex-row lg:justify-between md:px-28">
-          <div className="flex flex-col items-center lg:items-start mb-2">
-            <div className="flex-col mt-2 text-2xl sm:text-3xl md:text-4xl tracking-[0.05em]  font-semibold flex justify-center items-center h-10 shrink-0 ">
-              Articole
-            </div>
-            <div className="text-sm hidden mt-2 md:flex text-center lg:text-left pb-3 lg:pb-0 sm:text-lg md:text-xl tracking-[0.05em] leading-[24px] items-center max-w-[900px] shrink-0">
-              Pe măsură ce indivizii trec cu grație în anii lor de aur,
-              prioritizarea sănătății devine esențială pentru menținerea unui
-              stil de viață vibrant și împlinit. Îmbătrânirea este un proces
-              natural care aduce schimbări în bunăstarea fizică, mentală și
-              emoțională.
-            </div>
-          </div>
-        </div>
-      </div>
+      <ArticleBar />
       <div className="">
         <div>
-          {/* article.map(article) => <DisplayArticle id=article.id image=article.image 
-          title=article.title date=article.date description= article.description/>  */}
-          <DisplayArticle id={1} />
-          <DisplayArticle id={2} />
-          <DisplayArticle id={3} />
-          <DisplayArticle id={4} />
+          {articles?.map((article) => (
+            <DisplayArticle key={article._id} article={article} />
+          ))}
         </div>
       </div>
       <ArticlesOption topPx={435} />
