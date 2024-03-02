@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import axios_api from "../api/axios_api";
 import { ArticleBar } from "../components/ArticleBar";
 import ArticlesOption from "../components/ArticlesOption";
 import DisplayArticle from "../components/DisplayArticle";
 
 const Articles = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const category = searchParams.get('category');
   const [articles, setArticles] = useState([]);
   const [articleLimit, setArticleLimit] = useState(10);
   const [totalArticles, setTotalArticles] = useState();
@@ -12,7 +15,7 @@ const Articles = () => {
     try {
       axios_api
         .get("/get_articles", {
-          params: { inf_limit: articleLimit - 10, sup_limit: articleLimit },
+          params: { inf_limit: articleLimit - 10, sup_limit: articleLimit, category: category },
           withCredentials: true,
         })
         .then((response) => {
@@ -33,6 +36,7 @@ const Articles = () => {
   }
 
   useEffect(() => {
+    console.log(category)
     get_all_articles(articleLimit);
   }, [articleLimit]);
 

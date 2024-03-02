@@ -15,25 +15,15 @@ const DisplayArticle = ({ article }) => {
       <div className="w-full flex items-center lg:max-w-[1450px] justify-center lg:justify-start md:px-14 lg:px-28 ">
         <div className="flex flex-col justify-center items-center">
           <img
-            // style={{
-            //   transition: "transform 0.2s", // Add a smooth transition effect
-            // }}
-            // onMouseEnter={(e) => {
-            //   e.currentTarget.style.transform = "scale(1.0025)"; // Increase the scale when hovering
-            // }}
-            // onMouseLeave={(e) => {
-            //   e.currentTarget.style.transform = "scale(1)"; // Reset the scale on mouse leave
-            // }}
             onClick={() => navigate(`/article-page/${article?.id}`)}
             className="cursor-pointer object-cover lg:w-[850px] lg:h-[364px] sm:w-[550px] sm:h-[235px]  w-[335px] h-[143px]"
-            src={article?.main_image} // Replace with your image URL
+            src={article?.main_image}
             alt="article"
           />
           <div className="flex flex-col lg:w-[850px] sm:w-[550px] w-[335px]">
             <div className="flex items-center gap-12 pt-1">
-              <p>autor</p>
-              <p>data</p>
-              <p>timp de citire?</p>
+              <p>{article?.author}</p>
+              <p>{article?.reading_time} min</p>
             </div>
             <div className="pt-1">
               <p

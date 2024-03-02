@@ -56,7 +56,7 @@ min-[1300px]:block hidden max-w-[250px] `}
       <p className="text-2xl pb-4">Categorii</p>
       <div className="flex flex-col gap-2">
         {categories.map((category) => (
-          <a key={category} href={`/articles?${category[0]}`} className="text-lg">
+          <a key={category} href={`/articles?category=${category[0]}`} className="text-lg">
             {category[1]}
           </a>
         ))}
