@@ -58,7 +58,8 @@ const Articles = () => {
     <div>
       <ArticleBar />
       <div>
-        <div>
+        <div className="lg: min-h-[725px]">
+          {articles.length === 0 ? <NoArticles/> : null}
           {articles?.map((article) => (
             <DisplayArticle key={article._id} article={article} />
           ))}
@@ -68,5 +69,13 @@ const Articles = () => {
     </div>
   );
 };
+
+const NoArticles = () => {
+  return (
+  <div className="flex items-center justify-center absolute top-[50%] left-[10%] lg:left-[25%]">
+      <p className="text-3xl">Nu exista articole cu aceasta categorie</p>
+  </div>
+  )
+}
 
 export default Articles;
