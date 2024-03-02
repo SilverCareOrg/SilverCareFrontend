@@ -167,7 +167,7 @@ const TermsSection = () => {
         </div>
         <img className="relative w-[1rem] h-[1rem]" alt="" src={slash_svg} />
         <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium">
-          Termeni și conditii
+          <a href="/TermeniSiConditii">Termeni și conditii</a>
         </div>
         <img
           className="max-lg:hidden relative w-[1rem] h-[1rem]"

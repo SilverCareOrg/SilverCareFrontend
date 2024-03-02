@@ -7,7 +7,7 @@ const ArticleHead = ({ article }) => {
               src={article?.main_image} // Replace with your image URL
               alt="main article"
           />
-          <div className="flex px-4 md:px-0 flex-col min-[1300px]:w-[1200px] lg:w-[848px] md:max-w-full max-[768px]:px-[4.5rem] xl:px-[0rem] xl:mr-[8px] md:w-[750px] sm:w-[625px] sm:max-w-full max-w-[500px]">
+          <div className="flex md:px-0 flex-col min-[1300px]:w-[1200px] lg:w-[848px] md:max-w-full max-[768px]:px-[16px] xl:px-[0rem] xl:mr-[8px] md:w-[750px] sm:w-[625px] sm:max-w-full max-w-[500px]">
             <div className="flex items-center gap-12 pt-1">
               <p>{article?.author}</p>
               <p>{article?.reading_time} min</p>

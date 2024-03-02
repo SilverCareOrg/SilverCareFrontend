@@ -14,6 +14,7 @@ import Notfound from "./pages/404";
 import Cart from "./pages/Cart";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
+import TermsAndConditions from "./pages/TermsAndConditions";
 import Footer from "./components/Footer";
 import AdminUpdateServiceProduct from "./pages/AdminUpdateServiceProduct";
 import ProductDetails from "./components/ProductDetails";
@@ -37,8 +38,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const App = () => {
   return (
     <section className="flex flex-col min-h-screen overflow-x-hidden overflow-hidden">
-      {/* TODO: uncomment this */}
-       <Navbar /> 
+      <Navbar />
       <ScrollOnTopOnRefresh />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -85,9 +85,9 @@ const App = () => {
           element={<AdminUpdateServiceProduct />}
         />
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
+        <Route path="TermeniSiConditii" element={<TermsAndConditions />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
-      {/* TODO: uncomment this */}
       <Footer />
     </section>
   );
