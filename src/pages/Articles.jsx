@@ -7,6 +7,7 @@ import DisplayArticle from "../components/DisplayArticle";
 const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [articleLimit, setArticleLimit] = useState(10);
+  const [totalArticles, setTotalArticles] = useState();
   const get_all_articles = (articleLimit) => {
     try {
       axios_api
@@ -17,7 +18,8 @@ const Articles = () => {
         .then((response) => {
           if (response.status === 200) {
             const json = response.data;
-            setArticles([...articles.concat(json)]);
+            setTotalArticles(json.total);
+            setArticles([...articles.concat(json.articles)]);
           }
         })
         .catch((error) => {
@@ -38,7 +40,7 @@ const Articles = () => {
   useEffect(() => {
     const onScroll = () => {
       // if articles.length = articles.total
-      if (articles.length % 10 === 0) {
+      if (totalArticles < articles.length) {
         if (window.innerHeight + window.scrollY >= window.document.body.offsetHeight - 1350) {
           handleArticleChange();
         }
@@ -51,7 +53,7 @@ const Articles = () => {
   return (
     <div>
       <ArticleBar />
-      <div className="">
+      <div>
         <div>
           {articles?.map((article) => (
             <DisplayArticle key={article._id} article={article} />

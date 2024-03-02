@@ -23,16 +23,16 @@ const Bar = () => {
 const Home = () => {
   return (
     <div className="home overflow-x-hidden overflow-hidden">
-      {/* <HomeSearch /> */}
-      {/* <Hero /> */}
-      {/* <Bar /> */}
-      {/* <FindMore /> */}
-      {/* <Bar /> */}
-      {/* <Whyme /> */}
-      {/* <Bar /> */}
-      {/* <ArticlesTab /> */}
+      <HomeSearch />
+      <Hero />
+      <Bar />
+      <FindMore />
+      <Bar />
+      <Whyme />
+      <Bar />
+      <ArticlesTab />
 
-      <WorkInProgress />
+      {/* <WorkInProgress /> */}
     </div>
   );
 };

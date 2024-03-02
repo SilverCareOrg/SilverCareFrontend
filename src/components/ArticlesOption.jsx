@@ -61,16 +61,16 @@ min-[1300px]:block hidden max-w-[250px] `}
           </a>
         ))}
       </div>
-      <p className="text-2xl pt-8 pb-4">Articole populare</p>
-      <div key='articole-populare' className="flex flex-col gap-2">
-        <p className="text-lg">articol1</p>
-        <p className="text-lg">articol2</p>
-        <p className="text-lg">articol3</p>
-        <p className="text-lg">articol4</p>
-        <p className="text-lg">articol5</p>
-        <p className="text-lg">articol6</p>
-        <p className="text-lg">articol7</p>
-      </div>
+      {/* <p className="text-2xl pt-8 pb-4">Articole populare</p> */}
+      {/* <div key='articole-populare' className="flex flex-col gap-2"> */}
+      {/*   <p className="text-lg">articol1</p> */}
+      {/*   <p className="text-lg">articol2</p> */}
+      {/*   <p className="text-lg">articol3</p> */}
+      {/*   <p className="text-lg">articol4</p> */}
+      {/*   <p className="text-lg">articol5</p> */}
+      {/*   <p className="text-lg">articol6</p> */}
+      {/*   <p className="text-lg">articol7</p> */}
+      {/* </div> */}
       {/* <p className="text-2xl pt-8 pb-4">Arhive</p> */}
       {/* <div key='arhive' className="flex flex-col gap-2"> */}
       {/*   <a href="/articles" className="text-lg"> */}

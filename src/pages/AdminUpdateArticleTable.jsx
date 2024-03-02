@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 function AdminUpdateArticleTable() {
   const [articles, setArticles] = useState([]);
   const [articleLimit, setArticleLimit] = useState(10);
+  const [totalArticles, setTotalArticles] = useState();
   const get_all_articles = (articleLimit) => {
     try {
       axios_api
@@ -15,7 +16,30 @@ function AdminUpdateArticleTable() {
         .then((response) => {
           if (response.status === 200) {
             const json = response.data;
-            setArticles([...articles.concat(json)]);
+            setTotalArticles(json.total);
+            setArticles([...articles.concat(json.articles)]);
+          }
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    } catch (err) { }
+  };
+
+  const setArticleVisibility = (article) => {
+    try {
+      axios_api
+        .post("/set_article_visibility",
+          {
+            id: article.id,
+            hidden: !article.hidden,
+          },
+          {
+            withCredentials: true,
+          })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log('Article visibility updated');
           }
         })
         .catch((error) => {
@@ -36,7 +60,7 @@ function AdminUpdateArticleTable() {
   useEffect(() => {
     const onScroll = () => {
       // if articles.length = articles.total
-      if (articles.length % 10 === 0) {
+      if (totalArticles < articles.length) {
         if (window.innerHeight + window.scrollY >= window.document.body.offsetHeight - 150) {
           handleArticleChange();
         }
@@ -47,6 +71,11 @@ function AdminUpdateArticleTable() {
 
   function goToProductUpdatePage(id) {
     window.location.href = `/adminUpdateArticle/${id}`;
+  }
+
+  function handleArticleVisibility(article) {
+    console.log(article?.title)
+    setArticleVisibility(article);
   }
 
   return (
@@ -72,6 +101,17 @@ function AdminUpdateArticleTable() {
             >
               Update Article with ID:{article.id}
             </button>
+            <div className="flex align-center items-center ml-16 mt-2">
+              <p className="text-red-600 text-xl">Hide Article</p>
+              <input
+                type="checkbox"
+                id="common_location"
+                name="common_location"
+                checked={article?.hidden}
+                onChange={() => handleArticleVisibility(article)}
+                className="w-10 h-10 ml-2 mr-2"
+              />
+            </div>
           </div>
         ))}
       </div>
