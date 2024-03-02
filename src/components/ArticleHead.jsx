@@ -4,7 +4,7 @@ const ArticleHead = ({ article }) => {
           <div className="flex flex-col min-[1300px]:items-center items-center justify-start">
             <img
               className=" object-cover min-[1300px]:w-[1200px] lg:w-[848px] lg:h-[530px] md:w-full md:h-[428px] sm:w-full sm:h-[365px] w-[500px] h-[278px]"
-              src={article?.main_image} // Replace with your image URL
+              src={`data:image/jpeg;base64,${article?.main_image}`}
               alt="main article"
           />
           <div className="flex md:px-0 flex-col min-[1300px]:w-[1200px] lg:w-[848px] md:max-w-full max-[768px]:px-[16px] xl:px-[0rem] xl:mr-[8px] md:w-[750px] sm:w-[625px] sm:max-w-full max-w-[500px]">

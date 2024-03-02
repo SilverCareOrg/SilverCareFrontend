@@ -392,15 +392,9 @@ const Navbar = () => {
               LOCATIE
             </b> */}
 
-              <Link to="/category">
+              <Link to="/articles">
                 <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
-                  OCAZIE
-                </b>
-              </Link>
-
-              <Link to="/category">
-                <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[5rem] h-[2rem] shrink-0">
-                  CADOU
+                  ARTICOLE
                 </b>
               </Link>
             </div>
@@ -545,17 +539,12 @@ const Navbar = () => {
                     LOCATIE
                   </div> */}
 
-                  <Link to="/category">
+                  <Link to="/articles">
                     <div className="relative tracking-[0.15em] leading-[120%] uppercase font-semibold">
-                      OCAZIE
+                      ARTICOLE
                     </div>
                   </Link>
 
-                  <Link to="/category">
-                    <div className="relative tracking-[0.15em] leading-[120%] uppercase font-semibold">
-                      CADOU
-                    </div>
-                  </Link>
                 </div>
               </div>
             </div>
