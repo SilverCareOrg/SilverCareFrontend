@@ -17,7 +17,7 @@ const DisplayArticle = ({ article }) => {
           <img
             onClick={() => navigate(`/article-page/${article?.id}`)}
             className="cursor-pointer object-cover lg:w-[850px] lg:h-[364px] sm:w-[550px] sm:h-[235px]  w-[335px] h-[143px]"
-            src={article?.main_image}
+            src={`data:image/jpeg;base64,${article?.main_image}`}
             alt="article"
           />
           <div className="flex flex-col lg:w-[850px] sm:w-[550px] w-[335px]">

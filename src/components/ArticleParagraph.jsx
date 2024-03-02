@@ -8,7 +8,7 @@ const ArticleParagraph = ({ paragraphData }) => {
               <img
                 className="cursor-pointer object-cover lg:w-[848px] lg:h-[407px] md:w-[750px] md:h-[320px] sm:w-[625px] sm:h-[267px] 
               px-4 md:px-0 sm:max-w-[1500px] sm:max-h-[1500px] max-w-[500px] max-h-[215px] my-5"
-                src={paragraphData?.image} // Replace with your image URL
+                src={`data:image/jpeg;base64,${paragraphData?.image}`}
                 alt="paragraph article"
               />
             ) : null}
