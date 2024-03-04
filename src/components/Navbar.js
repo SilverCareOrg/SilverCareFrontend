@@ -278,7 +278,7 @@ const Navbar = () => {
           <div className="flex flex-row">
             <Link to="/">
               <div className="flex flex-row items-center">
-                <img className="w-[10.5rem] h-[4.05rem] " alt="" src={logo_img} />
+                <img className="w-[11.25rem] h-[3.375rem] " alt="" src={logo_img} />
               </div>
             </Link>
           </div>
@@ -412,7 +412,7 @@ const Navbar = () => {
                   <NavLink to="/">
                     <div className="flex items-center justify-center">
                       <img
-                        className="w-[7rem] h-[2.7rem] sm:w-[10.5rem] sm:h-[4.05rem]"
+                        className="w-[5.985rem] h-[1.7955rem] sm:w-[9rem] sm:h-[2.7rem]"
                         alt=""
                         src={logo_img}
                       />
