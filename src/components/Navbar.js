@@ -278,7 +278,7 @@ const Navbar = () => {
           <div className="flex flex-row">
             <Link to="/">
               <div className="flex flex-row items-center">
-                <img className="w-[7.72rem] h-[2.5rem]" alt="" src={logo_img} />
+                <img className="w-[10.5rem] h-[4.05rem] " alt="" src={logo_img} />
               </div>
             </Link>
           </div>
@@ -383,7 +383,7 @@ const Navbar = () => {
           <div className="w-[77rem] flex flex-row items-center justify-center">
             <div className="flex-1 flex flex-row items-start justify-start py-[0rem] ml-0 xl:ml-8 px-[12rem] gap-[2rem]">
               <Link to="/category">
-                <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
+                <b className="relative tracking-[0.15em] ml-[8px] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
                   EXPERIENȚE
                 </b>
               </Link>
@@ -393,7 +393,7 @@ const Navbar = () => {
             </b> */}
 
               <Link to="/articles">
-                <b className="relative tracking-[0.15em] leading-[120%] uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
+                <b className="relative tracking-[0.15em] leading-[120%] ml-6 uppercase flex items-center justify-center w-[6rem] h-[2rem] shrink-0">
                   ARTICOLE
                 </b>
               </Link>
@@ -412,7 +412,7 @@ const Navbar = () => {
                   <NavLink to="/">
                     <div className="flex items-center justify-center">
                       <img
-                        className="w-[6rem] h-[2rem] sm:w-[9rem] sm:h-[3rem]"
+                        className="w-[7rem] h-[2.7rem] sm:w-[10.5rem] sm:h-[4.05rem]"
                         alt=""
                         src={logo_img}
                       />
