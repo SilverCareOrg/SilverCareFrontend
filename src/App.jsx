@@ -32,6 +32,9 @@ import ScrollOnTopOnRefresh from "./components/ScrollOnTopOnRefresh";
 import PaymentCartPanel from "./components/PaymentCartPanel";
 import AdminUpdateArticleTable from "./pages/AdminUpdateArticleTable.jsx";
 import AdminUpdateArticle from "./pages/AdminUpdateArticle.jsx";
+import Hotjar from "@hotjar/browser";
+const hotjarVersion = 6;
+Hotjar.init(process.env.REACT_APP_HOTJAR_SITEID, hotjarVersion);
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
