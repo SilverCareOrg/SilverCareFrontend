@@ -28,12 +28,40 @@ function AdminUpdateService() {
     console.log(products);
   }, []);
 
+  useEffect(() => {
+  }, [products]);
+
   function goToProductUpdatePage(id) {
     window.location.href = `/adminUpdateServiceProduct/${id}`;
   }
 
-  function handleProductVisibility(product) {
-    console.log(product.name)
+  function handleProductVisibility(productToUpdate) {
+    try {
+      axios_api
+        .post("/set_service_visibility",
+          {
+            id: productToUpdate.id,
+            hidden: !productToUpdate.hidden,
+          },
+          {
+            withCredentials: true,
+          })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log('Article visibility updated');
+            setProducts(currentProducts => currentProducts.map((product) => {
+              if (product.id === productToUpdate.id) {
+                // Return a new object with the updated visibility
+                return { ...product, hidden: !product.hidden };
+              }
+              return product;
+            }));
+          }
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    } catch (err) { }
   }
 
   return (
@@ -66,7 +94,7 @@ function AdminUpdateService() {
                   type="checkbox"
                   id="common_location"
                   name="common_location"
-                  checked={product?.isVisible}
+                  checked={product?.hidden}
                   onChange={() => handleProductVisibility(product)}
                   className="w-10 h-10 ml-2 mr-2"
                 />

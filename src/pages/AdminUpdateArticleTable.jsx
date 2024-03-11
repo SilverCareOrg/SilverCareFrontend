@@ -40,6 +40,13 @@ function AdminUpdateArticleTable() {
         .then((response) => {
           if (response.status === 200) {
             console.log('Article visibility updated');
+            setArticles(currentArticles => currentArticles.map((art) => {
+              if (art.id === article.id) {
+                // Return a new object with the updated visibility
+                return { ...art, hidden: !art.hidden };
+              }
+              return art;
+            }));
           }
         })
         .catch((error) => {
