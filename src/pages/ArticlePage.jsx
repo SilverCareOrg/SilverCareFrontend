@@ -21,8 +21,10 @@ const ArticlePage = () => {
         .then((response) => {
           if (response.status === 200) {
             setCurrentArticle(response.data);
-            console.log(response.data.description.length);
             setDescriptionLength(response.data.description.length);
+            
+            // Sort current article texts by position
+            response.data.texts.sort((a, b) => (a.position > b.position) ? 1 : -1);
           }
         })
         .catch((error) => {
