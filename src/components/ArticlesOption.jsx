@@ -9,12 +9,6 @@ const ArticlesOption = ({ topPx }) => {
     axios_api
       .get("/get_articles_types", {
         withCredentials: true,
-        headers: {
-          //   'X-CSRFToken': `${localStorage.getItem('csrftoken')}`, // Set the CSRF token in the request headers
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type":
-            "multipart/form-data;  boundary=----WebKitFormBoundaryEXAMPLE",
-        },
       })
       .then((response) => {
         // Handle the response
