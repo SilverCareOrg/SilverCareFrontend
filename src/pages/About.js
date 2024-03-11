@@ -18,7 +18,7 @@ const About = () => {
                 Cine suntem noi?
               </h1>
               <p className="text-lg text-gray-700">
-              SilverCare inseamna integrare, emotii pozitive, relatii noi si grija fata de seniori. 
+              Eldie inseamna integrare, emotii pozitive, relatii noi si grija fata de seniori. 
               Serviciile noastre asigura reintegrarea in comunitate a seniorilor. Va punem la dispozitie o gama larga de optiuni, garantand siguranta domnilor si doamnelor de varsta a 3-a.
               </p>
               <p className="text-lg text-gray-700">Haideti sa ajutam seniorii sa isi regaseasca activitatile favorite!</p>
@@ -40,7 +40,7 @@ const About = () => {
                 Cine suntem noi?
               </h1>
               <p className="mt-2 text-center text-lg text-gray-700">
-              SilverCare înseamnă integrare, emoții pozitive, relații noi și grija față de seniori. 
+              Eldie înseamnă integrare, emoții pozitive, relații noi și grija față de seniori. 
               Serviciile noastre asigură reintegrarea în comunitate a seniorilor. Vă punem la dispoziție o gamă largă de opțiuni, garantând siguranța domnilor si doamnelor de vârsta a 3-a.
               </p>
               <p className="text-center text-lg text-gray-700">Haideți să ajutăm seniorii să își regăsească activitățile favorite!</p>

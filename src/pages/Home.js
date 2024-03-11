@@ -11,6 +11,8 @@ import HomeSearch from "../components/HomeSearch";
 import Lottie from "lottie-react";
 import caring_family from "../animations/caring-family.json";
 import { WorkInProgress } from "./WorkInProgress";
+import JoinUs from "../components/JoinUs";
+import CheckArticles from "../components/CheckArticles";
 
 const Bar = () => {
   return (
@@ -27,10 +29,9 @@ const Home = () => {
       <Hero />
       <Bar />
       <FindMore />
-      <Bar />
+      <CheckArticles/>
       <Whyme />
-      <Bar />
-      <ArticlesTab />
+      {/* <ArticlesTab /> */}
 
       {/* <WorkInProgress /> */}
     </div>

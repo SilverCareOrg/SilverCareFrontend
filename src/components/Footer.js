@@ -64,7 +64,7 @@ const AboutSection = () => {
   return (
     <div className="flex-1 flex flex-col items-start justify-start max-lg:gap-[10px] lg:gap-[24px]">
       <div className="self-stretch relative tracking-[0.05em] leading-[24px] font-extrabold">
-        Despre SilverCare
+        Despre Eldie
       </div>
       <div className="self-stretch flex flex-col items-start justify-start gap-[8px]">
         <Link to="/about">
@@ -115,7 +115,7 @@ const OptionsSection = () => {
 const ExtraSection = () => {
   return (
     <div className="self-stretch w-72 flex flex-col items-start justify-start gap-[48px] text-right text-17xl text-white">
-      <div className="lg:text-right self-stretch relative tracking-[0.05em] leading-[120%] font-semibold text-3xl flex lg:items-end lg:justify-end h-8 shrink-0">{`SilverCare `}</div>
+      <div className="lg:text-right self-stretch relative tracking-[0.05em] leading-[120%] font-semibold text-3xl flex lg:items-end lg:justify-end h-8 shrink-0">{`Eldie `}</div>
       <div className="self-stretch h-5 flex flex-row items-end justify-end gap-[15px]">
         <a
           href="https://www.linkedin.com/company/96455905"
@@ -136,7 +136,7 @@ const ExtraSection = () => {
         <div className="relative tracking-[0.05em] leading-[24px] font-medium">{`Contact: `}</div>
         <div className="flex-1 flex flex-col items-start justify-start gap-[16px] text-right font-open-sans">
           <b className="self-stretch relative tracking-[0.1em] leading-[24px]">
-            office@silvercare.com
+            office@eldie.com
           </b>
           <b className="self-stretch relative tracking-[0.1em] leading-[24px]">
             +40 766 551 409
@@ -153,7 +153,7 @@ const ExtraSection = () => {
 const Copyright = () => {
   return (
     <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-xsmall lg:font-medium">
-      @ Copyright 2023, SilverCare, All Rights Reserved
+      @ Copyright 2023, Eldie, All Rights Reserved
     </div>
   );
 };
@@ -162,28 +162,28 @@ const TermsSection = () => {
   return (
     <div className="max-lg:flex max-lg:flex-col justify-start">
       <div className="flex flex-row items-center justify-start gap-[32px]">
-        <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium">
-          Legal
-        </div>
-        <img className="relative w-[1rem] h-[1rem]" alt="" src={slash_svg} />
+        {/* <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium"> */}
+        {/*   Legal */}
+        {/* </div> */}
+        {/* <img className="relative w-[1rem] h-[1rem]" alt="" src={slash_svg} /> */}
         <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium">
           <a href="/TermeniSiConditii">Termeni și conditii</a>
         </div>
-        <img
-          className="max-lg:hidden relative w-[1rem] h-[1rem]"
-          alt=""
-          src={slash_svg}
-        />
-        <div className="max-lg:hidden relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium">
-          Politică de confidențialitate
-        </div>
+        {/* <img */}
+        {/*   className="max-lg:hidden relative w-[1rem] h-[1rem]" */}
+        {/*   alt="" */}
+        {/*   src={slash_svg} */}
+        {/* /> */}
+        {/* <div className="max-lg:hidden relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium"> */}
+        {/*   Politică de confidențialitate */}
+        {/* </div> */}
       </div>
 
-      <div className="lg:hidden flex flex-row items-center justify-start pt-2">
-        <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium">
-          Politică de confidențialitate
-        </div>
-      </div>
+      {/* <div className="lg:hidden flex flex-row items-center justify-start pt-2"> */}
+      {/*   <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-small lg:font-medium"> */}
+      {/*     Politică de confidențialitate */}
+      {/*   </div> */}
+      {/* </div> */}
     </div>
   );
 };

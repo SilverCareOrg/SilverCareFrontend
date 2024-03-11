@@ -6,10 +6,10 @@ const JoinUs = () => {
       <div className="w-full flex items-center  justify-center flex-col lg:flex-row lg:justify-between md:px-28 max-w-[1450px]">
         <div className="flex flex-col items-center lg:items-start">
           <div className="flex-col text-lg sm:text-2xl md:text-3xl tracking-[0.05em]  font-semibold flex items-center h-10 shrink-0 ">
-            Alătură-te echipei SilverCare
+            Alătură-te echipei Eldie
           </div>
           <div className="text-sm pb-3 lg:pb-0 sm:text-lg md:text-xl tracking-[0.05em] leading-[24px] flex items-center max-w-[586px] h-10 shrink-0">
-            Dorești să devii partener SilverCare?
+            Dorești să devii partener Eldie?
           </div>
         </div>
         <NavLink to="/contact">
