@@ -20,13 +20,13 @@ jobs:
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '14' # Specify the Node.js version
 
       - name: Delete node_modules
         run: rm -rf node_modules/
 
       - name: Install dependencies
-        run: yarn ci --legacy-peer-deps
+        run: yarn install --frozen-lockfile
 
       - name: Build
         run: yarn run build
