@@ -531,7 +531,7 @@ const Navbar = () => {
                 <div className="flex-1 flex flex-row items-start justify-between">
                   <Link to="/category">
                     <div className="relative tracking-[0.15em] leading-[120%] uppercase font-semibold">
-                      EXPERIENTE
+                      EXPERIENȚE
                     </div>
                   </Link>
 
