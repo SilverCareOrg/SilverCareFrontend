@@ -153,7 +153,7 @@ function AdminUpdateArticle() {
     // console.log(paragraphImage);
     // console.log(paragraphText);
 
-    const url = `/update_article?id=${id.id}`;
+    const url = `/edit_article`;
     axios_api
       .post(url, formDataToSubmit, {
         withCredentials: true,
