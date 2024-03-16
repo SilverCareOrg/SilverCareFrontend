@@ -81,7 +81,6 @@ function AdminUpdateArticleTable() {
   }
 
   function handleArticleVisibility(article) {
-    console.log(article?.title)
     setArticleVisibility(article);
   }
 

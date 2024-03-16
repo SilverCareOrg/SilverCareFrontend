@@ -36,7 +36,6 @@ const Articles = () => {
   }
 
   useEffect(() => {
-    console.log(category)
     get_all_articles(articleLimit);
   }, [articleLimit]);
 

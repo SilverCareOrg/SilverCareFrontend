@@ -94,7 +94,6 @@ const ProductDetails = () => {
     setVisibleCartPanel(false);
   };
 
-  console.log(service.description);
 
   const monthNumberToAbbreviationMap = {
     1: "ian",

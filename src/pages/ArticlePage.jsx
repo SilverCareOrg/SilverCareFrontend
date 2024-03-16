@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import ArticleHead from "../components/ArticleHead";
 import ArticleParagraph from "../components/ArticleParagraph";
 import ArticlesOption from "../components/ArticlesOption";
+import { LoadingComponent } from "../components/LoadingComponent";
 const ArticlePage = () => {
   const id = useParams();
   const [currentArticle, setCurrentArticle] = useState();
   const [descriptionLength, setDescriptionLength] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const get_article = () => {
     const url = `/get_article?id=${id.id}`;
     try {
@@ -22,7 +24,7 @@ const ArticlePage = () => {
           if (response.status === 200) {
             setCurrentArticle(response.data);
             setDescriptionLength(response.data.description.length);
-            
+            setIsLoading(false);
             // Sort current article texts by position
             response.data.texts.sort((a, b) => (a.position > b.position) ? 1 : -1);
           }
@@ -41,12 +43,13 @@ const ArticlePage = () => {
     <div className="pb-12">
       <div>
         <ArticleHead article={currentArticle} />
-        <ArticlesOption topPx={835 + descriptionLength*0.29} />
+        <ArticlesOption topPx={835 + descriptionLength * 0.29} />
       </div>
       <div>
-        {currentArticle?.texts.map((data, index) => (
+        {isLoading ? LoadingComponent : currentArticle?.texts.map((data, index) => (
           <ArticleParagraph key={index} paragraphData={data} />
-        ))}
+        ))
+        }
       </div>
     </div>
   );

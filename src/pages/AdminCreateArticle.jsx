@@ -70,7 +70,6 @@ function AdminCreateArticle() {
   };
 
   const handleCategoryChange = (index) => {
-    console.log(index);
     setCategoryIndex(index);
   };
 
@@ -173,8 +172,6 @@ function AdminCreateArticle() {
   };
 
   const handleParagraphImageUpload = (event, index) => {
-    console.log(index);
-    console.log(imageIndexes);
     const file = event.target.files[0];
     if (imageIndexes.includes(imageIndexes[index])) {
       // Create a new array with the item replaced
