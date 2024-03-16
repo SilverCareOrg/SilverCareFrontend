@@ -5,12 +5,13 @@ import { ArticleBar } from "../components/ArticleBar";
 import ArticlesOption from "../components/ArticlesOption";
 import DisplayArticle from "../components/DisplayArticle";
 
-const Articles = () => {
+export const Articles = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const category = searchParams.get('category');
   const [articles, setArticles] = useState([]);
   const [articleLimit, setArticleLimit] = useState(10);
   const [totalArticles, setTotalArticles] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const get_all_articles = (articleLimit) => {
     try {
       axios_api
@@ -23,6 +24,7 @@ const Articles = () => {
             const json = response.data;
             setTotalArticles(json.total);
             setArticles([...articles.concat(json.articles)]);
+            setIsLoading(false);
           }
         })
         .catch((error) => {
@@ -58,7 +60,9 @@ const Articles = () => {
       <ArticleBar />
       <div>
         <div className="lg: min-h-[725px]">
-          {articles.length === 0 ? <NoArticles/> : null}
+          {/* {articles.length === 0 ? <NoArticles /> : null} */}
+          {isLoading ? <LoadArticles/> : null}
+          {articles.length === 0 && !isLoading ? <NoArticles/> : null}
           {articles?.map((article) => (
             <DisplayArticle key={article._id} article={article} />
           ))}
@@ -69,12 +73,20 @@ const Articles = () => {
   );
 };
 
+const LoadArticles = () => {
+    return (
+      <div className="flex items-center justify-center absolute top-[50%] left-[10%] lg:left-[25%]">
+        <p className="text-3xl">Încărcăm articolele.</p>
+      </div>
+    );
+}
+
 const NoArticles = () => {
-  return (
-  <div className="flex items-center justify-center absolute top-[50%] left-[10%] lg:left-[25%]">
-      <p className="text-3xl">Nu exista articole cu aceasta categorie</p>
-  </div>
-  )
+    return (
+      <div className="flex items-center justify-center absolute top-[50%] left-[10%] lg:left-[25%]">
+        <p className="text-3xl">Nu există articole cu această categorie.</p>
+      </div>
+    );
 }
 
 export default Articles;

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import ArticleHead from "../components/ArticleHead";
 import ArticleParagraph from "../components/ArticleParagraph";
 import ArticlesOption from "../components/ArticlesOption";
-import { LoadingComponent } from "../components/LoadingComponent";
 const ArticlePage = () => {
   const id = useParams();
   const [currentArticle, setCurrentArticle] = useState();
@@ -24,9 +23,9 @@ const ArticlePage = () => {
           if (response.status === 200) {
             setCurrentArticle(response.data);
             setDescriptionLength(response.data.description.length);
-            setIsLoading(false);
             // Sort current article texts by position
             response.data.texts.sort((a, b) => (a.position > b.position) ? 1 : -1);
+            setIsLoading(false);
           }
         })
         .catch((error) => {
@@ -41,16 +40,24 @@ const ArticlePage = () => {
 
   return (
     <div className="pb-12">
-      <div>
-        <ArticleHead article={currentArticle} />
-        <ArticlesOption topPx={835 + descriptionLength * 0.29} />
-      </div>
-      <div>
-        {isLoading ? LoadingComponent : currentArticle?.texts.map((data, index) => (
-          <ArticleParagraph key={index} paragraphData={data} />
-        ))
-        }
-      </div>
+      {isLoading ?
+        <div className="flex items-center justify-center p-24">
+          <p className="text-3xl">Încărcăm articolul.</p>
+        </div>
+        :
+        <>
+          <div>
+            <ArticleHead article={currentArticle} />
+            <ArticlesOption topPx={835 + descriptionLength * 0.29} />
+          </div>
+          <div>
+            {currentArticle?.texts.map((data, index) => (
+              <ArticleParagraph key={index} paragraphData={data} />
+            ))
+            }
+          </div>
+        </>
+      }
     </div>
   );
 };
