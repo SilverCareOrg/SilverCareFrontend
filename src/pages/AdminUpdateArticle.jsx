@@ -64,7 +64,6 @@ function AdminUpdateArticle() {
         .then((response) => {
           if (response.status === 200) {
             const currentArticle = response.data;
-            console.log(currentArticle);
             for (let i = 0; i < currentArticle?.texts.length; i++) {
               setParagraphText([
                 ...paragraphText,
@@ -150,8 +149,6 @@ function AdminUpdateArticle() {
     for (var pair of formDataToSubmit.entries()) {
       console.log(pair[0] + " - " + pair[1]);
     }
-    // console.log(paragraphImage);
-    // console.log(paragraphText);
 
     const url = `/edit_article`;
     axios_api

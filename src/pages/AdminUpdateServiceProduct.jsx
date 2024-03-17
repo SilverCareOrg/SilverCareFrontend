@@ -117,8 +117,6 @@ function AdminUpdateServiceProduct() {
 
   const handleSectionsInit = (section) => {
     var existingSections = sectionText;
-    console.log(existingSections);
-    console.log(section);
     existingSections[section.question] = section.answer;
 
     setSectionText(existingSections);
@@ -194,14 +192,11 @@ function AdminUpdateServiceProduct() {
     //updatingServiceId = id; pass this to the put call
     setUpdatingServiceId(id);
     setCurrentService(products[id - 1]);
-    console.log(currentService?.sections.length);
     currentService?.options.forEach((optionObject) => {
       handleAddServiceOption(optionObject);
     });
     for (let i = 0; i < currentService?.sections.length; i++) {
       handleSectionSelect(currentService?.sections[i].question);
-      console.log(currentService?.sections[i].question);
-      console.log(currentService?.sections[i].answer);
       handleTextChange(
         currentService?.sections[i].question,
         currentService?.sections[i].answer,

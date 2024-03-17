@@ -16,9 +16,9 @@ function classNames(...classes) {
 
 const Products = () => {
   const [showFilter, setShowFilter] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [sortByPrice, setSortByPrice] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [sortByPrice, setSortByPrice] = useState("");
 
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
@@ -105,7 +105,7 @@ const Products = () => {
   useEffect(() => {
     if (!firstAccess) {
       if (category === "") {
-        setSelectedCategory(null);
+        setSelectedCategory("");
         setCategory("-");
       } else if (category !== "" && category !== "-") {
         setSelectedCategory(category);
@@ -113,7 +113,7 @@ const Products = () => {
       }
 
       if (locationOption === "") {
-        setSelectedLocation(null);
+        setSelectedLocation("");
         setLocationOption("-");
       } else if (locationOption !== "" && locationOption !== "-") {
         setSelectedLocation(locationOption);

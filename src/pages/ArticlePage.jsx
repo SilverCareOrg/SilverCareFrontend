@@ -8,6 +8,7 @@ const ArticlePage = () => {
   const id = useParams();
   const [currentArticle, setCurrentArticle] = useState();
   const [descriptionLength, setDescriptionLength] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const get_article = () => {
     const url = `/get_article?id=${id.id}`;
     try {
@@ -22,9 +23,9 @@ const ArticlePage = () => {
           if (response.status === 200) {
             setCurrentArticle(response.data);
             setDescriptionLength(response.data.description.length);
-            
             // Sort current article texts by position
             response.data.texts.sort((a, b) => (a.position > b.position) ? 1 : -1);
+            setIsLoading(false);
           }
         })
         .catch((error) => {
@@ -39,15 +40,24 @@ const ArticlePage = () => {
 
   return (
     <div className="pb-12">
-      <div>
-        <ArticleHead article={currentArticle} />
-        <ArticlesOption topPx={835 + descriptionLength*0.29} />
-      </div>
-      <div>
-        {currentArticle?.texts.map((data, index) => (
-          <ArticleParagraph key={index} paragraphData={data} />
-        ))}
-      </div>
+      {isLoading ?
+        <div className="flex items-center justify-center p-24">
+          <p className="text-3xl">Încărcăm articolul.</p>
+        </div>
+        :
+        <>
+          <div>
+            <ArticleHead article={currentArticle} />
+            <ArticlesOption topPx={835 + descriptionLength * 0.29} />
+          </div>
+          <div>
+            {currentArticle?.texts.map((data, index) => (
+              <ArticleParagraph key={index} paragraphData={data} />
+            ))
+            }
+          </div>
+        </>
+      }
     </div>
   );
 };
