@@ -145,6 +145,9 @@ function AdminUpdateArticle() {
       formDataToSubmit.append(key, formData[key]);
     });
 
+    // add id in formDataToSubmit
+    formDataToSubmit.append("id", id.id);
+
     //logging out 'formdatatosubmit'
     for (var pair of formDataToSubmit.entries()) {
       console.log(pair[0] + " - " + pair[1]);

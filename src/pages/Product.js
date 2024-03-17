@@ -524,18 +524,26 @@ const Products = () => {
               <div className="lg:min-h-[70rem] flex flex-col max-lg:items-center lg:items-start justify-start gap-[2.5rem] text-[1.5rem]">
                 <LargeFilter />
 
-                <div className="max-lg:hidden flex-1 flex flex-col items-start justify-start gap-[1rem] lg:w-[57.25rem]">
-                  {lg_rows.map((productGroup, index) => (
-                    <ProductRow key={index} products={productGroup} />
-                  ))}
-                </div>
-                <LoadMore />
-                <Pagination
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                  numberOfProducts={numberProducts}
-                  onPageChange={handlePageChange}
-                />
+                {/* Check if there are products */}
+                {products.length > 0 ? (
+                  <div>
+                    <div className="max-lg:hidden flex-1 flex flex-col items-start justify-start gap-[1rem] lg:w-[57.25rem]">
+                      {lg_rows.map((productGroup, index) => (
+                        <ProductRow key={index} products={productGroup} />
+                      ))}
+                    </div>
+                    <LoadMore />
+                    <Pagination
+                      currentPage={currentPage}
+                      pageSize={pageSize}
+                      numberOfProducts={numberProducts}
+                      onPageChange={handlePageChange}
+                    />
+                  </div>
+                ) : (
+                  // Display this message if there are no products
+                  <p className="text-center w-full mt-10 text-xl">Revenim cât mai curând cu lista plină de activități, special alese pentru dumneavoastră!</p>
+                )}
               </div>
             </div>
           </div>
@@ -548,28 +556,36 @@ const Products = () => {
           <div className="self-stretch flex flex-col justify-start">
             <SmallFilter />
             <div className="xl:h-[70rem] flex flex-col max-x:items-center xl:items-start justify-start gap-[2.5rem] text-[1.5rem] text-white">
-              <div className="sm:hidden relative xl:hidden flex-1 flex flex-col items-center justify-start gap-[2rem]">
-                {max_lg_rows.map((productGroup, index) => (
-                  <ProductRow key={index} products={productGroup} />
-                ))}
-              </div>
-              <div className="max-sm:hidden relative lg:hidden flex-1 flex flex-col items-start justify-start gap-[2rem]">
-                {max_lg_rows_double.map((productGroup, index) => (
-                  <ProductRow key={index} products={productGroup} />
-                ))}
-              </div>
-              <div className="max-lg:hidden relative xl:hidden flex-1 flex flex-col items-start justify-start gap-[2rem]">
-                {lg_rows.map((productGroup, index) => (
-                  <ProductRow key={index} products={productGroup} />
-                ))}
-              </div>
-              <LoadMore />
-              <Pagination
-                currentPage={currentPage}
-                pageSize={pageSize}
-                numberOfProducts={numberProducts}
-                onPageChange={handlePageChange}
-              />
+              {/* Check if there are products */}
+              {products.length > 0 ? (
+                  <div>
+                    <div className="sm:hidden relative xl:hidden flex-1 flex flex-col items-center justify-start gap-[2rem]">
+                      {max_lg_rows.map((productGroup, index) => (
+                        <ProductRow key={index} products={productGroup} />
+                      ))}
+                    </div>
+                    <div className="max-sm:hidden relative lg:hidden flex-1 flex flex-col items-start justify-start gap-[2rem]">
+                      {max_lg_rows_double.map((productGroup, index) => (
+                        <ProductRow key={index} products={productGroup} />
+                      ))}
+                    </div>
+                    <div className="max-lg:hidden relative xl:hidden flex-1 flex flex-col items-start justify-start gap-[2rem]">
+                      {lg_rows.map((productGroup, index) => (
+                        <ProductRow key={index} products={productGroup} />
+                      ))}
+                    </div>
+                    <LoadMore />
+                    <Pagination
+                      currentPage={currentPage}
+                      pageSize={pageSize}
+                      numberOfProducts={numberProducts}
+                      onPageChange={handlePageChange}
+                    />
+                  </div>
+                ) : (
+                  // Display this message if there are no products
+                  <p className="text-center w-full mt-10 text-lg text-black">Revenim cât mai curând cu lista plină de activități, special alese pentru dumneavoastră!</p>
+                )}
             </div>
           </div>
         </div>
