@@ -48,7 +48,7 @@ function AdminUpdateArticle() {
         // Handle errors
         console.log("Error:", error);
       });
-    
+
   };
 
   const get_article = () => {
@@ -64,16 +64,18 @@ function AdminUpdateArticle() {
         .then((response) => {
           if (response.status === 200) {
             const currentArticle = response.data;
+            let paragraphTextAxios = [];
+            let paragraphImageAxios = [];
             for (let i = 0; i < currentArticle?.texts.length; i++) {
-              setParagraphText([
-                ...paragraphText,
-                currentArticle?.texts[i].text,
-              ]);
-              setParagraphImage([
-                ...paragraphImage,
-                currentArticle?.texts[i].image,
-              ]);
+              paragraphTextAxios.push(currentArticle?.texts[i].text)
+              paragraphImageAxios.push(currentArticle?.texts[i].image)
             }
+            setParagraphText(
+              paragraphTextAxios
+            );
+            setParagraphImage(
+              paragraphImageAxios
+            );
 
             setFormData(() => ({
               title: currentArticle?.title,
@@ -87,7 +89,7 @@ function AdminUpdateArticle() {
         .catch((error) => {
           console.log("Error:", error);
         });
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -106,6 +108,7 @@ function AdminUpdateArticle() {
   const handleAddParagraphOption = () => {
     const newParagraphText = {};
     setParagraphText([...paragraphText, newParagraphText]);
+    console.log(paragraphText)
   };
 
   const handleOptionChange = (index, name, value) => {
