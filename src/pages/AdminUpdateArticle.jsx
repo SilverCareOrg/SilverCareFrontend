@@ -53,7 +53,7 @@ function AdminUpdateArticle() {
   };
 
   const get_article = () => {
-    const url = `/get_article?id=${id.id}`;
+    const url = `/get_article?id=${id.id}&edit=true`;
     try {
       axios_api
         .get(url, {
@@ -69,8 +69,8 @@ function AdminUpdateArticle() {
             let paragraphImageAxios = [];
             let imageIndexAxios = [];
             for (let i = 0; i < currentArticle?.texts.length; i++) {
-              paragraphTextAxios.push(currentArticle?.texts[i].text)
-              paragraphImageAxios.push(currentArticle?.texts[i].image)
+              paragraphTextAxios.push({"text": currentArticle?.texts[i].text});
+              paragraphImageAxios.push(currentArticle?.texts[i].image);
               if(currentArticle?.texts[i].image !== null || undefined){
                 imageIndexAxios.push(i);
               }
@@ -119,19 +119,40 @@ function AdminUpdateArticle() {
     console.log(paragraphText)
   };
 
-  const handleOptionChange = (index, value) => {
+  const handleOptionChange = (index, name, value) => {
     const updatedOptions = [...paragraphText];
-    updatedOptions[index] = value;
+    updatedOptions[index][name] = value;
     setParagraphText(updatedOptions);
   };
 
   const handleRemoveOption = (index) => {
     const updatedText = [...paragraphText];
     const updatedImage = [...paragraphImage];
+    if (imageIndexes.includes(imageIndexes[index])) {
+      // Create a new array with the item replaced
+      let value = 0;
+      for (let i = 0; i < imageIndexes.length; i++) {
+        if (imageIndexes[i] === index) {
+          value = i;
+          const newIndex = imageIndexes.filter((index) => index !== value);
+          for (let j = i; j < newIndex.length; j++) {
+            newIndex[j] = newIndex[j] - 1;
+          }
+          setImageIndexes(newIndex);
+          break;
+        }
+      }
+      const newImages = [
+        ...paragraphImage.slice(0, value),
+        ...paragraphImage.slice(value + 1)
+      ];
+
+      // Update the state with the new array
+      setParagraphImage(newImages);
+    }
     updatedText.splice(index, 1);
     updatedImage.splice(index, 1);
     setParagraphText(updatedText);
-    setParagraphImage(updatedImage);
   };
 
   const handleUpdateArticle = async (event) => {
@@ -142,21 +163,15 @@ function AdminUpdateArticle() {
     formDataToSubmit.append("id", id.id);
     formDataToSubmit.append("image", selectedImage);
     if (paragraphText.length !== 0) {
-      let newParagraphText = [];
-      for (let i = 0; i<paragraphText.length; i++){
-        newParagraphText.push(`{"text":"${paragraphText[i]}"}`);
-      }
-      setParagraphText(newParagraphText);
       formDataToSubmit.append("paragraphText", JSON.stringify(paragraphText));
     }
+
     if (paragraphImage.length !== 0) {
-      formDataToSubmit.append("paragraphImage", paragraphImage);
+      for (var x = 0; x < paragraphImage.length; x++) {
+        formDataToSubmit.append("paragraphImage", paragraphImage[x]);
+      }
     }
-    // Submit both the text and image in a "paragraphs" variable
-    // formDataToSubmit.append("paragraphs", [
-    //   paragraphImage,
-    //   JSON.stringify(paragraphText),
-    // ]);
+
     // Append all fields from formData
     Object.keys(formData).forEach((key) => {
       formDataToSubmit.append(key, formData[key]);
@@ -200,8 +215,21 @@ function AdminUpdateArticle() {
     setSelectedImage(file);
   };
 
-  const handleParagraphImageUpload = (event) => {
+  const handleParagraphImageUpload = (event, index) => {
     const file = event.target.files[0];
+    if (imageIndexes.includes(imageIndexes[index])) {
+      // Create a new array with the item replaced
+      const newImages = [
+        ...paragraphImage.slice(0, index),
+        file,
+        ...paragraphImage.slice(index + 1)
+      ];
+
+      // Update the state with the new array
+      setParagraphImage(newImages);
+      return;
+    }
+    setImageIndexes([...imageIndexes, index]);
     setParagraphImage([...paragraphImage, file]);
   };
 
@@ -354,7 +382,7 @@ function AdminUpdateArticle() {
                     id={`paragraphImage${index}`}
                     type="file"
                     accept="image/*"
-                    onChange={handleParagraphImageUpload}
+                    onChange={(e) => handleParagraphImageUpload(e, index)}
                     className="w-full border rounded-md p-2"
                   />
                 </div>
@@ -368,9 +396,9 @@ function AdminUpdateArticle() {
                   <textarea
                     id={`paragraphText${index}`}
                     name="paragraphDetails"
-                    value={option}
+                    value={option.text}
                     onChange={(e) =>
-                      handleOptionChange(index, e.target.value)
+                      handleOptionChange(index, "text", e.target.value)
                     }
                     rows="4"
                     className="w-full border rounded-md p-2"
