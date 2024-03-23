@@ -8,6 +8,7 @@ function AdminUpdateArticle() {
   const [paragraphText, setParagraphText] = useState([]);
   const [paragraphImage, setParagraphImage] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imageIndexes, setImageIndexes] = useState([]);
   const id = useParams();
   const [formData, setFormData] = useState({
     title: "",
@@ -48,7 +49,7 @@ function AdminUpdateArticle() {
         // Handle errors
         console.log("Error:", error);
       });
-    
+
   };
 
   const get_article = () => {
@@ -64,16 +65,25 @@ function AdminUpdateArticle() {
         .then((response) => {
           if (response.status === 200) {
             const currentArticle = response.data;
+            let paragraphTextAxios = [];
+            let paragraphImageAxios = [];
+            let imageIndexAxios = [];
             for (let i = 0; i < currentArticle?.texts.length; i++) {
-              setParagraphText([
-                ...paragraphText,
-                currentArticle?.texts[i].text,
-              ]);
-              setParagraphImage([
-                ...paragraphImage,
-                currentArticle?.texts[i].image,
-              ]);
+              paragraphTextAxios.push(currentArticle?.texts[i].text)
+              paragraphImageAxios.push(currentArticle?.texts[i].image)
+              if(currentArticle?.texts[i].image !== null || undefined){
+                imageIndexAxios.push(i);
+              }
             }
+            setParagraphText(
+              paragraphTextAxios
+            );
+            setParagraphImage(
+              paragraphImageAxios
+            );
+            setImageIndexes(
+              imageIndexAxios
+            );
 
             setFormData(() => ({
               title: currentArticle?.title,
@@ -87,7 +97,7 @@ function AdminUpdateArticle() {
         .catch((error) => {
           console.log("Error:", error);
         });
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -106,11 +116,12 @@ function AdminUpdateArticle() {
   const handleAddParagraphOption = () => {
     const newParagraphText = {};
     setParagraphText([...paragraphText, newParagraphText]);
+    console.log(paragraphText)
   };
 
-  const handleOptionChange = (index, name, value) => {
+  const handleOptionChange = (index, value) => {
     const updatedOptions = [...paragraphText];
-    updatedOptions[index][name] = value;
+    updatedOptions[index] = value;
     setParagraphText(updatedOptions);
   };
 
@@ -127,9 +138,15 @@ function AdminUpdateArticle() {
     event.preventDefault();
 
     const formDataToSubmit = new FormData();
-
+    formDataToSubmit.append("imageIndexes", imageIndexes);
+    formDataToSubmit.append("id", id.id);
     formDataToSubmit.append("image", selectedImage);
     if (paragraphText.length !== 0) {
+      let newParagraphText = [];
+      for (let i = 0; i<paragraphText.length; i++){
+        newParagraphText.push(`{"text":"${paragraphText[i]}"}`);
+      }
+      setParagraphText(newParagraphText);
       formDataToSubmit.append("paragraphText", JSON.stringify(paragraphText));
     }
     if (paragraphImage.length !== 0) {
@@ -153,7 +170,7 @@ function AdminUpdateArticle() {
       console.log(pair[0] + " - " + pair[1]);
     }
 
-    const url = `/edit_article`;
+    const url = '/edit_article';
     axios_api
       .post(url, formDataToSubmit, {
         withCredentials: true,
@@ -353,7 +370,7 @@ function AdminUpdateArticle() {
                     name="paragraphDetails"
                     value={option}
                     onChange={(e) =>
-                      handleOptionChange(index, "text", e.target.value)
+                      handleOptionChange(index, e.target.value)
                     }
                     rows="4"
                     className="w-full border rounded-md p-2"
