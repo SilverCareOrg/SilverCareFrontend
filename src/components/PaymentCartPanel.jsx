@@ -1,9 +1,9 @@
+import { loadStripe } from "@stripe/stripe-js/pure";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios_api from "../api/axios_api";
-import RegistrationService from "./RegistrationService";
-import { useEffect, useRef, useState } from "react";
 import back_icon_arrow from "../styles/icons/back_icon_arrow.svg";
-import { loadStripe } from "@stripe/stripe-js/pure";
+import RegistrationService from "./RegistrationService";
 
 import ProgressBar from "./ProgressBar";
 
@@ -172,6 +172,9 @@ const PaymentCartPanel = ({}) => {
   };
 
   const handleCartPanelStageChange = (stage) => {
+    if(products.length === 0) {
+    return;
+    }
     setCartPanelStage(stage);
 
     // bring the user to the top of the page
