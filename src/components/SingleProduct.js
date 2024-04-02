@@ -4,13 +4,13 @@ import RegistrationService from "./RegistrationService";
 import { useEffect, useRef, useState } from "react";
 
 const SingleProduct = ({ product }) => {
-  const { img_path, id } = product;
+  const { image_path, id } = product;
   const url = "/product/details/" + id;
   const [visibleRegistrationService, setVisibleRegistrationService] =
     useState(false);
   const baseUrl = window.location.origin;
-  var final_img_path = baseUrl + "/images/" + img_path;
-  // var final_img_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
+  var final_image_path = baseUrl + "/images/" + image_path;
+  // var final_image_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${image_path}`;
 
   const DisplayPriceText = () => {
     var min = product.options[0].price;
@@ -95,7 +95,7 @@ const SingleProduct = ({ product }) => {
           <img
             className="absolute h-full w-full top-[0%] right-[0%] bottom-[0%] left-[0%] max-w-full overflow-hidden max-h-full object-cover"
             alt=""
-            src={final_img_path}
+            src={`data:image/jpeg;base64,${image_path[0]}`}
           />
 
           <div

@@ -19,31 +19,17 @@ import CartPanel from "./CartPanel";
 const ProductDetails = () => {
   const { id } = useParams();
   const [service, setService] = useState([]);
+  const [images, setImages] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { state: product } = useLocation();
   const [visibleCartPanel, setVisibleCartPanel] = useState(false);
-  const [visibleRegistrationService, setVisibleRegistrationService] =
-    useState(false);
-  // const {
-  //   city,
-  //   county,
-  //   common_location,
-  //   options_common_city,
-  //   img_path,
-  //   name,
-  //   description,
-  //   category,
-  //   organiser,
-  //   sections,
-  //   options,
-  //   location,
-  //   map_location,
-  // } = product;
+  const [visibleRegistrationService, setVisibleRegistrationService] = useState(false);
+
   const {
     city,
     county,
     common_location,
-    img_path,
+    image_path,
     name,
     sections,
     options_common_city,
@@ -59,7 +45,7 @@ const ProductDetails = () => {
     get_service_by_id(id);
   }, []);
 
-  var final_img_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${img_path}`;
+  var final_image_path = `${process.env.REACT_APP_SERVER_IMAGE_PATH}${image_path}`;
   const main_option = options?.length === 1 ? options[0] : null;
 
   const get_service_by_id = (id) => {
@@ -76,6 +62,9 @@ const ProductDetails = () => {
             const data = response.data;
 
             setService(data.service[0][0]);
+
+            // Wait until the service is set and then set Images
+            setImages(data.service[0][0].image_path);
           }
         })
         .catch((error) => {
@@ -131,7 +120,7 @@ const ProductDetails = () => {
         if (cart === null) {
           cart = [
             {
-              service_image_path: img_path,
+              service_image_path: image_path,
               service_name: service.name,
               number_of_participants: numberOfParticipants,
               id: service.service_id,
@@ -156,7 +145,7 @@ const ProductDetails = () => {
         } else {
           cart = JSON.parse(cart);
           cart.push({
-            service_image_path: img_path,
+            service_image_path: image_path,
             service_name: service.name,
             number_of_participants: numberOfParticipants,
             id: service.service_id,
@@ -946,13 +935,13 @@ const ProductDetails = () => {
             {/* <img
             className="relative rounded-sm w-[0.83rem] h-[1.63rem]"
             alt=""
-            src={final_img_path}
+            src={final_image_path}
           /> */}
             <div className="flex flex-col items-center justify-center gap-[1.5rem]">
               <img
                 className="relative lg:rounded-lg max-lg:w-full lg:w-[77rem] max-lg:h-full lg:h-[33rem] object-cover"
                 alt=""
-                src={final_img_path}
+                src={`data:image/jpeg;base64,${images[0]}`}
               />
               {/* <img
               className="relative w-[7rem] h-[1rem]"
