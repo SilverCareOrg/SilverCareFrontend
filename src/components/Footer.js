@@ -136,7 +136,10 @@ const ExtraSection = () => {
         <div className="relative tracking-[0.05em] leading-[24px] font-medium">{`Contact: `}</div>
         <div className="flex-1 flex flex-col items-start justify-start gap-[16px] text-right font-open-sans">
           <b className="self-stretch relative tracking-[0.1em] leading-[24px]">
-            office@eldie.com
+            teofil.sturzoiu@gmail.com 
+          </b>
+          <b className="self-stretch relative tracking-[0.1em] leading-[24px]">
+            stefanavram93@gmail.com
           </b>
           <b className="self-stretch relative tracking-[0.1em] leading-[24px]">
             +40 766 551 409
@@ -153,7 +156,7 @@ const ExtraSection = () => {
 const Copyright = () => {
   return (
     <div className="relative tracking-[0.05em] leading-[24px] max-lg:font-xsmall lg:font-medium">
-      @ Copyright 2023, Eldie, All Rights Reserved
+      @ Copyright 2024, Eldie, All Rights Reserved
     </div>
   );
 };
@@ -206,7 +209,7 @@ const Footer = () => {
               </div>
               <div className="self-stretch flex flex-row items-center justify-between">
                 <Copyright />
-                <TermsSection />
+                {/* <TermsSection /> */}
               </div>
             </div>
           </div>

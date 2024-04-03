@@ -88,7 +88,7 @@ const App = () => {
           element={<AdminUpdateServiceProduct />}
         />
         <Route path="paymentCartPanel" element={<PaymentCartPanel />} />
-        <Route path="TermeniSiConditii" element={<TermsAndConditions />} />
+        {/* <Route path="TermeniSiConditii" element={<TermsAndConditions />} /> */}
         <Route path="*" element={<Notfound />} />
       </Routes>
       <Footer />
