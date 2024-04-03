@@ -413,8 +413,8 @@ export default function CartPanel({ onClose }) {
                                       >
                                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                           <img
-                                            src={image_path}
-                                            alt={product.service_image_path}
+                                            src={`data:image/jpeg;base64,${product.service_image_path[0]}`}
+                                            alt={product.service_image_path[0]}
                                             className="h-full w-full object-cover object-center"
                                           />
                                         </div>
