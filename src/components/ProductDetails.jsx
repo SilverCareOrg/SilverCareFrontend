@@ -831,7 +831,7 @@ const ProductDetails = () => {
         {common_location &&
           map_location != "" &&
           (main_option === null ||
-            (main_option != null && main_option?.map_location == "")) && (
+            (main_option != null && main_option?.map_location === null && main_option?.map_location == "")) && (
             <div className="max-lg:w-[20.44rem] lg:w-[44.13rem] flex flex-col items-start justify-center gap-[1.5rem]">
               <div className="relative box-border w-full border-t-[1px] border-solid border-text-fields-grey-hf" />
 
