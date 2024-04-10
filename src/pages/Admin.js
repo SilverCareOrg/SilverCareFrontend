@@ -44,6 +44,20 @@ function Admin() {
     navigate("/adminAddService");
   };
 
+  const handleAddLinkService = async (event) => {
+    //Prevent page reload
+    event.preventDefault();
+
+    navigate("/adminAddLinkService");
+  }
+
+  const handleUpdateLinkService = async (event) => {
+    //Prevent page reload
+    event.preventDefault();
+
+    navigate("/adminUpdateLinkService");
+  }
+
   const handleDeleteService = async (event) => {
     //Prevent page reload
     event.preventDefault();
@@ -88,6 +102,12 @@ function Admin() {
       <div className="login">
         <div className="login-title">
           This is the admin page. Please choose one of the following actions.
+        </div>
+        <div className="login-button-container" onClick={handleAddLinkService}>
+          <button>Add new link service.</button>
+        </div>
+        <div className="login-button-container" onClick={handleUpdateLinkService}>
+          <button>Update link service table.</button>
         </div>
         <div className="login-button-container" onClick={handleAddService}>
           <button>Add new service.</button>
