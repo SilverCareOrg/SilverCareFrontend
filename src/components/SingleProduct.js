@@ -12,7 +12,14 @@ const SingleProduct = ({ product }) => {
   var final_image_path = baseUrl + "/images/" + image_path;
   // var final_image_path =  `${process.env.REACT_APP_SERVER_IMAGE_PATH}${image_path}`;
 
+  console.log(product);
+
   const DisplayPriceText = () => {
+    // If there are no options in the service as a key, return price
+    if (!product.options) {
+      return <span>{product.price} RON</span>;
+    }
+
     var min = product.options[0].price;
 
     for (let i = 1; i < product.options.length; i++) {
@@ -28,43 +35,6 @@ const SingleProduct = ({ product }) => {
     } else {
       return <span>De la {min} RON</span>;
     }
-  };
-
-  const handleAddCart = async (event) => {
-    //Prevent page reload
-    event.preventDefault();
-
-    axios_api
-      .post(
-        "/add_to_cart",
-        {
-          service_id: product.service_id,
-          senior_name: "senior1",
-          adult_name: "adult1",
-          phone_number: "1234567890",
-          companion: "companion1",
-          email: "user@user",
-        },
-        {
-          sameSite: "none",
-          withCredentials: true,
-          headers: {
-            // 'X-CSRFToken': csrfToken, // Set the CSRF token in the request headers
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        // Handle the response
-        if (response.status == 200) {
-        } else {
-          console.log("Failed to send login data to the API");
-        }
-      })
-      .catch((error) => {
-        // Handle errors
-        console.log("Error:", error);
-      });
   };
 
   const toggleRegistrationService = () => {
@@ -90,6 +60,8 @@ const SingleProduct = ({ product }) => {
         e.currentTarget.style.boxShadow = "0px 8px 16px rgba(0, 0, 0, 0)";
       }}
     >
+
+      {!product.url &&
       <Link to={url} state={product}>
         <div className="bg-white relative h-[18rem]  lg:w-[99.91%] top-[0%] right-[0.09%] bottom-[0%] left-[0%] flex flex-col items-end justify-between lg:py-[1.5rem] lg:px-[2rem] box-border">
           <img
@@ -108,7 +80,28 @@ const SingleProduct = ({ product }) => {
             }}
           />
         </div>
-      </Link>
+      </Link>}
+
+      {product.url &&
+      <a href={product.url} target="_blank">
+      <div className="bg-white relative h-[18rem]  lg:w-[99.91%] top-[0%] right-[0.09%] bottom-[0%] left-[0%] flex flex-col items-end justify-between lg:py-[1.5rem] lg:px-[2rem] box-border">
+        <img
+          className="absolute h-full w-full top-[0%] right-[0%] bottom-[0%] left-[0%] max-w-full overflow-hidden max-h-full object-cover"
+          alt=""
+          src={`data:image/jpeg;base64,${image_path[0]}`}
+        />
+
+        <div
+          className="max-lg:hidden absolute top-0 left-0"
+          style={{
+            background:
+              "linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0))",
+            width: "23rem",
+            height: "18rem",
+          }}
+        />
+      </div>
+    </a>}
 
       <div className="">
         <div className="flex-1 flex flex-col py-[0.7rem] max-lg:px-[1rem] lg:px-[1rem] box-border">

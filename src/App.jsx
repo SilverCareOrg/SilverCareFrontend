@@ -32,6 +32,9 @@ import ScrollOnTopOnRefresh from "./components/ScrollOnTopOnRefresh";
 import PaymentCartPanel from "./components/PaymentCartPanel";
 import AdminUpdateArticleTable from "./pages/AdminUpdateArticleTable.jsx";
 import AdminUpdateArticle from "./pages/AdminUpdateArticle.jsx";
+import AdminAddLinkService from "./pages/AdminAddLinkService.js";
+import AdminUpdateLinkService from "./pages/AdminUpdateLinkService.jsx";
+import AdminUpdateLinkServiceProduct from "./pages/AdminUpdateLinkServiceProduct.jsx";
 import Hotjar from "@hotjar/browser";
 const hotjarVersion = 6;
 Hotjar.init(process.env.REACT_APP_HOTJAR_SITEID, hotjarVersion);
@@ -74,6 +77,8 @@ const App = () => {
         <Route path="/adminAddService" element={<AdminAddService />} />
         <Route path="/adminUpdateJson" element={<AdminUpdateJson />} />
         <Route path="/adminCreateArticle" element={<AdminCreateArticle />} />
+        <Route path="/adminAddLinkService" element={<AdminAddLinkService />} />
+        <Route path="/adminUpdateLinkService" element={<AdminUpdateLinkService />} />
         <Route
           path="/adminUpdateArticleTable"
           element={<AdminUpdateArticleTable />}
@@ -81,6 +86,11 @@ const App = () => {
         <Route
           path="/adminUpdateArticle/:id"
           element={<AdminUpdateArticle />}
+        />
+
+        <Route
+          path="/adminUpdateLinkServiceProduct/:id"
+          element={< AdminUpdateLinkServiceProduct/>}
         />
         <Route path="/article-page/:id" element={<ArticlePage />} />
         <Route
